@@ -1,0 +1,17 @@
+<svg width="24" height="34" viewBox="0 0 24 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Union" filter="url(#filter0_d_38_727)">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M19.0208 19.1213C20.1923 17.9497 20.1923 16.0503 19.0208 14.8787L9.12127 4.97918C7.9497 3.80761 6.05021 3.80761 4.87863 4.97919C3.70706 6.15076 3.70706 8.05025 4.87863 9.22183L12.6568 17L4.87863 24.7782C3.70706 25.9497 3.70706 27.8492 4.87863 29.0208C6.05021 30.1924 7.9497 30.1924 9.12127 29.0208L19.0208 19.1213Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d_38_727" x="0" y="0.100586" width="23.8994" height="33.7988" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="2"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_38_727"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_38_727" result="shape"/>
+</filter>
+</defs>
+</svg>

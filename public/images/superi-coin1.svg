@@ -1,0 +1,18 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 63">
+<rect id="Rectangle 113" width="48" height="48" rx="12" fill="url(#paint0_linear_33_569)"/>
+<g id="Group 61">
+<path id="Rectangle 118" d="M13.3334 11.9998H20.0001C20.7365 11.9998 21.3334 12.5968 21.3334 13.3332V21.3332H13.3334C12.597 21.3332 12.0001 20.7362 12.0001 19.9998V13.3332C12.0001 12.5968 12.597 11.9998 13.3334 11.9998Z" stroke="white" stroke-width="2.66667"/>
+<path id="Rectangle 120" d="M13.3334 36.0002H20.0001C20.7365 36.0002 21.3334 35.4032 21.3334 34.6668V26.6668H13.3334C12.597 26.6668 12.0001 27.2638 12.0001 28.0002V34.6668C12.0001 35.4032 12.597 36.0002 13.3334 36.0002Z" stroke="white" stroke-width="2.66667"/>
+<path id="Rectangle 119" d="M34.6666 11.9998H27.9999C27.2635 11.9998 26.6666 12.5968 26.6666 13.3332V21.3332H34.6666C35.403 21.3332 35.9999 20.7362 35.9999 19.9998V13.3332C35.9999 12.5968 35.403 11.9998 34.6666 11.9998Z" stroke="white" stroke-width="2.66667"/>
+<path id="Rectangle 121" d="M34.6666 36.0002H27.9999C27.2635 36.0002 26.6666 35.4032 26.6666 34.6668V26.6668H34.6666C35.403 26.6668 35.9999 27.2638 35.9999 28.0002V34.6668C35.9999 35.4032 35.403 36.0002 34.6666 36.0002Z" stroke="white" stroke-width="2.66667"/>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear_33_569" x1="23.4146" y1="0" x2="23.4146" y2="48" gradientUnits="userSpaceOnUse">
+<stop stop-color="#263B85"/>
+<stop offset="0.0001" stop-color="#263B85"/>
+<stop offset="1" stop-color="#121D43"/>
+</linearGradient>
+</defs>
+</svg>
