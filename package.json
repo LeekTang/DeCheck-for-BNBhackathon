@@ -1,0 +1,27 @@
+{
+  "name": "DeCheck",
+  "private": true,
+  "scripts": {
+    "build:env": "nuxt build --legacy --mode env",
+    "dev": "nuxt dev --legacy --mode env",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "nuxt": "^3.3.2",
+    "postcss-px-to-viewport-8-plugin": "^1.2.2",
+    "vue-i18n": "^9.2.2"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "@element-plus/nuxt": "^1.0.4",
+    "@nuxtjs/tailwindcss": "^6.6.5",
+    "@pinia/nuxt": "^0.4.7",
+    "element-plus": "^2.3.2",
+    "pinia": "^2.0.33",
+    "swiper": "^9.0.3",
+    "vue-awesome-swiper": "^5.0.1"
+  }
+}
