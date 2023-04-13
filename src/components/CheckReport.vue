@@ -183,18 +183,25 @@ const state = reactive({
 })
 
 watch(tokenAddr,() => {
-  console.log('tokenAddr',tokenAddr)
   getGoPlus()
 })
 
 const getGoPlus = () => {
-    request.get(`/plugin/decheck/api/security/token/${chain.value}/${tokenAddr.value}`).then((res) => {
-      store.searchInfo = res
-      state.goInfo = searchInfo.value
-      if(res == null){
+    if(tokenAddr.value){
+      request.get(`/plugin/decheck/api/security/token/${chain.value}/${tokenAddr.value}`).then((res) => {
+        store.searchInfo = res
+        state.goInfo = searchInfo.value
+        if(res == null){
+          store.searchInfo = ''
+        }
+      }).catch(err => {
         store.searchInfo = ''
-      }
-    })
+      })
+    }else{
+      state.goInfo = ''
+      store.searchInfo = ''
+    }
+    
 }
 
 </script>

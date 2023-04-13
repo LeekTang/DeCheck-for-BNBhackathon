@@ -5,7 +5,7 @@
     <DetailsInfo />
     <CheckReport />
     <CheckBottom />
-    <BottomBar/>
+    <BottomBar :class="`${ store.tokenAddr ? '' : 'fixed bottom-0' }`"/>
   </div>
 </template>
 <script setup>

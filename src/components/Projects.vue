@@ -92,7 +92,7 @@ const getProject = () => {
 
 const goUrl = (id) => {
   router.push({
-    name: "projectDetails",
+    name: "ProjectDetails",
     query: { id: id}
   })
 }

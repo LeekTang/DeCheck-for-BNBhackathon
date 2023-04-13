@@ -1,5 +1,5 @@
 <template>
-  <div :class="`${Object.keys(store.searchInfo).length > 0 || Object.keys(store.searchProjectInfo).length > 0 ? '' : 'li'}  flex items-start w-[75rem] mx-auto mt-[8rem]`">
+  <div class="flex items-start w-[75rem] mx-auto mt-[8rem]">
     <client-only>
       <el-select v-model="state.chain" class="h-[3.5rem] w-[11.25rem] mr-[1.5rem]" size="large">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
