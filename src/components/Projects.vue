@@ -1,37 +1,40 @@
 <template>
   <div class="w-[75rem] mx-auto mt-[4rem]">
-    <div class="text-[1.25rem] text-[#fff] font-extrabold mb-[1.5rem]">PROJECTS</div>
+    <div class="text-[1.25rem] text-[#fff] font-extrabold mb-[1.5rem]">{{ t('PROJECTS')}}</div>
     <div class="project-bg w-full p-[1.5rem] rounded-[0.75rem]">
       <div class="w-[43rem] h-[3.5rem] bg-[#474174] rounded-[1rem] mb-[2rem]">
-        <el-input v-model="searchInput" class="h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff]" placeholder="Search by project name, token contract address and token symbol " :prefix-icon="Search" >
+        <el-input v-model="state.searchInput" class="h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff]" :placeholder="t('searchplace')" :prefix-icon="Search" >
           <template #suffix>
-            <div class="h-[2rem] w-[4.13rem] input-bg text-[0.88rem] text-[#fff] rounded-[0.5rem]">Search</div>
+            <div class="h-[2rem] w-[4.13rem] input-bg text-[0.88rem] text-[#fff] rounded-[0.5rem]" @click="searchClick">{{ t('Search') }}</div>
           </template>
         </el-input>
       </div>
       <div class="flex flex-row text-[0.88rem] text-[#FFFFFFA8] h-[3rem]">
-        <p class="w-[30rem]">name</p>
-        <p class="w-[8rem]">Token</p>
-        <p class="w-[8rem]">Chain</p>
-        <p class="w-[8rem]">Participant</p>
-        <p class="w-[8rem]">Reviews</p>
-        <p class="w-[8rem]">Score</p>
+        <p class="w-[30rem]">{{ t('Name') }}</p>
+        <p class="w-[8rem]">{{ t('Token') }}</p>
+        <p class="w-[8rem]">{{ t('Chain') }}</p>
+        <p class="w-[8rem]">{{ t('Participant') }}</p>
+        <p class="w-[8rem]">{{ t('Reviews') }}</p>
+        <p class="w-[8rem]">{{ t('Score') }}</p>
       </div>
-      <div v-for="(item, index) in list" :key="index" class="flex flex-row items-center text-[0.88rem] text-[#FFFFFF] h-[4rem] border-b border-[#FFFFFF1C]">
-        <div class="w-[30rem] flex items-center"><p class="h-[2.5rem] w-[2.5rem] bg-[#fff] rounded-[0.75rem] mr-[0.88rem]"></p>{{item.name}}</div>
-        <p class="w-[8rem]">{{item.token}}</p>
-        <p class="w-[8rem]">{{item.chain}}</p>
-        <p class="w-[8rem]">{{item.participant}}</p>
-        <p class="w-[8rem]">{{item.reviews}}</p>
-        <p class="w-[8rem]"><el-rate disabled size="large" v-model="item.rate" /></p>
+      <div v-for="(item, index) in state.projectList" :key="index" class="flex flex-row items-center text-[0.88rem] text-[#FFFFFF] h-[4rem] border-b border-[#FFFFFF1C]">
+        <div class="w-[30rem] flex items-center cursor-pointer" @click="goUrl(item.id)">
+          <p class="h-[2.5rem] w-[2.5rem] bg-[#fff] rounded-[0.75rem] mr-[0.88rem]"></p>
+          <a>{{item.name}}</a>
+        </div>
+        <p class="w-[8rem]">{{item.tokenName || '--'}}</p>
+        <p class="w-[8rem]">{{item.mainChain || '--'}}</p>
+        <p class="w-[8rem]">{{item.Participant || '--'}}</p>
+        <p class="w-[8rem]">{{item.Reviews || '--'}}</p>
+        <p class="w-[8rem]"><el-rate disabled size="large" v-model="item.score" /></p>
       </div>
       <div class="flex justify-between items-center h-[4rem]">
         <client-only>
-          <el-select v-model="value" class="h-[2rem] w-[11.25rem] m-0" effect="dark" size="large">
+          <el-select v-model="state.pageSize" class="h-[2rem] w-[11.25rem] m-0" effect="dark" size="large" @change="pageSizeChange">
             <el-option
               v-for="item in options"
               :key="item.value"
-              :label="item.label"
+              :label="t(item.label)"
               :value="item.value"
             />
           </el-select>
@@ -40,8 +43,11 @@
           small
           background
           layout="prev, pager, next"
-          :total="list.length"
-          :page-size="value"
+          :pagerCount="5"
+          :total="state.totle"
+          :page-size="state.pageSize"
+          v-model:current-page="state.page"
+          @current-change="pageChange"
           class="mt-4"
         />
       </div>
@@ -49,41 +55,66 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { Search } from '@element-plus/icons-vue'
-import { ref } from 'vue'
+import { onMounted, ref, reactive } from 'vue'
+import { abbr } from '@/src/utils/utils'
+import request from '@/src/utils/request'
+import { useI18n } from  'vue-i18n'
+const { t,locale } = useI18n();
+const router = useRouter()
 
-const searchInput = ref('')
-
-const list = [
-  {name: "Happy April Fool's Day - 100 $fvSOLV giveaway", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 5},
-  {name: "Make you DID on Arbitrum—SpaceID X Multichain", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 5},
-  {name: "Tearing Spaces Game Review", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 5},
-  {name: "The First Ever Avalanche OAT", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 3},
-  {name: "St. Patrick's Day 2023 Celebration with LEND and TEN ...", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 2},
-  {name: "Happy April Fool's Day - 100 $fvSOLV giveaway", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 1},
-  {name: "Make you DID on Arbitrum—SpaceID X Multichain", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 4},
-  {name: "Tearing Spaces Game Review", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 5},
-  {name: "The First Ever Avalanche OAT", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 2},
-  {name: "St. Patrick's Day 2023 Celebration with LEND and TEN ...", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 3},
-  {name: "Happy April Fool's Day - 100 $fvSOLV giveaway", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 4},
-  {name: "Make you DID on Arbitrum—SpaceID X Multichain", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 1},
-  {name: "Tearing Spaces Game Review", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 4},
-  {name: "The First Ever Avalanche OAT", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 5},
-  {name: "St. Patrick's Day 2023 Celebration with LEND and TEN ...", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 5},
-  {name: "Happy April Fool's Day - 100 $fvSOLV giveaway", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 3},
-  {name: "Make you DID on Arbitrum—SpaceID X Multichain", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 2},
-  {name: "Tearing Spaces Game Review", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 1},
-  {name: "The First Ever Avalanche OAT", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 4},
-  {name: "St. Patrick's Day 2023 Celebration with LEND and TEN ...", token: 'HEX', chain: 'Ethereum', participant: '10,000', reviews: '6,000', rate: 5},
-]
-
-const value = ref(10)
 const options = [
-  { value: 10, label: 'Show 10 items', },
-  { value: 20, label: 'Show 20 items', },
-  { value: 50, label: 'Show 50 items', }
+  { value: 10, label: '10items', },
+  { value: 20, label: '20items', },
+  { value: 50, label: '50items', }
 ]
+
+const state = reactive({
+  projectList: {},
+  searchInput: '',
+  page: 1,
+  pageSize: 10,
+  totle: 10,
+})
+
+const getProject = () => {
+  request({ url: `/plugin/decheck/api/project/page?page=${state.page}&pageSize=${state.pageSize}&keyword=${state.searchInput}`,method : 'get'}).then((res) => {
+    state.projectList = res.list
+    state.projectList.forEach(element => {
+      if(element.mainChain){
+        element.mainChain = element.mainChain.join()
+      }
+    });
+    state.totle = res.total
+  })
+}
+
+const goUrl = (id) => {
+  router.push({
+    name: "projectDetails",
+    query: { id: id}
+  })
+}
+
+const pageSizeChange = (val) => {
+  state.pageSize = val;
+  getProject();
+}
+
+const pageChange = (val) => {
+  state.page = val;
+  getProject()
+}
+
+const searchClick = () => {
+  state.page = 1
+  getProject()
+}
+
+onMounted(()=>{
+  getProject()
+})
 
 </script>
 

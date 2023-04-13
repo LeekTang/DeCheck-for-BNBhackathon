@@ -1,53 +1,119 @@
 <template>
-  <div class="w-full flex items-center justify-between fixed top-0 px-[12.5rem] bg-[#190A43] z-[100]">
-    <div class="flex items-center w-[38.2rem] justify-between text-[1rem] text-[#fff]">
-      <div class="logo h-[4rem] w-[11.25rem] leading-[4rem] text-center text-[1.25rem] text-[#fff] font-extrabold cursor-pointer">LOGO</div>
-      <NuxtLink to="/">Home</NuxtLink>
-      <NuxtLink to="/explorer">Explorer</NuxtLink>
-      <NuxtLink to="/dao">DeCheck DAO</NuxtLink>
-      <NuxtLink to="/comment">Check</NuxtLink>
-    </div>
-    <div class="flex">
-      <client-only>
-        <el-popover :ref="(ref) => {state.languagePop = ref}" placement="bottom" :teleported="false"  trigger="click">
-          <template #reference>
-            <div class="h-[2rem] w-[4.88rem] flex justify-center items-center bg-[#ffffff1c] font-semibold rounded-[0.25rem] mr-[1.5rem] border-2 border-white cursor-pointer">
-              <img src="/images/web.svg" class="h-[1rem] w-[1rem]">
-              <span class="text-[1rem] text-[#ffffff] ml-[0.44rem]">{{state.language}}</span>
+  <div class="w-full fixed top-0 bg-[#190A43] z-[100]">
+    <div class="w-[75rem] mx-auto flex items-center justify-between">
+      <div class="flex items-center w-[38.2rem] py-[0.75rem] justify-between text-[1rem] text-[#fff]">
+        <img src="/images/logo.svg" class="h-[2.5rem] w-[9.14rem] cursor-pointer" />
+        <NuxtLink to="/">{{ t('Home') }}</NuxtLink>
+        <NuxtLink to="/explorer">{{ t('Explorer') }}</NuxtLink>
+        <NuxtLink to="/dao">{{ t('DeCheckDAO') }}</NuxtLink>
+        <NuxtLink to="/check">{{ t('Check') }}</NuxtLink>
+      </div>
+      <div class="flex">
+        <client-only>
+          <el-popover :ref="(ref) => {state.languagePop = ref}" placement="bottom" :teleported="false"  trigger="click">
+            <template #reference>
+              <div class="h-[2rem] w-[4.88rem] flex justify-center items-center bg-[#ffffff1c] font-semibold rounded-[0.25rem] mr-[1.5rem] border-2 border-white cursor-pointer">
+                <img src="/images/web.svg" class="h-[1rem] w-[1rem]">
+                <span class="text-[1rem] text-[#ffffff] ml-[0.44rem]">{{state.language}}</span>
+              </div>
+            </template>
+            <div class="flex flex-col cursor-pointer rounded-[0.75] bg-[#322558FF]">
+              <div v-for="(item, index) in languageList" :key="index" @click="onSetLanguage(item.key)"
+                class="h-[3rem] text-center leading-[3rem] text-[#fff] hover:bg-[#493d6a] ">
+                {{ item.label }}
+              </div>
             </div>
-          </template>
-          <div class="flex flex-col cursor-pointer bg-[#322558FF]">
-						<div v-for="(item, index) in languageList" :key="index" @click="onSetLanguage(item.key)"
-							class="h-[3rem] text-center leading-[3rem] text-[#fff] hover:bg-[#493d6a] ">
-							{{ item.label }}
-						</div>
-					</div>
-        </el-popover>
-      </client-only>
-      <div class="h-[2rem] leading-[2rem] w-[11.25rem] bg-white text-[#121D43] text-[1rem] text-center font-semibold rounded-[0.25rem] cursor-pointer"><NuxtLink to="/userInfo">Connect Wallet</NuxtLink></div>
+          </el-popover>
+        </client-only>
+        
+        <client-only>
+				  <el-popover :ref="(ref) => { state.setPop = ref}" placement="bottom" :width="180" :teleported="false" trigger="click" v-if="state.isSign">
+            <template #reference>
+              <div class="text-[#fff] text-[1rem] text-center font-semibold  cursor-pointer flex items-center">
+                <p class="h-[2rem] w-[2rem] rounded-full bg-[#D9D9D9FF] mr-[0.5rem]"></p>
+                <p>{{plusXing()}}</p>
+              </div>
+            </template>
+            <div
+              class="flex flex-col cursor-pointer items-center rounded-[0.75rem] text-[#fff] bg-[#322558FF]">
+              <div @click="onShowInfo" class="h-[3rem] w-[10.25rem] rounded-[0.75rem] text-center leading-[3rem] font-bold hover:bg-[#493d6a]"><NuxtLink to="/userInfo">{{ t('myreviews') }}</NuxtLink></div>
+              <div @click="goSignOut" class="h-[3rem] w-[10.25rem] rounded-[0.75rem] text-center text-[#FF5353FF] leading-[3rem] font-bold hover:bg-[#493d6a] ">{{ t('logout') }}</div>
+            </div>
+          </el-popover>
+          <div v-else class="h-[2rem] leading-[2rem] w-[11.25rem] bg-white 
+            text-[#121D43] text-[1rem] text-center font-semibold rounded-[0.25rem] cursor-pointer" @click="connectClick()">
+            {{ t('Connect')}}
+          </div>
+        </client-only>
+      </div>
     </div>
   </div>
 </template>
 <script setup >
+import web3js from '@/src/utils/link'
+import { userStore } from '@/src/stores/user'
+import { onMounted, reactive} from 'vue'
 import { useI18n } from  'vue-i18n'
 const { t,locale } = useI18n();
+const store = userStore()
+const router = useRouter()
 
 const state = reactive ({
-  language: computed(() => {
-    return locale.value
-  })
+  language: computed(() => { return locale.value }),
+  isSign: computed(() => store.getIsSign),
+  userInfo: computed(() => store.getUserInfo),
 })
 
 const languageList = [
-	{ key: 'zh', label: '简体中文', value: 'zh' },
-	{ key: 'en', label: 'English', value: 'en' },
+	{ key: 'ZH', label: '简体中文', value: 'ZH' },
+	{ key: 'EN', label: 'English', value: 'EN' },
 ];
 
 const onSetLanguage = (value) => {
-	localStorage.language = value;
-  locale.value = value
+  locale.value = value;
+  localStorage.language = value
   state.languagePop.hide();
 };
+
+const connectClick = () => {
+  if(window.ethereum){
+	  web3js.connect().catch((err)=>{
+		  if(err.code == 4001){
+			  ElMessage.error(t('refuse'));
+			}
+		}).then((res) => {
+			if(res == undefined) {return;}
+			web3js.getSign().then(signres=>{
+        store.isSign = true;
+        store.userInfo = { account: signres.account}
+      }).catch((err) => {
+				if(err.code == 4001){
+					ElMessage.error(t('refuse'));
+				}
+			})		
+		})
+	}else{
+		ElMessage.error(t('refuse'));
+	}
+}
+
+const initLanguage = () => {
+	locale.value = localStorage.language || 'EN';
+};
+
+const goSignOut = () => {
+  store.isSign = false;
+	store.userInfo = {};
+  localStorage.language = ''
+}
+
+onMounted(()=>{
+  initLanguage();
+})
+
+const plusXing = () => {
+  return state.userInfo.account.substring(0,4) + '...' + state.userInfo.account.substring(state.userInfo.account.length - 4);
+}
 </script>
 
 <style scoped>
@@ -55,7 +121,9 @@ const onSetLanguage = (value) => {
   background: linear-gradient(225deg, #26fff270 0%, #7350ff70 100%);
 }
 :deep(.el-popover){
-  padding: 0;
+  padding: 0.56rem;
   border: none;
+  border-radius: 0.75rem;
+  background-color: #322558FF;
 }
 </style>

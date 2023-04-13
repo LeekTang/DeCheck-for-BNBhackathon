@@ -1,21 +1,21 @@
 <template>
-  <div v-if="Object.keys(state.project).length > 0" class="w-[75rem] mx-auto mt-[1.5rem] flex">
+  <div v-if="state.project" class="w-[75rem] mx-auto mt-[1.5rem] flex">
     <div class="info-bg rounded-[0.75rem] mr-[1.5rem]">
       <img :src="state.project.logo" class="h-[16rem] w-[16rem] rounded-[0.75rem] pt-[1.5rem] pb-1 mx-auto"/>
       <div class="p-[1.5rem]">
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
-          <p class="text-[#FFFFFFA8]">Contracts</p>
+          <p class="text-[#FFFFFFA8]">{{ t('Contracts') }}</p>
           <p class="text-[#fff] font-bold" v-if="state.project.tokenAddr">{{abbr(state.project.tokenAddr)}}</p>
         </div>
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
-          <p class="text-[#FFFFFFA8]">Autids</p>
+          <p class="text-[#FFFFFFA8]">{{ t('Autids') }}</p>
           <p class="text-[#fff] font-bold">
             {{state.project.auditor}}
           </p>
         </div>
         <p class="border border-[#FFFFFF1C]"></p>
-        <p class="my-[1.5rem] text-[0.88rem] text-[#fff] ">I know something about this project!</p>
-        <div class="w-[21rem] h-[3.5rem] bg-[#1E50FF] rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]">REVIEW NOW</div>
+        <p class="my-[1.5rem] text-[0.88rem] text-[#fff] ">{{ t('tips') }}</p>
+        <div class="w-[21rem] h-[3.5rem] bg-[#1E50FF] rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]">{{ t('reviewNow') }}</div>
       </div>
     </div>
     <div class="w-[49.5rem]">
@@ -32,8 +32,8 @@
           </client-only>
         </div>
       </div>
-      <p class="text-[1rem] text-[#ffffffa8] leading-[1rem] my-[1rem]">Investment Agency</p>
-      <p class="text-[1rem] text-[#fff] font-bold leading-[1rem] my-[1rem]">{{state.project.invest}}</p>
+      <p class="text-[1rem] text-[#ffffffa8] leading-[1rem] my-[1rem]">{{ t('Investment') }}</p>
+      <p class="text-[1rem] text-[#fff] font-bold leading-[1rem] my-[1rem]">{{state.project.invest || '--'}}</p>
       <div class="mt-[3.5rem]">
         <div :class="`${state.isEllipsis ? 'text-ellipsis' : 'more-ellipsis'} text-[1rem] text-[#ffffffa8] leading-[2rem]`">
             {{state.project.intro}}
@@ -46,12 +46,11 @@
 </template>
 <script setup>
 import { ElRate } from 'element-plus'
-import { onMounted,reactive } from 'vue'
+import { onMounted,reactive,defineProps } from 'vue'
 import request from '@/src/utils/request'
 import { abbr } from '@/src/utils/utils'
-import { userStore } from '@/src/stores/user' 
-import { storeToRefs } from 'pinia'
-const store = userStore()
+import { useI18n } from  'vue-i18n'
+const { t,locale } = useI18n();
 
 const iconList = [
   {name: 'web', icon: 'images/web-icon.svg', tip: 'Official website',},
@@ -63,24 +62,31 @@ const iconList = [
   {name: 'gitbook', icon: 'images/gitbook-icon.svg', tip: 'gitbook'},
 ]
 
-const { tokenID } = storeToRefs( store )
+const props = defineProps({
+  projectID: {
+    type: String
+  }
+})
 
 const state = reactive({
   isEllipsis: true,
-  project: {}
-})
-
-watch(tokenID,() => {
-  projectInfo()
+  project: {},
 })
 
 const projectInfo = () => {
-  if(tokenID.value){
-    request.get(`/plugin/decheck/api/project/detail/${tokenID.value}`).then((res) => {
-      store.projectInfo = state.project = res
-    })
-  }
+  request.get(`/plugin/decheck/api/project/detail/${props.projectID}`).then((res) => {
+    state.project = res
+    state.project.mainChain = state.project.mainChain.join()
+    state.project.auditor = state.project.auditor.join()
+    state.project.invest = state.project.invest.join()
+  })
 }
+
+
+
+onMounted(()=>{
+  projectInfo();
+})
 
 </script>
 <style scoped>

@@ -8,7 +8,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import HeaderView from '@/src/components/Header.vue';
 import HotProject from '@/src/components/HotProject.vue'
 import Projects from '@/src/components/Projects.vue'

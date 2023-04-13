@@ -18,7 +18,7 @@
         <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold mt-[2rem]">Content of review</div>
         <div class="mt-[1rem] w-[48rem] bg-[#FFFFFF1C] rounded-[1.25rem] p-[1.5rem]">
           <el-input v-model="textarea" type="textarea" :rows="6" placeholder="Please input"/>
-          <el-upload action="#" multiple :limit="9" list-type="picture-card" :show-file-list="false" :auto-upload="false" :on-exceed="handleExceed">
+          <el-upload action="#" multiple :limit="9" :file-list="uploadFiles" list-type="picture-card" :show-file-list="true" :auto-upload="false" :on-exceed="handleExceed">
             <div class="flex flex-col items-center text-[#abaaaae0] text-[0.75rem]">
               <el-icon><Plus /></el-icon>
               <p class="mt-[0.75rem]">Pictures and videos</p>
@@ -60,9 +60,8 @@ const checkClick = (item:any) => {
 }
 
 const rateValue = ref(null)
-
+const uploadFiles = reactive([])
 const textarea = ref('')
-
 const handleExceed: UploadProps['onExceed'] = (files, uploadFiles) => {
   ElMessage.warning(
     `The limit is 3, you selected ${files.length} files this time, add up to ${

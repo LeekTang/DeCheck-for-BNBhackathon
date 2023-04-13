@@ -1,22 +1,19 @@
 <template>
   <div class="w-[75rem] mx-auto mt-[8rem]">
-    <div class="text-[1.25rem] text-[#fff] font-extrabold">HOT PROJECTS</div>
+    <div class="text-[1.25rem] text-[#fff] font-extrabold">{{ t('hotProjects')}}</div>
     <div class="mt-[1.5rem]">
       <swiper>
-        <swiper-slide class="swiper-no-swiping" v-for="(item,index) in 6" :key="index">
-          <div class="h-[26.13rem] w-[24rem] bg-[#FFFFFF] rounded-[1.25rem] relative" @click="goUrl()">
-            <img src="/images/test.png" class="w-full h-[18rem] rounded-[1.25rem]"/>
+        <swiper-slide class="swiper-no-swiping" v-for="(item,index) in state.hotPorject" :key="index">
+          <div class="h-[26.13rem] w-[24rem] bg-[#FFFFFF] rounded-[1.25rem] relative" @click="goUrl(item.id)">
+            <img :src="item.logo" class="w-full h-[18rem] rounded-[1.25rem]"/>
             <div class="h-[8.13rem] w-full absolute bottom-0 left-0 reviews rounded-[1.25rem] p-[1.5rem] flex flex-col justify-between">
-              <p class="text-[1.13rem] text-[#121D43] font-bold">PREOJECTS NAME</p>
+              <p class="text-[1.13rem] text-[#121D43] font-bold">{{item.name}}</p>
               <div class="flex justify-between">
                 <div class="flex items-center">
                   <div class="h-[2.5rem] w-[2.5rem] bg-[#E6E6E6] rounded-full mr-[0.63rem]"></div>
-                  <div>
-                    <div class="text-[0.88rem] text-[#121D43] font-bold">USER NAME</div>
-                    <div class="text-[0.75rem] text-[#121D43] font-medium">0xe04C...1Bc2</div>
-                  </div>
+                  <div class="text-[0.75rem] text-[#121D43] font-bold">{{abbr(item.tokenAddr)}}</div>
                 </div>
-                <el-rate disabled size="large" v-model="value" />
+                <el-rate disabled size="large" v-model="item.score" />
               </div>
             </div>
           </div>
@@ -32,21 +29,33 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ElRate } from 'element-plus'
 import SwiperCore, {Autoplay, Navigation} from 'swiper'
 import Swipers from 'swiper'
-import { onMounted,ref } from 'vue'
+import { onMounted, ref, reactive } from 'vue'
+import { abbr } from '@/src/utils/utils'
+import request from '@/src/utils/request'
+import { useI18n } from  'vue-i18n'
+const { t,locale } = useI18n();
 
 SwiperCore.use([Autoplay,Navigation])
-
-const value = ref(5)
-
 const router = useRouter()
-const goUrl = () => {
+
+const state = reactive({
+  hotPorject: []
+})
+
+const goUrl = (id) => {
   router.push({
-    name: "ProjectDetails",
-    
+    name: "projectDetails",
+    query: { id: id}
+  })
+}
+
+const getHotProject = () => {
+  request.get(`/plugin/decheck/api/project/hot`).then((res) => {
+    state.hotPorject = res
   })
 }
 
@@ -61,9 +70,10 @@ onMounted(()=>{
       prevEl: '.swiper-button-prev',
     },
     autoplay: {
-      delay: 2000,
+      delay: 5000,
       disableOnInteraction: false
     }
   })
+  getHotProject();
 })
 </script>
