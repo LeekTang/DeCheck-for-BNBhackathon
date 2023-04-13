@@ -26,6 +26,7 @@ deploy-test-decheck:
     - mv -f decheck_dist.tar.gz /home/web_build_cache/
     - rsync -v /home/web_build_cache/decheck_dist.tar.gz   google_host:/home/web/ --progress
     - ssh google_host "rm /home/web/test-decheck/.output -rf && tar -xf /home/web/decheck_dist.tar.gz -C /home/web/test-decheck/"
+    - ssh google_host "/home/web/test-decheck/restart.sh"
   only:
     - master
   when: manual
@@ -39,6 +40,7 @@ deploy-pro-decheck:
     - mv -f decheck_dist.tar.gz /home/web_build_cache/
     - rsync -v /home/web_build_cache/decheck_dist.tar.gz   google_host:/home/web/ --progress
     - ssh google_host "rm /home/web/decheck/.output -rf && tar -xf /home/web/decheck_dist.tar.gz -C /home/web/decheck/"
+    - ssh google_host "/home/web/decheck/restart.sh"
   only:
     - master
   when: manual
