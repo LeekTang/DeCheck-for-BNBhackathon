@@ -21,7 +21,7 @@ deploy-test-decheck:
   stage: deploy
   script:
     - npm install 
-    - npm build:env
+    - npm run build:env
     - tar -zcf decheck_dist.tar.gz dist
     - mv -f decehck_dist.tar.gz /home/web_build_cache/
     - rsync -v /home/web_build_cache/decheck_dist.tar.gz   google_host:/home/web/ --progress
@@ -34,7 +34,7 @@ deploy-pro-decheck:
   stage: deploy
   script:
     - npm install 
-    - npm build:prod
+    - npm run build:prod
     - tar -zcf decheck_dist.tar.gz dist
     - mv -f decehck_dist.tar.gz /home/web_build_cache/
     - rsync -v /home/web_build_cache/decheck_dist.tar.gz   google_host:/home/web/ --progress
