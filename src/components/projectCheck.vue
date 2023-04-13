@@ -35,7 +35,7 @@
             <p class="text-[#FFFFFFA8]">Website</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
               Hexarhong.com
-              <img src="images/out.svg" class="h-[1rem] w-[1rem]">
+              <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
             </p>
           </div>
         </div>
@@ -53,7 +53,7 @@
             <p class="text-[#FFFFFFA8]">Uniswap</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
               Tread
-              <img src="images/out.svg" class="h-[1rem] w-[1rem]">
+              <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
             </p>
           </div>
           <div class="flex justify-between">
@@ -118,14 +118,14 @@
         <p class="text-[1.25rem] font-bold text-gradient">Risk Check</p>
         <p class="text-[#FFFFFF] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
           View Details
-          <img src="images/out.svg" class="h-[1rem] w-[1rem]">
+          <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
         </p>
       </div>
       <div class="p-[1.5rem]">
         <div class="flex justify-between flex-wrap">
           <div v-for="(item, index) in riskList" :key="index" 
             class="h-[3.5rem] w-[33.75rem] flex items-center border-b-2 border-b-[#FFFFFF1C]">
-            <img :src="item.state == 1 ? 'images/success.svg' : (item.state == 2 ? 'images/warning.svg' : 'images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+            <img :src="item.state == 1 ? '/images/success.svg' : (item.state == 2 ? '/images/warning.svg' : '/images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
             <p :class="`${item.state == 1 ? 'text-[#fff]' : (item.state == 2 ? 'text-[#FFB524FF]' : 'text-[#FF5353FF]')} text-[0.88rem] `">{{item.text}}</p>
           </div>
         </div>

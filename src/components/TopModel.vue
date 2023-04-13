@@ -4,12 +4,12 @@
       <div class="">
         <p class="text-[#fff] text-[1.25rem] font-black mb-[1rem]">{{t('decheck')}}</p>
         <div class="ground w-[38.25rem] px-6 py-4 text-[#ffffffa8]">
-          <img src="images/top-left.svg" class="h-[9.38rem] w-[35.25rem]">
+          <img src="/images/top-left.svg" class="h-[9.38rem] w-[35.25rem]">
           <p class="text-[1.13rem] font-semibold mt-[1.5rem]">{{t('highly')}}</p>
         </div>
       </div>
       <div class="h-[28.56rem] w-[30.38rem] border-dashed">
-        <img src="images/top-right.svg" class="">
+        <img src="/images/top-right.svg" class="">
       </div>
     </div>
   </div>

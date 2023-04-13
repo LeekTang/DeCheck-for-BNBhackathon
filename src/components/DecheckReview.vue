@@ -41,11 +41,11 @@
           </div>
           <div v-if="item.video" class="h-[11.63rem] w-[46.5rem] bg-[#FFFFFF1C] rounded-[0.75rem] mt-[1.75rem] flex justify-center items-center">
             <video class="h-[8.63rem] w-[43.44rem] rounded-[0.75rem]" controls autoplay>
-              <source src="1.mp4" type="video/mp4">
+              <source src="/1.mp4" type="video/mp4">
             </video>
           </div>
           <div :class="`${item.islike ? 'bg-[#fff] text-[#121D43FF]' : 'text-[#FFFFFFA8]'} h-[2rem] w-[4.88rem] mt-[1.5rem] flex items-center justify-center border-2 border-[#FFFFFFA8] rounded-[0.75rem]`">
-            <img :src="item.islike ? 'images/like.svg' : 'images/notlike.svg'" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+            <img :src="item.islike ? '/images/like.svg' : '/images/notlike.svg'" class="h-[1rem] w-[1rem] mr-[0.5rem]">
             <p>{{item.like || '--'}}</p>
           </div>
         </div>

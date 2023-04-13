@@ -9,7 +9,7 @@
         </div>
         <div class="h-[3.5rem] w-[11.25rem] div-bg text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]"><NuxtLink to="/apply">{{ t('DeCheckDAO') }}</NuxtLink></div>
       </div>
-      <img src="images/project-apply.svg" class="absolute right-0">
+      <img src="/images/project-apply.svg" class="absolute right-0">
     </div>
   </div>
 </template>

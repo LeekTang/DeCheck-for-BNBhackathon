@@ -16,7 +16,7 @@
         <swiper class="dao w-[36.75rem] h-[20.75rem]">
           <swiper-slide v-for="(item,index) in 3" :key="index">
             <div class="w-[36.75rem] h-[20.75rem] bg-[#F4F7FFFF] rounded-[1.25rem] relative">
-              <img src="images/project-right.svg" class="w-full h-full"/>
+              <img src="/images/project-right.svg" class="w-full h-full"/>
             </div>
           </swiper-slide>
           <div class="swiper-button-next h-[4rem] w-[4rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">

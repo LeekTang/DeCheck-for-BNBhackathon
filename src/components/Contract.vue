@@ -6,7 +6,7 @@
         <p class="text-[2.56rem] text-[#121D43] font-extrabold leading-[3rem]">{{ t('selfservice') }}</p>
         <div class="h-[3.5rem] w-[11.25rem] cursor-pointer div-bg text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]">{{t('start')}}</div>
       </div>
-      <img src="images/contract-bg.svg" class="absolute right-0 top-0">
+      <img src="/images/contract-bg.svg" class="absolute right-0 top-0">
     </div>
   </div>
 </template>

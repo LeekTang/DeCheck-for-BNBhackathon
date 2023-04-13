@@ -53,13 +53,13 @@ import { useI18n } from  'vue-i18n'
 const { t,locale } = useI18n();
 
 const iconList = [
-  {name: 'web', icon: 'images/web-icon.svg', tip: 'Official website',},
-  {name: 'twitter', icon: 'images/twitter-icon.svg', tip: 'twitter'},
-  {name: 'telegram', icon: 'images/telegram-icon.svg', tip: 'telegram'},
-  {name: 'discord', icon: 'images/discord-icon.svg', tip: 'discord'},
-  {name: 'cand', icon: 'images/cand-icon.svg', tip: 'cand'},
-  {name: 'github', icon: 'images/github-icon.svg', tip: 'github'},
-  {name: 'gitbook', icon: 'images/gitbook-icon.svg', tip: 'gitbook'},
+  {name: 'web', icon: '/images/web-icon.svg', tip: 'Official website',},
+  {name: 'twitter', icon: '/images/twitter-icon.svg', tip: 'twitter'},
+  {name: 'telegram', icon: '/images/telegram-icon.svg', tip: 'telegram'},
+  {name: 'discord', icon: '/images/discord-icon.svg', tip: 'discord'},
+  {name: 'cand', icon: '/images/cand-icon.svg', tip: 'cand'},
+  {name: 'github', icon: '/images/github-icon.svg', tip: 'github'},
+  {name: 'gitbook', icon: '/images/gitbook-icon.svg', tip: 'gitbook'},
 ]
 
 const props = defineProps({

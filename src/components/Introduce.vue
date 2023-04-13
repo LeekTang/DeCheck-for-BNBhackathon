@@ -21,7 +21,7 @@
         </div>
         <div class="h-[3.5rem] w-[11.25rem] div-bg cursor-pointer text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]">{{ t('Explorer') }}</div>
       </div>
-      <img src="images/intro-bg.svg" class="absolute right-0">
+      <img src="/images/intro-bg.svg" class="absolute right-0">
     </div>
   </div>
 </template>
@@ -30,13 +30,13 @@
 import { useI18n } from  'vue-i18n'
 const { t,locale } = useI18n();
 const originList = [
-    {id: 1, name: 'ethereum', icon: 'images/eth.svg'},
-    {id: 2, name: 'BNB CHAIN', icon: 'images/bnb.svg'},
-    {id: 3, name: 'SOLANA', icon: 'images/solana.svg'},
-    {id: 4, name: 'POLKADOT', icon: 'images/polkadot.svg'},
-    {id: 5, name: 'polygon', icon: 'images/polygon.svg'},
-    {id: 6, name: 'AVALANCHE', icon: 'images/avalanche.svg'},
-    {id: 7, name: 'celo', icon: 'images/celo.svg'},
+    {id: 1, name: 'ethereum', icon: '/images/eth.svg'},
+    {id: 2, name: 'BNB CHAIN', icon: '/images/bnb.svg'},
+    {id: 3, name: 'SOLANA', icon: '/images/solana.svg'},
+    {id: 4, name: 'POLKADOT', icon: '/images/polkadot.svg'},
+    {id: 5, name: 'polygon', icon: '/images/polygon.svg'},
+    {id: 6, name: 'AVALANCHE', icon: '/images/avalanche.svg'},
+    {id: 7, name: 'celo', icon: '/images/celo.svg'},
 ];
 
 const list = [

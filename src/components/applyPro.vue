@@ -51,7 +51,7 @@
             <el-form-item label="Attachment">
               <div v-if="Form.imageUrl" class="relative">
                 <img :src="Form.imageUrl" class="h-[11.88rem] w-[16.25rem] rounded-[0.25rem]" />
-                <img src="images/close.svg" @click="Form.imageUrl = ''" class="h-[1rem] w-[1rem] absolute top-[0.5rem] right-[0.5rem]">
+                <img src="/images/close.svg" @click="Form.imageUrl = ''" class="h-[1rem] w-[1rem] absolute top-[0.5rem] right-[0.5rem]">
               </div>
               <el-upload
                 class="h-[11.88rem] w-[16.25rem] bg-[#FFFFFF1C] flex items-center justify-center"
@@ -60,7 +60,7 @@
                 :on-success="handleAvatarSuccess"
                 v-else
               >
-                <img src="images/plus.svg" class="h-[5rem] w-[5rem]">
+                <img src="/images/plus.svg" class="h-[5rem] w-[5rem]">
               </el-upload>
               
             </el-form-item>
