@@ -32,7 +32,7 @@ deploy-pro-decheck:
     - rsync -v /home/web_build_cache/decheck_dist.tar.gz   google_host:/home/web/ --progress
     - ssh google_host "rm /home/web/decheck/dist -rf && tar -xf /home/web/decheck_dist.tar.gz -C /home/web/decheck/"
   only:
-    - main
+    - master
   when: manual
 
 
