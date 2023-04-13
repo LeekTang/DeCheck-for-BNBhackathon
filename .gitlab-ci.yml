@@ -1,0 +1,38 @@
+default:
+  tags:
+    - test
+  cache:
+    key: "$CI_PROJECT_ID-$CI_COMMIT_REF_SLUG"
+stages:
+  - build
+  - deploy
+
+build-job-decheck:
+  stage: build
+  script:
+    - pnpm install --no-frozen-lockfile
+    - pnpm build
+    - tar -zcf decheck_dist.tar.gz dist
+    - mv -f decehck_dist.tar.gz /home/web_build_cache/
+  only:
+    - master
+
+deploy-test-decheck:
+  stage: deploy
+  script:
+    - rsync -v /home/web_build_cache/decheck_dist.tar.gz   google_host:/home/web/ --progress
+    - ssh google_host "rm /home/web/test-decheck/dist -rf && tar -xf /home/web/decheck_dist.tar.gz -C /home/web/test-decheck/"
+  only:
+    - master
+  when: manual
+
+deploy-pro-decheck:
+  stage: deploy
+  script:
+    - rsync -v /home/web_build_cache/decheck_dist.tar.gz   google_host:/home/web/ --progress
+    - ssh google_host "rm /home/web/decheck/dist -rf && tar -xf /home/web/decheck_dist.tar.gz -C /home/web/decheck/"
+  only:
+    - main
+  when: manual
+
+
