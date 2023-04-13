@@ -22,10 +22,10 @@ deploy-test-decheck:
   script:
     - npm install 
     - npm run build:env
-    - tar -zcf decheck_dist.tar.gz dist
+    - tar -zcf decheck_dist.tar.gz .output
     - mv -f decehck_dist.tar.gz /home/web_build_cache/
     - rsync -v /home/web_build_cache/decheck_dist.tar.gz   google_host:/home/web/ --progress
-    - ssh google_host "rm /home/web/test-decheck/dist -rf && tar -xf /home/web/decheck_dist.tar.gz -C /home/web/test-decheck/"
+    - ssh google_host "rm /home/web/test-decheck/.output -rf && tar -xf /home/web/decheck_dist.tar.gz -C /home/web/test-decheck/"
   only:
     - master
   when: manual
@@ -35,10 +35,10 @@ deploy-pro-decheck:
   script:
     - npm install 
     - npm run build:prod
-    - tar -zcf decheck_dist.tar.gz dist
+    - tar -zcf decheck_dist.tar.gz .output
     - mv -f decehck_dist.tar.gz /home/web_build_cache/
     - rsync -v /home/web_build_cache/decheck_dist.tar.gz   google_host:/home/web/ --progress
-    - ssh google_host "rm /home/web/decheck/dist -rf && tar -xf /home/web/decheck_dist.tar.gz -C /home/web/decheck/"
+    - ssh google_host "rm /home/web/decheck/.output -rf && tar -xf /home/web/decheck_dist.tar.gz -C /home/web/decheck/"
   only:
     - master
   when: manual
