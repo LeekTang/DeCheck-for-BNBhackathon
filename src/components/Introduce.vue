@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full px-[12.5rem]">
-    <p class="text-[#FFFFFF70] text-[1rem] text-center">RAISE CAPITAL ACROSS ALL MAIN BLOCKCHAIN NETWORKS</p>
-    <div class="mt-[1rem] flex">
+  <div class="w-[75rem] mx-auto">
+    <p class="text-[#FFFFFF70] text-[1rem] text-center">{{ t('introtitle') }}</p>
+    <div class="mt-[1rem] flex justify-between">
       <div v-for="item in originList" :key="item.id" class="flex items-center h-[3rem] w-[10.63rem]">
         <img :src="item.icon" class="h-[2rem] w-[2rem]">
         <p class="ml-[0.5rem] text-[0.88rem] text-[#FFFFFF70]">{{item.name}}</p>
@@ -10,23 +10,25 @@
     <div class="mt-[4rem] flex justify-between">
       <div class="flex flex-col justify-center items-center list-bg h-[8rem] w-[17.63rem] rounded-[1.25rem]" v-for="item in list" :key="item.id">
         <p class="text-gradient text-[2rem] font-extrabold">{{item.number}}</p>
-        <p class="text-[1rem] text-[#fff] font-semibold mt-[1rem]">{{item.name}}</p>
+        <p class="text-[1rem] text-[#fff] font-semibold mt-[1rem]">{{t(item.name)}}</p>
       </div>
     </div>
     <div class="mt-[4rem] h-[26.5rem] bottom-bg flex relative rounded-[1.25rem]">
-      <div class="w-[42.31rem] py-[4rem] pl-[4rem]">
-        <p class="text-[2.56rem] text-[#121D43] font-bold leading-[3rem]">Most of the mainstream projects are included</p>
-        <p class="text-[1.44rem] text-[#121D43] leading-[1.75rem] mt-[1.5rem]">Professional community developers help you understand the project from all perspectives</p>
-        <div class="h-[3.5rem] w-[11.25rem] div-bg text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]">Explorer</div>
+      <div class="w-[42.31rem] py-[4rem] pl-[4rem] flex flex-col justify-between">
+        <div>
+          <p class="text-[2.56rem] text-[#121D43] font-extrabold leading-[3rem]">{{t('publicitytitle')}}</p>
+          <p class="text-[1.44rem] text-[#121D43] font-normal leading-[1.75rem] mt-[1.5rem]">{{ t('publicitytip') }}</p>
+        </div>
+        <div class="h-[3.5rem] w-[11.25rem] div-bg cursor-pointer text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]">{{ t('Explorer') }}</div>
       </div>
       <img src="images/intro-bg.svg" class="absolute right-0">
     </div>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { onMounted, provide, reactive, computed, onUnmounted } from 'vue';
-
+<script setup>
+import { useI18n } from  'vue-i18n'
+const { t,locale } = useI18n();
 const originList = [
     {id: 1, name: 'ethereum', icon: 'images/eth.svg'},
     {id: 2, name: 'BNB CHAIN', icon: 'images/bnb.svg'},

@@ -29,7 +29,7 @@ export default defineNuxtConfig({
   experimental: {
     viteNode: true
   },
-  modules: ["@nuxtjs/tailwindcss","@element-plus/nuxt","@pinia/nuxt"],
+  modules: ["@nuxtjs/tailwindcss","@element-plus/nuxt","@pinia/nuxt","@pinia-plugin-persistedstate/nuxt"],
   plugins: [{src: '~/plugins/swiper.js', ssr: false}],
   css: ["element-plus/dist/index.css"],
   postcss: {
