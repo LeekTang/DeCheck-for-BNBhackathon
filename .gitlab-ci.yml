@@ -11,7 +11,7 @@ build-job-decheck:
   stage: build
   script:
     - pnpm install --no-frozen-lockfile
-    - pnpm build
+    - npm build
     - tar -zcf decheck_dist.tar.gz dist
     - mv -f decehck_dist.tar.gz /home/web_build_cache/
   only:
