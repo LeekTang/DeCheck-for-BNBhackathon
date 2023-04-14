@@ -72,6 +72,8 @@ const getHotProject = () => {
     }else{
       state.allList = ''
       state.isShowAll = false
+      store.tokenAddr = state.searchInput
+      store.chain = state.chain;
     }
   })
 }

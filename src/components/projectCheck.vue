@@ -99,7 +99,7 @@
           <div v-for="(item, index) in listOrder" :key="index">
             <div v-if="state.goInfo.hasOwnProperty(item.key)" class="h-[3.5rem] w-[33.75rem] flex items-center border-b-2 border-b-[#FFFFFF1C]">
               <img :src="state.goInfo[item.key] == 0 ? '/images/success.svg' : (state.goInfo[item.key] == 1 ? '/images/warning.svg' : '/images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-              <p :class="`${state.goInfo[item.key] == 0 ? 'text-[#fff]' : (state.goInfo[item.key] == 1 ? 'text-[#FFB524FF]' : 'text-[#FF5353FF]')} text-[0.88rem] `">{{state.goInfo[item.key] == 0 ? item.state1 : (state.goInfo[item.key] == 1 ? item.state2 : item.state3)}}</p>
+              <p :class="`${state.goInfo[item.key] == 0 ? 'text-[#fff]' : (state.goInfo[item.key] == 1 ? 'text-[#FFB524FF]' : 'text-[#FF5353FF]')} text-[0.88rem] `">{{state.goInfo[item.key] == 0 ? item.state2 : (state.goInfo[item.key] == 1 ? item.state1 : item.state3)}}</p>
             </div>
           </div>
         </div>

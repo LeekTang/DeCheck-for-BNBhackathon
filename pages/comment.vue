@@ -13,7 +13,7 @@
         </div>
         <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold mt-[2rem]">Score</div>
         <div class="mt-[1rem]">
-          <el-rate v-model="rateValue" size="large"></el-rate>
+          <el-rate v-model="state.rateValue" size="large"></el-rate>
         </div>
         <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold mt-[2rem]">Content of review</div>
         <div class="mt-[1rem] w-[48rem] bg-[#FFFFFF1C] rounded-[1.25rem] p-[1.5rem]">
@@ -38,10 +38,16 @@
 <script setup>
 import HeaderView from '@/src/components/Header.vue';
 import BottomBar from '@/src/components/BottomBar.vue';
+import { ElMessage } from 'element-plus';
 import { ref, reactive } from 'vue'
+import request from '@/src/utils/request'
 import { Plus } from '@element-plus/icons-vue'
 import { userStore } from '@/src/stores/user'
+import { useI18n } from  'vue-i18n'
+const { t,locale } = useI18n();
 const store = userStore();
+const route = useRoute();
+const router = useRouter()
 
 const checkList = reactive ([
   {name: 'General', state: false},
@@ -61,21 +67,11 @@ const checkClick = (item) => {
   }
 }
 
-const props = defineProps({
-  id: {
-    type: String
-  },
-  name: {
-    type: String
-  }
-})
-
 const state = reactive({
   rateValue: 0,
   textarea: ""
 })
 
-const rateValue = ref(null)
 const uploadFiles = reactive([])
 const handleExceed  = (files, uploadFiles) => {
   ElMessage.warning(
@@ -85,17 +81,33 @@ const handleExceed  = (files, uploadFiles) => {
   )
 }
 
+const back = () => {
+  router.back()
+}
+
 const submitClick = () => {
+  let tagList = []
+  checkList.forEach(item => {
+    if(item.state == true){
+      tagList.push(item.name)
+    }
+  })
   let data = {
     content: state.textarea,
-    projectId: props.id,
-    projectName: props.name,
+    projectId: route.query.id,
+    projectName: route.query.name,
     score: state.rateValue,
-    tags: "aa",
+    tags: tagList,
     type: 0,
     userId: store.userInfo.account,
     visible: true
   }
+  request({url: '/plugin/decheck/api/project/review/add' , data , method: 'post'}).then(res=>{
+    console.log(res)
+    if(res != null){
+      ElMessage.success(t('commontsuccess'))
+    }
+  })
 }
 </script>
 

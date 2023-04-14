@@ -99,5 +99,6 @@
   "Okey": "Okey",
   "sorryaddress": "This is a wallet address Please enter the correct contract addresstake By the way, take care to check that the blockchain network is correct",
   "Submitted successfully!": "Submitted successfully!",
-  "success": "By the way, take care to check that the blockchain network is correct"
+  "success": "By the way, take care to check that the blockchain network is correct",
+  "commontsuccess": "Post a comment successfully"
 }

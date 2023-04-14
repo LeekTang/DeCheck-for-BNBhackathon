@@ -99,5 +99,6 @@
   "Okey": "好的",
   "sorryaddress": "这是一个钱包地址，请输入正确的代币合约地址。请顺便注意检查区块链网络是否正确",
   "Submitted successfully!": "提交成功！",
-  "success": "请耐心等待平台审核"
+  "success": "请耐心等待平台审核",
+  "commontsuccess": "发表评论成功"
 }
