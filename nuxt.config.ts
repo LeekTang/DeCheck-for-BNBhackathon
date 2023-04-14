@@ -19,8 +19,8 @@ export default defineNuxtConfig({
 
       ],
       meta: [
-        { name: "keywords", content: "web3、区块链、元宇宙、比特币、以太坊、区块链媒体,区块链新闻,区块链快讯,区块链专栏,区块链游戏,区块链投资,区块链赚钱,区块链钱包,BTC,ETH,DeFi,交易所,稳定币,DApp,NFT" },
-        { name: "description", content: "2web3,是一个汇总整理区块链领域相关项目信息、行业工具、 产品资讯等内容的垂直领域导航网站。我们将配合视频内容的形式为站点赋能，尽可能降低普通用户从web2过渡 到web3的学习和认知成本。" },
+        { name: "keywords", content: "" },
+        { name: "description", content: "" },
         { name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" },
       ],
       __dangerouslyDisableSanitizers: ['script'],

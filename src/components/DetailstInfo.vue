@@ -1,11 +1,11 @@
 <template>
   <div v-if="Object.keys(state.project).length > 0" class="w-[75rem] mx-auto mt-[1.5rem] flex">
     <div class="info-bg rounded-[0.75rem] mr-[1.5rem]">
-      <img :src="state.project.logo" class="h-[16rem] w-[16rem] rounded-[0.75rem] pt-[1.5rem] pb-1 mx-auto"/>
+      <img :src="state.project.logo" @error="imgError" class="h-[16rem] w-[16rem] rounded-[0.75rem] pt-[1.5rem] pb-1 mx-auto"/>
       <div class="p-[1.5rem]">
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">Contracts</p>
-          <p class="text-[#fff] font-bold" v-if="state.project.tokenAddr">{{abbr(state.project.tokenAddr)}}</p>
+          <p class="text-[#fff] font-bold" v-if="state.project.tokenAddr">{{state.project.tokenList ? abbr(state.project.tokenList[0][1]) : '--'}}</p>
         </div>
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">Autids</p>
@@ -48,7 +48,7 @@
 import { ElRate } from 'element-plus'
 import { onMounted,reactive } from 'vue'
 import request from '@/src/utils/request'
-import { abbr } from '@/src/utils/utils'
+import { abbr, imgError } from '@/src/utils/utils'
 import { userStore } from '@/src/stores/user' 
 import { storeToRefs } from 'pinia'
 const store = userStore()
@@ -77,8 +77,16 @@ watch(tokenID,() => {
 const projectInfo = () => {
   if(tokenID.value){
     request.get(`/plugin/decheck/api/project/detail/${tokenID.value}`).then((res) => {
+      if(res.tokenAddr){
+        res.tokenList = Object.entries(res.tokenAddr)
+        // console.log(Object.entries(res.tokenAddr)[0][1]);
+      }
       store.projectInfo = state.project = res
+      state.project.auditor = state.project.auditor.join()
+      state.project.invest = state.project.invest.join()
     })
+  }else{
+    store.projectInfo = state.project = ''
   }
 }
 

@@ -10,7 +10,7 @@
       </div>
       <div class="flex">
         <client-only>
-          <el-popover :ref="(ref) => {state.languagePop = ref}" placement="bottom" :teleported="false"  trigger="click">
+          <el-popover :ref="(ref) => {state.languagePop = ref}" placement="bottom" :show-arrow="false" :teleported="false"  trigger="click">
             <template #reference>
               <div class="h-[2rem] w-[4.88rem] flex justify-center items-center bg-[#ffffff1c] font-semibold rounded-[0.25rem] mr-[1.5rem] border-2 border-white cursor-pointer">
                 <img src="/images/web.svg" class="h-[1rem] w-[1rem]">
@@ -27,7 +27,7 @@
         </client-only>
         
         <client-only>
-				  <el-popover :ref="(ref) => { state.setPop = ref}" placement="bottom" :width="180" :teleported="false" trigger="click" v-if="state.isSign">
+				  <el-popover :ref="(ref) => { state.setPop = ref}" placement="bottom" :width="180" :show-arrow="false" :teleported="false" trigger="click" v-if="state.isSign">
             <template #reference>
               <div class="text-[#fff] text-[1rem] text-center font-semibold  cursor-pointer flex items-center">
                 <p class="h-[2rem] w-[2rem] rounded-full bg-[#D9D9D9FF] mr-[0.5rem]"></p>
@@ -53,6 +53,7 @@
 import web3js from '@/src/utils/link'
 import { userStore } from '@/src/stores/user'
 import { onMounted, reactive} from 'vue'
+import request from '@/src/utils/request'
 import { useI18n } from  'vue-i18n'
 const { t,locale } = useI18n();
 const store = userStore()
@@ -77,23 +78,26 @@ const onSetLanguage = (value) => {
 
 const connectClick = () => {
   if(window.ethereum){
-	  web3js.connect().catch((err)=>{
-		  if(err.code == 4001){
-			  ElMessage.error(t('refuse'));
-			}
-		}).then((res) => {
+	  web3js.connect().then((res) => {
 			if(res == undefined) {return;}
 			web3js.getSign().then(signres=>{
-        store.isSign = true;
-        store.userInfo = { account: signres.account}
-      }).catch((err) => {
-				if(err.code == 4001){
-					ElMessage.error(t('refuse'));
-				}
-			})		
+        if(signres.signMessage){
+          let data = {
+            aggregateType: 7,
+            appId: "1646086759245303808",
+            authId: signres.account,
+            strSign: signres.signMessage,
+            type: 4,
+            data: 'Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees.'
+          }
+          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data,baseURL:'http://192.168.101.3:9488'}).then(loginres => {
+            localStorage.setItem('token',loginres.tokenValue)
+            store.userInfo = { account: signres.account}
+            store.isSign = true;
+          })
+        }
+      })
 		})
-	}else{
-		ElMessage.error(t('refuse'));
 	}
 }
 

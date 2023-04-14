@@ -19,18 +19,18 @@
       </div>
       <div v-for="(item, index) in state.projectList" :key="index" class="flex flex-row items-center text-[0.88rem] text-[#FFFFFF] h-[4rem] border-b border-[#FFFFFF1C]">
         <div class="w-[30rem] flex items-center cursor-pointer" @click="goUrl(item.id)">
-          <p class="h-[2.5rem] w-[2.5rem] bg-[#fff] rounded-[0.75rem] mr-[0.88rem]"></p>
+          <img :src="item.logo" class="h-[2.5rem] w-[2.5rem] bg-[#fff] rounded-[0.75rem] mr-[0.88rem]" @error="imgError"/>
           <a>{{item.name}}</a>
         </div>
         <p class="w-[8rem]">{{item.tokenName || '--'}}</p>
-        <p class="w-[8rem]">{{item.mainChain || '--'}}</p>
-        <p class="w-[8rem]">{{item.Participant || '--'}}</p>
+        <p class="w-[8rem]">{{item.chain || '--'}}</p>
+        <p class="w-[8rem]">{{item.partake || '--'}}</p>
         <p class="w-[8rem]">{{item.Reviews || '--'}}</p>
         <p class="w-[8rem]"><el-rate disabled size="large" v-model="item.score" /></p>
       </div>
       <div class="flex justify-between items-center h-[4rem]">
         <client-only>
-          <el-select v-model="state.pageSize" class="h-[2rem] w-[11.25rem] m-0" effect="dark" size="large" @change="pageSizeChange">
+          <el-select v-model="state.pageSize" class="h-[2rem] w-[11.25rem] m-0" size="large" :teleported="false" @change="pageSizeChange">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -40,7 +40,6 @@
           </el-select>
         </client-only>
         <el-pagination
-          small
           background
           layout="prev, pager, next"
           :pagerCount="5"
@@ -48,6 +47,7 @@
           :page-size="state.pageSize"
           v-model:current-page="state.page"
           @current-change="pageChange"
+          :hide-on-single-page="true"
           class="mt-4"
         />
       </div>
@@ -58,7 +58,7 @@
 <script setup>
 import { Search } from '@element-plus/icons-vue'
 import { onMounted, ref, reactive } from 'vue'
-import { abbr } from '@/src/utils/utils'
+import { abbr, imgError } from '@/src/utils/utils'
 import request from '@/src/utils/request'
 import { useI18n } from  'vue-i18n'
 const { t,locale } = useI18n();
@@ -78,12 +78,39 @@ const state = reactive({
   totle: 10,
 })
 
+const chainList = [
+  { id: "1", label: "Ethereum" },
+  { id: "10", label: "Optimism" },
+  { id: "25", label: "Cronos" },
+  { id: "56", label: "BSC" },
+  { id: "66", label: "OKC" },
+  { id: "100", label: "Gnosis" },
+  { id: "128", label: "Heco" },
+  { id: "137", label: "Polygon" },
+  { id: "250", label: "Fantom" },
+  { id: "321", label: "KCC" },
+  { id: "324", label: "zkSync Era" },
+  { id: "10001", label: "ETHW" },
+  { id: "201022", label: "FON" },
+  { id: "42161", label: "Arbitrum" },
+  { id: "43114", label: "Avalanche" },
+  { id: "59140", label: "Linea" },
+  { id: "1666600000", label: "Harmony" },
+  { id: "tron", label: "Tron" },
+]
+
 const getProject = () => {
   request({ url: `/plugin/decheck/api/project/page?page=${state.page}&pageSize=${state.pageSize}&keyword=${state.searchInput}`,method : 'get'}).then((res) => {
     state.projectList = res.list
-    state.projectList.forEach(element => {
-      if(element.mainChain){
-        element.mainChain = element.mainChain.join()
+    state.projectList.forEach(ele => {
+      if(ele.tokenAddr){
+        Object.keys(ele.tokenAddr).forEach(chainID => {
+          chainList.forEach( chaindItem => {
+            if(chainID == chaindItem.id){
+              ele.chain = chaindItem.label
+            }
+          })
+        })
       }
     });
     state.totle = res.total
@@ -129,7 +156,35 @@ onMounted(()=>{
   background: #474174;
   box-shadow: none;
 }
+
+:deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
+  background-color: #493d6a;
+  border-radius: 0.25rem;
+}
+
+:deep(.el-select-dropdown__item){
+  height: 3rem;
+  line-height: 3rem;
+  color: #fff;
+  margin: 0 0.5rem;
+}
+
+:deep(.el-popper.is-light){
+  background: #322559;
+  border: none;
+}
+
 :deep(.el-input__inner){
   color: #fff;
 }
+
+/* 分页样式修改 */
+:deep(.el-pagination.is-background .el-pager li){
+  background-color: transparent;
+  color: #ffffff54;
+}
+:deep(.el-pagination.is-background .el-pager li.is-active){
+  color: #fff;
+}
+
 </style>

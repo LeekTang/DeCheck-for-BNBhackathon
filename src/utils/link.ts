@@ -1,3 +1,4 @@
+import Web3  from 'web3';
 
 type ethAuth = {
     provider: any,
@@ -12,14 +13,8 @@ export default {
     connect: function () {
         if (window.ethereum) {
             return new Promise(async (resolve, reject) => {
-                this.provider = window.ethereum
-                // this.provider.enable().then((res: any) => {
-                //     console.log(res)
-                //     resolve(res)
-                // }).catch((err: any) => {
-                //     reject(err)
-                // })
-                this.provider.request({ method: 'eth_requestAccounts' }).then((res: any) => {
+                this.provider = new Web3(window.ethereum)
+                window.ethereum.request({ method: 'eth_requestAccounts' }).then((res: any) => {
                     resolve(res)
                 }).catch((err: any) => {
                     reject(err)
@@ -30,10 +25,12 @@ export default {
         }
     },
 
-    getSign(message = 'Welcome to 2web3! Click to sign in and accept the 2web3 Terms of Service: https://2web3.vip This request will not trigger a blockchain transaction or cost any gas fees.') {
+    getSign(message = 'Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees.') {
         return new Promise(async (reslove, reject) => {
-            let accounts = await this.provider.request({ method: 'eth_requestAccounts' });
-            this.provider.request({ method: 'personal_sign', params: [accounts[0], message] }).then ((res: any) => {
+            // let accounts = await this.provider.request({ method: 'eth_requestAccounts' });
+            let accounts = await this.provider.eth.getAccounts()
+            // this.provider.request({ method: 'personal_sign', params: [accounts[0], message] }).then ((res: any) => {
+            this.provider.eth.personal.sign(message, accounts[0], (err: any, res: unknown) => {
                 reslove({signMessage:res,account:accounts[0]})
             }).catch((err:any) => {
                 reject(err)

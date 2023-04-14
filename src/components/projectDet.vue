@@ -1,11 +1,11 @@
 <template>
-  <div v-if="state.project" class="w-[75rem] mx-auto mt-[1.5rem] flex">
+  <div v-if="Object.keys(state.project).length > 0" class="w-[75rem] mx-auto mt-[1.5rem] flex">
     <div class="info-bg rounded-[0.75rem] mr-[1.5rem]">
-      <img :src="state.project.logo" class="h-[16rem] w-[16rem] rounded-[0.75rem] pt-[1.5rem] pb-1 mx-auto"/>
+      <img :src="state.project.logo" @error="imgError" class="h-[16rem] w-[16rem] rounded-[0.75rem] pt-[1.5rem] pb-1 mx-auto"/>
       <div class="p-[1.5rem]">
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{ t('Contracts') }}</p>
-          <p class="text-[#fff] font-bold" v-if="state.project.tokenAddr">{{abbr(state.project.tokenAddr)}}</p>
+          <p class="text-[#fff] font-bold" v-if="state.project.tokenAddr">{{state.project.tokenList ? abbr(state.project.tokenList[0][1]) : '--'}}</p>
         </div>
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{ t('Autids') }}</p>
@@ -15,7 +15,7 @@
         </div>
         <p class="border border-[#FFFFFF1C]"></p>
         <p class="my-[1.5rem] text-[0.88rem] text-[#fff] ">{{ t('tips') }}</p>
-        <div class="w-[21rem] h-[3.5rem] bg-[#1E50FF] rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]">{{ t('reviewNow') }}</div>
+        <div class="w-[21rem] h-[3.5rem] bg-[#1E50FF] rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]" @click="reviewClick">{{ t('reviewNow') }}</div>
       </div>
     </div>
     <div class="w-[49.5rem]">
@@ -48,8 +48,11 @@
 import { ElRate } from 'element-plus'
 import { onMounted,reactive,defineProps } from 'vue'
 import request from '@/src/utils/request'
-import { abbr } from '@/src/utils/utils'
+import { abbr, imgError } from '@/src/utils/utils'
+import { userStore } from '@/src/stores/user'
 import { useI18n } from  'vue-i18n'
+const store = userStore();
+const router = useRouter()
 const { t,locale } = useI18n();
 
 const iconList = [
@@ -71,15 +74,32 @@ const props = defineProps({
 const state = reactive({
   isEllipsis: true,
   project: {},
+  isSign: computed(() => store.getIsSign),
 })
 
 const projectInfo = () => {
   request.get(`/plugin/decheck/api/project/detail/${props.projectID}`).then((res) => {
+    if(res.tokenAddr){
+      res.tokenList = Object.entries(res.tokenAddr)
+    }
     state.project = res
-    state.project.mainChain = state.project.mainChain.join()
     state.project.auditor = state.project.auditor.join()
     state.project.invest = state.project.invest.join()
   })
+}
+
+const reviewClick = () => {
+  if(state.isSign){
+    router.push({
+      name: 'comment',
+      query: {
+        id: props.projectID,
+        name: state.project.name
+      }
+    })
+  }else{
+    console.log('aa',state.isSign)
+  }
 }
 
 

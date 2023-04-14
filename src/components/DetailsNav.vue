@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-start w-[75rem] mx-auto mt-[8rem]">
     <client-only>
-      <el-select v-model="state.chain" class="h-[3.5rem] w-[11.25rem] mr-[1.5rem]" size="large">
+      <el-select v-model="state.chain" class="h-[3.5rem] w-[11.25rem] mr-[1.5rem]" size="large" :teleported="false">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
       </el-select>
     </client-only>
@@ -13,11 +13,11 @@
         </template>
       </el-input>
 
-      <div class="w-[62.25rem] h-[30rem] scroll p-[0.5rem] mt-[0.5rem] bg-[#322558FF] rounded-[0.75rem]" v-if="state.isShowAll">
+      <div class="w-[62.25rem] max-h-[30rem] scroll p-[0.5rem] mt-[0.5rem] bg-[#322558FF] rounded-[0.75rem] z-40" v-if="state.isShowAll">
         <div class="h-[3rem] text-[#fff] flex justify-between items-center px-[1rem] rounded-[0.75rem] hover:bg-[#FFFFFF1C]" 
           v-for="(item,index) in state.allList" :key="index" @click="showProject(item)">
           <p class="text-[0.88rem]">{{item.name}}</p>
-          <p class="text-[0.75rem]">{{item.tokenAddr}}</p>
+          <p class="text-[0.75rem]">{{item.tokenAddr[state.chain]}}</p>
         </div>
       </div>  
     </div>
@@ -37,36 +37,49 @@ const route = useRoute();
 const store = userStore()
 
 const state = reactive({
-  chain: 1,
+  chain: "1",
   searchInput: '',
   allList: {},
   isShowAll: false
 })
 
 const options = [
-  { value: 1, label: 'ETH', },
-  { value: 10, label: 'Optimism', },
-  { value: 25, label: 'Cronos', },
-  { value: 56, label: 'BSC', },
-  { value: 66, label: 'OKC', },
-  { value: 100, label: 'Gnosis', },
-  { value: 128, label: 'HECO', },
-  { value: 137, label: 'Polygon', },
-  { value: 250, label: 'Fantom', },
+  { value: "1", label: 'ETH', },
+  { value: "10", label: 'Optimism', },
+  { value: "25", label: 'Cronos', },
+  { value: "56", label: 'BSC', },
+  { value: "66", label: 'OKC', },
+  { value: "100", label: 'Gnosis', },
+  { value: "128", label: 'HECO', },
+  { value: "137", label: 'Polygon', },
+  { value: "250", label: 'Fantom', },
 ]
 
 
 const getHotProject = () => {
-  request.get(`/plugin/decheck/api/project/page?page=1&pageSize=50&keyword=${state.searchInput}`).then((res) => {
-    state.allList = res.list
-    state.isShowAll = true
+  store.searchInfo = ''
+  store.searchProjectInfo = ''
+  store.tokenAddr = ""
+  store.tokenID = ""
+  request.get(`/plugin/decheck/api/project/page?page=1&pageSize=50&keyword=${state.searchInput}&chainId=${state.chain}`).then((res) => {
+    if(res.list){
+      if(res.list.length <= 1){
+        showProject(res.list[0])
+      }else {
+        state.allList = res.list
+        state.isShowAll = true
+      }
+    }else{
+      state.allList = ''
+      state.isShowAll = false
+    }
   })
 }
 
-const showProject = (item) => {
+const showProject = (item) => {  
   store.chain = state.chain;
   store.tokenID = item.id;
-  store.tokenAddr = item.tokenAddr;
+  store.tokenAddr = item.tokenAddr[state.chain];
   state.isShowAll = false
 }
 
@@ -77,6 +90,9 @@ onMounted(()=>{
   store.searchProjectInfo = ''
   store.tokenAddr = ""
   store.tokenID = ""
+  if(route.query){
+    getHotProject()
+  }
 })
 </script>
 
@@ -112,5 +128,23 @@ onMounted(()=>{
 }
 :deep(.el-input__inner){
   color: #fff;
+}
+
+:deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
+  background-color: #493d6a;
+  border-radius: 0.25rem;
+}
+
+:deep(.el-select-dropdown__item){
+  height: 3rem;
+  line-height: 3rem;
+  color: #fff;
+  margin: 0 0.5rem;
+}
+
+:deep(.el-popper.is-light){
+  background: #322559;
+  border: none;
+  
 }
 </style>

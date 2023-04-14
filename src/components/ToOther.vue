@@ -9,8 +9,8 @@
           10,000
         </p>
       </div>
-      <div class="h-[14.25rem] flex flex-col justify-around px-[4rem] pt-[1.5rem] ">
-        <p class="text-[1.25rem] text-[#121D43FF] leading-[1.63rem] font-normal">
+      <div class="h-[14.25rem] flex flex-col justify-between px-[4rem] pt-[1.5rem] pb-[3rem]">
+        <p class="text-[1.25rem] text-[#787f93] leading-[1.63rem] font-normal">
           {{t('audittip')}}
         </p>
         <div class="h-[3.5rem] w-[11.25rem] button-bg leading-[3.5rem] text-center text-[1.13rem] text-[#fff] font-black rounded-full cursor-pointer">
@@ -27,8 +27,8 @@
           100,000
         </p>
       </div>
-      <div class="h-[14.25rem] flex flex-col justify-around px-[4rem] pt-[1.5rem] ">
-        <p class="text-[1.25rem] text-[#121D43FF] leading-[1.63rem] font-normal">
+      <div class="h-[14.25rem] flex flex-col justify-between px-[4rem] pt-[1.5rem] pb-[3rem]">
+        <p class="text-[1.25rem] text-[#787f93] leading-[1.63rem] font-normal">
           {{t('reviewedtip')}}
         </p>
         <div

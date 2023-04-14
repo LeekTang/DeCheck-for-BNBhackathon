@@ -10,14 +10,14 @@
     <div class="mt-[4rem] flex justify-between">
       <div class="flex flex-col justify-center items-center list-bg h-[8rem] w-[17.63rem] rounded-[1.25rem]" v-for="item in list" :key="item.id">
         <p class="text-gradient text-[2rem] font-extrabold">{{item.number}}</p>
-        <p class="text-[1rem] text-[#fff] font-semibold mt-[1rem]">{{t(item.name)}}</p>
+        <p class="text-[1rem] text-[#fff] font-semibold">{{t(item.name)}}</p>
       </div>
     </div>
     <div class="mt-[4rem] h-[26.5rem] bottom-bg flex relative rounded-[1.25rem]">
       <div class="w-[42.31rem] py-[4rem] pl-[4rem] flex flex-col justify-between">
         <div>
           <p class="text-[2.56rem] text-[#121D43] font-extrabold leading-[3rem]">{{t('publicitytitle')}}</p>
-          <p class="text-[1.44rem] text-[#121D43] font-normal leading-[1.75rem] mt-[1.5rem]">{{ t('publicitytip') }}</p>
+          <p class="text-[1.44rem] text-[#5e6683] font-normal leading-[1.75rem] mt-[1.5rem]">{{ t('publicitytip') }}</p>
         </div>
         <div class="h-[3.5rem] w-[11.25rem] div-bg cursor-pointer text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]">{{ t('Explorer') }}</div>
       </div>

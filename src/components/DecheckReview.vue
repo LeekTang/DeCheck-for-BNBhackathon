@@ -10,9 +10,9 @@
       <div class="w-[49.5rem]">
         <div v-for="(item, index) in state.comments" :key="index" class="w-full common-bg p-[1.5rem] rounded-[0.75rem] mb-[1.75rem]">
           <div class="flex justify-between items-start">
-            <div class="flex items-start">
+            <div class="flex items-center">
               <div class="h-[2.5rem] w-[2.5rem] rounded-full bg-[#e6e6e6] mr-[0.63rem]"></div>
-              <div class="mr-[0.63rem] text-[0.75rem] text-[#FFFFFFA8] font-bold">{{item.userId}}</div>
+              <div class="mr-[0.63rem] text-[0.75rem] text-[#FFFFFFA8] font-bold">{{abbr(item.userId)}}</div>
               <div class="flex items-center h-[1rem] px-[0.5rem] py-[0.19rem] bg-[#11B466FF] rounded-[1.25rem] text-[#fff] text-[0.63rem] font-semibold">Reviewed: {{item.reviewed || '--'}}</div>
             </div>
             <el-rate disabled size="large" v-model="item.score" />
@@ -22,7 +22,7 @@
               <div class="flex flex-wrap">
                 <p v-for="(com,index) in item.tags" :key="index" class="h-[1rem] max-w-[5rem] overflow-hidden leading-[1rem] rounded-[0.25rem] text-[0.63rem] text-[#fff] bg-[#FFFFFF1C] mr-[0.5rem] mb-[0.5rem] px-[0.5rem]">{{com}}</p>
               </div>
-              <div class="w-[15.5rem] text-[0.75rem] text-[#FFFFFFA8]">{{item.createAt}}</div>
+              <div class="text-[0.75rem] text-[#FFFFFFA8]">{{item.createAt}}</div>
             </div>
             <div class="text-[0.88rem] text-[#fff] leading-[1.25rem]">{{item.content}}</div>
           </div>
@@ -60,6 +60,7 @@ import SwiperCore, {Autoplay, Navigation} from 'swiper'
 import Swipers from 'swiper'
 import { onMounted,ref, reactive, defineProps } from 'vue'
 import request from '@/src/utils/request'
+import { abbr } from '@/src/utils/utils'
 SwiperCore.use([Autoplay,Navigation])
 
 const options = [

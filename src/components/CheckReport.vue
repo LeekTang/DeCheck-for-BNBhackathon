@@ -127,15 +127,19 @@
       </div>
       <div class="p-[1.5rem]">
         <div class="flex justify-between flex-wrap">
-          <div v-for="(item, index) in listOrder" :key="index" >
+          <template v-for="(item, index) in listOrder" :key="index" >
             <div v-if="state.goInfo.hasOwnProperty(item.key)" class="w-[33.75rem] flex flex-col border-b-2 border-b-[#FFFFFF1C]">
-              <div class="flex items-center my-[1rem]">
+              <div v-if="item.key == 'is_in_dex'" class="flex items-center my-[1rem]">
+                <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+                <p :class="`${state.goInfo[item.key] == 1 ? 'text-[#fff]' : (state.goInfo[item.key] == 0 ? 'text-[#FFB524FF]' : 'text-[#FF5353FF]')} text-[0.88rem] `">{{state.goInfo[item.key] == 0 ? item.state2 : (state.goInfo[item.key] == 1 ? item.state1 : item.state3)}}</p>
+              </div>
+              <div v-else class="flex items-center my-[1rem]">
                 <img :src="state.goInfo[item.key] == 0 ? '/images/success.svg' : (state.goInfo[item.key] == 1 ? '/images/warning.svg' : '/images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-                <p :class="`${state.goInfo[item.key] == 0 ? 'text-[#fff]' : (state.goInfo[item.key] == 1 ? 'text-[#FFB524FF]' : 'text-[#FF5353FF]')} text-[0.88rem] `">{{state.goInfo[item.key] == 0 ? item.state1 : (state.goInfo[item.key] == 1 ? item.state2 : item.state3)}}</p>
+                <p :class="`${state.goInfo[item.key] == 0 ? 'text-[#fff]' : (state.goInfo[item.key] == 1 ? 'text-[#FFB524FF]' : 'text-[#FF5353FF]')} text-[0.88rem] `">{{state.goInfo[item.key] == 0 ? item.state2 : (state.goInfo[item.key] == 1 ? item.state1 : item.state3)}}</p>
               </div>
               <p class="text-[0.88rem] text-[#FFFFFFA8] h-[4.13rem] mb-[1rem]">{{item.info}}</p>
             </div>
-          </div>
+          </template>
         </div>
         <p class="text-[1rem] text-[#fff] font-bold mt-[1.5rem]">Always do you own research</p>
         <div class="text-[0.88rem] text-[#FFFFFFA8] leading-[1.38rem] mt-[1rem]" v-html="`<p>Shilling is a common practice in cryptocurrency where people tend to advertise the coins that they own in hopes of positively affecting the price. Quite often, it can be difficult to distinguish the difference between a shill or an unbiased post. </p>
@@ -154,6 +158,8 @@ import { abbr } from '@/src/utils/utils'
 import { storeToRefs } from 'pinia'
 const store = userStore();
 
+
+//0:state2  1:state1  unknown:state3
 const listOrder = [
   { key: 'is_honeypot', state1: "It's a honeypot", state2: "This does not appear to be a honeypot", state3: "unknown", info: "If the contract is a honeypot, it will contain malicious code"},
   { key: 'is_open_source', state1: "Contract is open source", state2: "Contract not open source", state3: "unknown", info: "If this token contract is open source. You can check the contract code for details. Unsourced token contracts are likely to have malicious functions to defraud their users of their assets"},
@@ -163,7 +169,7 @@ const listOrder = [
   { key: 'is_whitelisted', state1: "Has whitelist", state2: "No whitelist", state3: "unknown", info: "If there is a whitelist, some addresses may not be able to trade normally (honeypot risk)"},
   { key: 'is_blacklisted', state1: "Has blacklist", state2: "No blacklist", state3: "unknown", info: "If the blacklist function is included. Some addresses may not be able to trade normally (honeypot risk)"},
   { key: 'is_mintable', state1: "Can Mint", state2: "Can not Mint", state3: "unknown", info: "The contract may contain additional issuance functions, which could maybe generate a large number of tokens, resulting in significant fluctuations in token prices. It is recommended to confirm with the project team whether it complies with the token issuance instructions"},
-  { key: 'can_take_back_ownership', state1: "Can not take back ownership", state2: "Can take back ownership", state3: "unknown", info: "If this function exists, it is possible for the project owner to regain ownership even after relinquishing it"},
+  { key: 'can_take_back_ownership', state1: "Can take back ownership", state2: "Can not take back ownership", state3: "unknown", info: "If this function exists, it is possible for the project owner to regain ownership even after relinquishing it"},
   { key: 'hidden_owner', state1: "The contract has hidden owner", state2: "There doesn't appear to be a hidden owner", state3: "unknown", info: "For contract with a hidden owner, developer can still manipulate the contract even if the ownership has been abandoned"},
   { key: 'selfdestruct', state1: "Selfdestruct mechanism exists", state2: "There is no selfdestruct mechanism", state3: "unknown", info: "It describes whether this contract can self destruct"},
   { key: 'external_call', state1: "External call exists", state2: "There is no external call", state3: "unknown", info: "It describes whether the contract would call functions of other contracts when primary methods are executed"},
@@ -171,7 +177,7 @@ const listOrder = [
   { key: 'transfer_pausable', state1: "It could be suspend trading", state2: "No codes found to suspend trading", state3: "unknown", info: "If a suspendable code is included, the token maybe neither be bought nor sold (honeypot risk)"},
   { key: 'is_in_dex', state1: "This token can be traded on the main Dex.", state2: "This token can not be traded on the main Dex.", state3: "unknown", info: "It describes whether the token can be traded on the main Dex"},
   { key: 'cannot_sell_all', state1: "You can't sell all the tokens", state2: "All the tokens can be sold", state3: "unknown", info: "It describes whether the contract has the function restricting token holder selling all the token"},
-  { key: 'is_anti_whale', state1: "No anti whale", state2: "Has anti whale", state3: "unknown", info: "It describes whether the contract has the function to modify the maximum amount of transactions or the maximum token position"},
+  { key: 'is_anti_whale', state1: "Has anti whale", state2: "No anti whale", state3: "unknown", info: "It describes whether the contract has the function to modify the maximum amount of transactions or the maximum token position"},
   { key: 'trading_cooldown', state1: "Has trading cooldown function.", state2: "No trading cooldown function.", state3: "unknown", info: "If there is a trading cooldown function, the user will not be able to sell the token within a certain time or block after buying"},
   { key: 'personal_slippage_modifiable', state1: "Has tax changes found for personal addresses", state2: "No tax changes found for personal addresses", state3: "unknown", info: "No tax changes were found for every assigned address. If it exists, the contract owner may set a very outrageous tax rate for assigned address to block it from trading"}
 ]

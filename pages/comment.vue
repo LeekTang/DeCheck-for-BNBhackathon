@@ -17,16 +17,17 @@
         </div>
         <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold mt-[2rem]">Content of review</div>
         <div class="mt-[1rem] w-[48rem] bg-[#FFFFFF1C] rounded-[1.25rem] p-[1.5rem]">
-          <el-input v-model="textarea" type="textarea" :rows="6" placeholder="Please input"/>
-          <el-upload action="#" multiple :limit="9" :file-list="uploadFiles" list-type="picture-card" :show-file-list="true" :auto-upload="false" :on-exceed="handleExceed">
+          <el-input v-model="state.textarea" type="textarea" :rows="6" placeholder="Please input"/>
+          <!-- <el-upload action="#" multiple :limit="9" :file-list="uploadFiles" list-type="picture-card" :show-file-list="true" :auto-upload="false" :on-exceed="handleExceed">
             <div class="flex flex-col items-center text-[#abaaaae0] text-[0.75rem]">
               <el-icon><Plus /></el-icon>
               <p class="mt-[0.75rem]">Pictures and videos</p>
             </div>
           </el-upload>
-          <div v-for="(item,index) in uploadFiles" :key="index">111 {{item}}</div>
+          <div v-for="(item,index) in uploadFiles" :key="index">111 {{item}}</div> -->
         </div>
-        <div class="mt-[1.5rem] h-[3rem] w-[11.25rem] bg-[#1E50FF] leading-[3rem] text-center text-[1rem] text-[#fff] font-bold rounded-[0.75rem]">Submit</div>
+        <div class="mt-[1.5rem] h-[3rem] w-[11.25rem] bg-[#1E50FF] leading-[3rem] text-center text-[1rem]
+         text-[#fff] font-bold rounded-[0.75rem]" @click="submitClick()">Submit</div>
       </div>
     </div>
     
@@ -34,12 +35,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import HeaderView from '@/src/components/Header.vue';
 import BottomBar from '@/src/components/BottomBar.vue';
 import { ref, reactive } from 'vue'
 import { Plus } from '@element-plus/icons-vue'
-import type { UploadProps } from 'element-plus'
+import { userStore } from '@/src/stores/user'
+const store = userStore();
 
 const checkList = reactive ([
   {name: 'General', state: false},
@@ -51,7 +53,7 @@ const checkList = reactive ([
   {name: 'Other', state: false}
 ])
 
-const checkClick = (item:any) => {
+const checkClick = (item) => {
   if(checkList.filter(ele => ele.state ).length < 3 || item.state){
     item.state = !item.state
   }else{
@@ -59,15 +61,41 @@ const checkClick = (item:any) => {
   }
 }
 
+const props = defineProps({
+  id: {
+    type: String
+  },
+  name: {
+    type: String
+  }
+})
+
+const state = reactive({
+  rateValue: 0,
+  textarea: ""
+})
+
 const rateValue = ref(null)
 const uploadFiles = reactive([])
-const textarea = ref('')
-const handleExceed: UploadProps['onExceed'] = (files, uploadFiles) => {
+const handleExceed  = (files, uploadFiles) => {
   ElMessage.warning(
     `The limit is 3, you selected ${files.length} files this time, add up to ${
       files.length + uploadFiles.length
     } totally`
   )
+}
+
+const submitClick = () => {
+  let data = {
+    content: state.textarea,
+    projectId: props.id,
+    projectName: props.name,
+    score: state.rateValue,
+    tags: "aa",
+    type: 0,
+    userId: store.userInfo.account,
+    visible: true
+  }
 }
 </script>
 

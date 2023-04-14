@@ -3,7 +3,7 @@
     <HeaderView />
     <projectNav />
     <projectInfo :projectID="state.projectID"/>
-    <projectCheck />
+    <projectCheck :projectID="state.projectID"/>
     <DecheckReview :projectID="state.projectID"/>
     <BottomBar />
   </div>
