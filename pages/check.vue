@@ -5,7 +5,7 @@
     <DetailsInfo />
     <CheckReport />
     <CheckBottom />
-    <BottomBar :class="`${ store.tokenAddr ? '' : 'fixed bottom-0' }`"/>
+    <BottomBar class="bottom-0 absolute"/>
   </div>
 </template>
 <script setup>
@@ -15,6 +15,7 @@ import DetailsNav from '@/src/components/DetailsNav.vue'
 import DetailsInfo from '@/src/components/DetailstInfo.vue'
 import CheckReport from '@/src/components/CheckReport.vue'
 import CheckBottom from '@/src/components/checkBottom.vue'
+import { storeToRefs } from 'pinia'
 
 import {  onMounted, onBeforeUnmount} from 'vue'
 import { userStore } from '@/src/stores/user'
@@ -27,6 +28,12 @@ onBeforeUnmount(()=>{
   store.tokenAddr = ""
   store.tokenID = ""
   console.log('页面销毁')
+})
+
+
+const { searchProjectInfo } = storeToRefs( store )
+watch(searchProjectInfo,(old,nwo)=>{
+  console.log(searchProjectInfo.value)
 })
 
 

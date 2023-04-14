@@ -81,12 +81,12 @@ const projectInfo = () => {
         res.tokenList = Object.entries(res.tokenAddr)
         // console.log(Object.entries(res.tokenAddr)[0][1]);
       }
-      store.projectInfo = state.project = res
+      store.searchProjectInfo = state.project = res
       state.project.auditor = state.project.auditor.join()
       state.project.invest = state.project.invest.join()
     })
   }else{
-    store.projectInfo = state.project = ''
+    store.searchProjectInfo = state.project = ''
   }
 }
 

@@ -84,13 +84,14 @@ const showProject = (item) => {
 }
 
 onMounted(()=>{
-  store.chain = state.chain = route.query.chain ? route.query.chain : 1;
+  store.chain = state.chain = route.query.chain ? route.query.chain : "1";
   state.searchInput = route.query.searchInput ? route.query.searchInput : '';
   store.searchInfo = ''
   store.searchProjectInfo = ''
   store.tokenAddr = ""
   store.tokenID = ""
-  if(route.query){
+  if(route.query.searchInput != null){
+    console.log(route.query)
     getHotProject()
   }
 })
