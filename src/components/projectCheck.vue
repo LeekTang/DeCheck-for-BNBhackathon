@@ -14,7 +14,7 @@
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">Token Contract Address</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.owner_address">{{abbr(state.goInfo.owner_address)}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.tokenList">{{abbr(state.tokenList[0][1])}}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
@@ -29,7 +29,7 @@
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">Total Supply</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.total_supply">{{state.goInfo.total_supply}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.total_supply">{{toShort( state.goInfo.total_supply, 6)}}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
@@ -68,7 +68,7 @@
                 <p class="text-[1.5rem] text-[#11B466] font-bold">{{state.goInfo.buy_tax || '-'}}</p>
               </div>
               <div class="flex justify-between">
-                <p class="text-[1.25rem] text-[#fff] font-medium">Buy Gax</p>
+                <p class="text-[1.25rem] text-[#fff] font-medium">Buy Gas</p>
                 <p class="text-[1.5rem] text-[#11B466] font-bold">{{state.goInfo.buyGas || '-'}}</p>
               </div>
             </div>
@@ -78,7 +78,7 @@
                 <p class="text-[1.5rem] text-[#FF5353FF] font-bold">{{state.goInfo.sell_tax || '-'}}</p>
               </div>
               <div class="flex justify-between">
-                <p class="text-[1.25rem] text-[#fff] font-medium">Sell Gax</p>
+                <p class="text-[1.25rem] text-[#fff] font-medium">Sell Gas</p>
                 <p class="text-[1.5rem] text-[#FF5353FF] font-bold">{{state.goInfo.sellGas || '-'}}</p>
               </div>
             </div>
@@ -115,7 +115,7 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
 import request from '@/src/utils/request'
-import { abbr } from '@/src/utils/utils'
+import { abbr,toShort } from '@/src/utils/utils'
 import { userStore } from '@/src/stores/user'
 const store = userStore();
 
@@ -148,7 +148,8 @@ const props = defineProps({
 })
 
 const state = reactive({
-  goInfo: {}
+  goInfo: {},
+  tokenList: []
 })
 
 const chainList = [
@@ -175,7 +176,7 @@ const chainList = [
 const projectInfo = () => {
   request.get(`/plugin/decheck/api/project/detail/${props.projectID}`).then((res) => {
     if(res.tokenAddr){
-      res.tokenList = Object.entries(res.tokenAddr)
+      state.tokenList = res.tokenList = Object.entries(res.tokenAddr)
       request.get(`/plugin/decheck/api/security/token/${res.tokenList[0][0]}/${res.tokenList[0][1]}`).then((ress) => {
         state.goInfo = ress
       })

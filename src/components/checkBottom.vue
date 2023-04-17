@@ -22,8 +22,8 @@
         <div class="px-[1.5rem] mt-[1rem]">
           <p class="text-[1rem] text-[#fff] font-bold mb-[1rem]">Top 10 holders ratio</p>
           <div class="flex justify-between mb-[1rem]" v-for="(item,index) in state.goInfo.holders" :key="item">
-            <p class="text-[0.88rem] text-[#FFFFFFA8] leading-[0.88rem] font-medium">{{index}}. {{plusXing(item.address)}}</p>
-            <p class="text-[0.88rem] text-[#fff] leading-[0.88rem] font-bold">{{toshor(item.balance)}}({{tosix(item.percent)}})</p>
+            <p class="text-[0.88rem] text-[#FFFFFFA8] leading-[0.88rem] font-medium">{{index}}. {{abbr(item.address)}}</p>
+            <p class="text-[0.88rem] text-[#fff] leading-[0.88rem] font-bold">{{toShort(item.balance, 6)}}({{tosix(item.percent)}})</p>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
               <p class="text-[0.88rem] text-[#FFFFFFA8] font-bold">LP Holders</p>
             </div>
             <div class="">
-              <p class="text-[1.5rem] text-[#fff] font-bold" v-if="state.goInfo.lp_total_supply">{{toshor(state.goInfo.lp_total_supply)}}</p>
+              <p class="text-[1.5rem] text-[#fff] font-bold" v-if="state.goInfo.lp_total_supply">{{toShort(state.goInfo.lp_total_supply, 6)}}</p>
               <p class="text-[0.88rem] text-[#FFFFFFA8] font-bold">Total Supply</p>
             </div>
             <p class="text-[2.56rem] text-[#4D75FFFF] font-bold">{{LPALL()}}</p>
@@ -48,8 +48,8 @@
         <div class="px-[1.5rem] mt-[1rem]">
           <p class="text-[1rem] text-[#fff] font-bold mb-[1rem]">Percentage of LP locked</p>
           <div class="flex justify-between mb-[1rem]" v-for="(item,index) in state.goInfo.lp_holders" :key="item">
-            <p class="text-[0.88rem] text-[#FFFFFFA8] leading-[0.88rem] font-medium">{{index}}. {{plusXing(item.address)}}</p>
-            <p class="text-[0.88rem] text-[#fff] leading-[0.88rem] font-bold">{{toshor(item.balance)}}({{tosix(item.percent)}})</p>
+            <p class="text-[0.88rem] text-[#FFFFFFA8] leading-[0.88rem] font-medium">{{index}}. {{abbr(item.address)}}</p>
+            <p class="text-[0.88rem] text-[#fff] leading-[0.88rem] font-bold">{{toShort(item.balance, 6)}}({{tosix(item.percent)}})</p>
           </div>
         </div>
       </div>
@@ -61,6 +61,7 @@
 import { onMounted, ref, reactive } from 'vue'
 import request from '@/src/utils/request'
 import { userStore } from '@/src/stores/user'
+import { abbr, toShort } from '@/src/utils/utils'
 import { storeToRefs } from 'pinia'
 const store = userStore();
 const { searchInfo } = storeToRefs( store )
@@ -75,16 +76,8 @@ watch(searchInfo,() => {
   state.goInfo = searchInfo.value
 })
 
-const plusXing = (item) => {
-  return item.substring(0,4) + '...' + item.substring(item.length - 4);
-}
-
 const tosix = (item) => {
   return Number(item * 100).toFixed(2) + '%'
-}
-
-const toshor = (item) => {
-  return Number(item).toFixed(6)
 }
 
 const holdALL = () => {
@@ -97,7 +90,7 @@ const holdALL = () => {
     } 
 }
 
-const aa = () =>{
+const holdPer = () =>{
   setTimeout(() => {
     if(state.goInfo.holders != undefined){
       let a = state.goInfo.holders.reduce((sumData,key) => {
@@ -108,7 +101,7 @@ const aa = () =>{
   }, 1000);
 }
 
-const bb = () =>{
+const poolPer = () =>{
   setTimeout(() => {
     if(state.goInfo.lp_holders != undefined){
     let a = state.goInfo.lp_holders.reduce((sumData,key) => {
@@ -132,8 +125,8 @@ const LPALL = () => {
 onMounted(()=>{
   holdALL();
   LPALL();
-  bb();
-  aa();
+  poolPer();
+  holdPer();
 })
 
 </script>

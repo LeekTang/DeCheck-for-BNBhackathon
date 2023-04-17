@@ -25,7 +25,7 @@
         <div class="flex">
           <client-only>
             <el-tooltip v-for="(item,index) in iconList" :key="index" :content="item.tip" placement="top">
-              <div class="p-[0.69rem] hover:bg-[#4C406C] rounded-full">
+              <div v-if="item.webSrc" class="p-[0.69rem] hover:bg-[#4C406C] rounded-full" @click.stop="goUrl(item.webSrc)">
                 <img :src="item.icon" class="h-[1.5rem] w-[1.5rem]"/>
               </div>
             </el-tooltip>
@@ -54,14 +54,20 @@ import { storeToRefs } from 'pinia'
 const store = userStore()
 
 const iconList = [
-  {name: 'web', icon: '/images/web-icon.svg', tip: 'Official website',},
-  {name: 'twitter', icon: '/images/twitter-icon.svg', tip: 'twitter'},
-  {name: 'telegram', icon: '/images/telegram-icon.svg', tip: 'telegram'},
-  {name: 'discord', icon: '/images/discord-icon.svg', tip: 'discord'},
-  {name: 'cand', icon: '/images/cand-icon.svg', tip: 'cand'},
-  {name: 'github', icon: '/images/github-icon.svg', tip: 'github'},
-  {name: 'gitbook', icon: '/images/gitbook-icon.svg', tip: 'gitbook'},
+  {name: 'web', icon: '/images/web-icon.svg', tip: 'Official website', webSrc: ''},
+  {name: 'twitter', icon: '/images/twitter-icon.svg', tip: 'twitter', webSrc: ''},
+  {name: 'telegram', icon: '/images/telegram-icon.svg', tip: 'telegram', webSrc: ''},
+  {name: 'discord', icon: '/images/discord-icon.svg', tip: 'discord', webSrc: ''},
+  {name: 'cand', icon: '/images/cand-icon.svg', tip: 'cand', webSrc: ''},
+  {name: 'github', icon: '/images/github-icon.svg', tip: 'github', webSrc: ''},
+  {name: 'gitbook', icon: '/images/gitbook-icon.svg', tip: 'gitbook', webSrc: ''},
 ]
+
+const goUrl = (url) => {
+  if(url){
+    window.open(url,'_blank')
+  }
+}
 
 const { tokenID } = storeToRefs( store )
 
@@ -79,11 +85,18 @@ const projectInfo = () => {
     request.get(`/plugin/decheck/api/project/detail/${tokenID.value}`).then((res) => {
       if(res.tokenAddr){
         res.tokenList = Object.entries(res.tokenAddr)
-        // console.log(Object.entries(res.tokenAddr)[0][1]);
+      }
+      if(res.website){
+        iconList[0].webSrc = res.website
       }
       store.searchProjectInfo = state.project = res
       state.project.auditor = state.project.auditor.join()
       state.project.invest = state.project.invest.join()
+      iconList.forEach((el,index) => {
+        if(state.project.socialMedia[index + 1] != undefined){
+          el.webSrc = state.project.socialMedia[index + 1]
+        }
+      })
     })
   }else{
     store.searchProjectInfo = state.project = ''

@@ -1,25 +1,25 @@
 <template>
   <div class="w-full fixed top-0 bg-[#190A43] z-[100]">
     <div class="w-[75rem] mx-auto flex items-center justify-between">
-      <div class="flex items-center w-[38.2rem] py-[0.75rem] justify-between text-[1rem] text-[#fff]">
+      <div class="flex items-center w-[38.2rem] py-[0.75rem] justify-between text-[1rem] text-[#ffffffa8]">
         <img src="/images/logo.svg" class="h-[2.5rem] w-[9.14rem] cursor-pointer" />
-        <NuxtLink to="/">{{ t('Home') }}</NuxtLink>
-        <NuxtLink to="/explorer">{{ t('Explorer') }}</NuxtLink>
-        <NuxtLink to="/dao">{{ t('DeCheckDAO') }}</NuxtLink>
-        <NuxtLink to="/check">{{ t('Check') }}</NuxtLink>
+        <NuxtLink to="/" activeClass="font-extrabold text-[#fff]">{{ t('Home') }}</NuxtLink>
+        <NuxtLink to="/explorer" activeClass="font-extrabold text-[#fff]">{{ t('Explorer') }}</NuxtLink>
+        <NuxtLink to="/dao" activeClass="font-extrabold text-[#fff]">{{ t('DeCheckDAO') }}</NuxtLink>
+        <NuxtLink to="/check" activeClass="font-extrabold text-[#fff]">{{ t('Check') }}</NuxtLink>
       </div>
       <div class="flex">
         <client-only>
           <el-popover :ref="(ref) => {state.languagePop = ref}" placement="bottom" :show-arrow="false" :teleported="false"  trigger="click">
             <template #reference>
-              <div class="h-[2rem] w-[4.88rem] flex justify-center items-center bg-[#ffffff1c] font-semibold rounded-[0.25rem] mr-[1.5rem] border-2 border-white cursor-pointer">
+              <div class="h-[2rem] w-[4.88rem] flex justify-center items-center bg-[#ffffff1c] font-semibold rounded-[0.75rem] mr-[1.5rem] border-2 border-white cursor-pointer">
                 <img src="/images/web.svg" class="h-[1rem] w-[1rem]">
                 <span class="text-[1rem] text-[#ffffff] ml-[0.44rem]">{{state.language}}</span>
               </div>
             </template>
-            <div class="flex flex-col cursor-pointer rounded-[0.75] bg-[#322558FF]">
+            <div class="flex flex-col cursor-pointer rounded-[0.75rem] bg-[#322558FF]">
               <div v-for="(item, index) in languageList" :key="index" @click="onSetLanguage(item.key)"
-                class="h-[3rem] text-center leading-[3rem] text-[#fff] hover:bg-[#493d6a] ">
+                class="h-[3rem] text-center rounded-[0.5rem] leading-[3rem] text-[#fff] hover:bg-[#493d6a] ">
                 {{ item.label }}
               </div>
             </div>
@@ -31,17 +31,17 @@
             <template #reference>
               <div class="text-[#fff] text-[1rem] text-center font-semibold  cursor-pointer flex items-center">
                 <p class="h-[2rem] w-[2rem] rounded-full bg-[#D9D9D9FF] mr-[0.5rem]"></p>
-                <p>{{plusXing()}}</p>
+                <p>{{abbr(state.userInfo.account)}}</p>
               </div>
             </template>
             <div
               class="flex flex-col cursor-pointer items-center rounded-[0.75rem] text-[#fff] bg-[#322558FF]">
-              <div @click="onShowInfo" class="h-[3rem] w-[10.25rem] rounded-[0.75rem] text-center leading-[3rem] font-bold hover:bg-[#493d6a]"><NuxtLink to="/userInfo">{{ t('myreviews') }}</NuxtLink></div>
-              <div @click="goSignOut" class="h-[3rem] w-[10.25rem] rounded-[0.75rem] text-center text-[#FF5353FF] leading-[3rem] font-bold hover:bg-[#493d6a] ">{{ t('logout') }}</div>
+              <div @click="onShowInfo" class="h-[3rem] w-[10.25rem] rounded-[0.5rem] text-center leading-[3rem] font-bold hover:bg-[#493d6a]"><NuxtLink to="/userInfo">{{ t('myreviews') }}</NuxtLink></div>
+              <div @click="goSignOut" class="h-[3rem] w-[10.25rem] rounded-[0.5rem] text-center text-[#FF5353FF] leading-[3rem] font-bold hover:bg-[#493d6a] ">{{ t('logout') }}</div>
             </div>
           </el-popover>
           <div v-else class="h-[2rem] leading-[2rem] w-[11.25rem] bg-white 
-            text-[#121D43] text-[1rem] text-center font-semibold rounded-[0.25rem] cursor-pointer" @click="connectClick()">
+            text-[#121D43] text-[1rem] text-center font-semibold rounded-[0.5rem] cursor-pointer" @click="connectClick()">
             {{ t('Connect')}}
           </div>
         </client-only>
@@ -51,6 +51,7 @@
 </template>
 <script setup >
 import web3js from '@/src/utils/link'
+import { abbr } from '@/src/utils/utils'
 import { userStore } from '@/src/stores/user'
 import { onMounted, reactive} from 'vue'
 import request from '@/src/utils/request'
@@ -115,9 +116,6 @@ onMounted(()=>{
   initLanguage();
 })
 
-const plusXing = () => {
-  return state.userInfo.account.substring(0,4) + '...' + state.userInfo.account.substring(state.userInfo.account.length - 4);
-}
 </script>
 
 <style scoped>

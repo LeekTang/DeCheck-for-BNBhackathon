@@ -11,7 +11,7 @@
     <BottomBar/>
   </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import HeaderView from '@/src/components/Header.vue';
 import TopView from '@/src/components/TopModel.vue'
 import Introduce from '@/src/components/Introduce.vue'

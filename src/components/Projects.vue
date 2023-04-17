@@ -155,6 +155,7 @@ onMounted(()=>{
 :deep(.el-input__wrapper){
   background: #474174;
   box-shadow: none;
+  border-radius: 16px;
 }
 
 :deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){

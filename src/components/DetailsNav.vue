@@ -7,7 +7,7 @@
     </client-only>
 
     <div class="w-[62.25rem] h-[3.5rem] bg-[#474174] rounded-[1rem] ">
-      <el-input v-model="state.searchInput" class="h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff]" placeholder="Search by project name, token contract address and token symbol " :prefix-icon="Search" >
+      <el-input v-model="state.searchInput" class="h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff]" @keyup.enter="getHotProject" placeholder="Search by project name, token contract address and token symbol " :prefix-icon="Search" >
         <template #suffix>
           <div ref="buttonRef" class="h-[2rem] w-[4.13rem] input-bg text-[0.88rem] text-[#fff] rounded-[0.5rem]" @click="getHotProject">Search</div>
         </template>
@@ -124,6 +124,7 @@ onMounted(()=>{
 :deep(.el-input__wrapper){
   background: #474174;
   box-shadow: none;
+  border-radius: 20px;
 }
 
 :deep(.select-trigger .el-input__wrapper){

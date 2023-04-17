@@ -15,7 +15,7 @@
         </div>
         <p class="border border-[#FFFFFF1C]"></p>
         <p class="my-[1.5rem] text-[0.88rem] text-[#fff] ">{{ t('tips') }}</p>
-        <div class="w-[21rem] h-[3.5rem] bg-[#1E50FF] rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]" @click="reviewClick">{{ t('reviewNow') }}</div>
+        <div :class="`${state.isSign ? 'bg-[#1E50FF]' : 'bg-[#8a8a8a]'} w-[21rem] h-[3.5rem]  rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]`" @click="reviewClick">{{ t('reviewNow') }}</div>
       </div>
     </div>
     <div class="w-[49.5rem]">
@@ -25,7 +25,7 @@
         <div class="flex">
           <client-only>
             <el-tooltip v-for="(item,index) in iconList" :key="index" :content="item.tip" placement="top">
-              <div class="p-[0.69rem] hover:bg-[#4C406C] rounded-full">
+              <div v-if="item.webSrc" class="p-[0.69rem] hover:bg-[#4C406C] rounded-full" @click.stop="goUrl(item.webSrc)">
                 <img :src="item.icon" class="h-[1.5rem] w-[1.5rem]"/>
               </div>
             </el-tooltip>
@@ -56,14 +56,20 @@ const router = useRouter()
 const { t,locale } = useI18n();
 
 const iconList = [
-  {name: 'web', icon: '/images/web-icon.svg', tip: 'Official website',},
-  {name: 'twitter', icon: '/images/twitter-icon.svg', tip: 'twitter'},
-  {name: 'telegram', icon: '/images/telegram-icon.svg', tip: 'telegram'},
-  {name: 'discord', icon: '/images/discord-icon.svg', tip: 'discord'},
-  {name: 'cand', icon: '/images/cand-icon.svg', tip: 'cand'},
-  {name: 'github', icon: '/images/github-icon.svg', tip: 'github'},
-  {name: 'gitbook', icon: '/images/gitbook-icon.svg', tip: 'gitbook'},
+  {name: 'web', icon: '/images/web-icon.svg', tip: 'Official website', webSrc: ''},
+  {name: 'twitter', icon: '/images/twitter-icon.svg', tip: 'twitter', webSrc: ''},
+  {name: 'telegram', icon: '/images/telegram-icon.svg', tip: 'telegram', webSrc: ''},
+  {name: 'discord', icon: '/images/discord-icon.svg', tip: 'discord', webSrc: ''},
+  {name: 'cand', icon: '/images/cand-icon.svg', tip: 'cand', webSrc: ''},
+  {name: 'github', icon: '/images/github-icon.svg', tip: 'github', webSrc: ''},
+  {name: 'gitbook', icon: '/images/gitbook-icon.svg', tip: 'gitbook', webSrc: ''},
 ]
+
+const goUrl = (url) => {
+  if(url){
+    window.open(url,'_blank')
+  }
+}
 
 const props = defineProps({
   projectID: {
@@ -82,9 +88,17 @@ const projectInfo = () => {
     if(res.tokenAddr){
       res.tokenList = Object.entries(res.tokenAddr)
     }
+    if(res.website){
+      iconList[0].webSrc = res.website
+    }
     state.project = res
     state.project.auditor = state.project.auditor.join()
     state.project.invest = state.project.invest.join()
+    iconList.forEach((el,index) => {
+      if(state.project.socialMedia[index + 1] != undefined){
+        el.webSrc = state.project.socialMedia[index + 1]
+      }
+    })
   })
 }
 

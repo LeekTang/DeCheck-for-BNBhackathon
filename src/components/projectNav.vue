@@ -1,10 +1,10 @@
 <template>
   <div class="flex items-center h-[3.5rem] w-[75rem] mx-auto mt-[8rem]">
-    <div class="h-full w-[4.88rem] text-center leading-[3.5rem] bg-[#322558] rounded-[0.75rem] mr-[1.5rem]" @click="back">
+    <div class="h-full w-[4.88rem] text-center leading-[3.5rem] bg-[#322558] rounded-[0.75rem] mr-[1.5rem]" @click="back" :teleported="false">
       <img src="/images/back.svg" class="inline-block"/>
     </div>
     <client-only>
-      <el-select v-model="state.chain" class="h-[3.5rem] w-[11.25rem] mr-[1.5rem]" size="large">
+      <el-select v-model="state.chain" class="h-[3.5rem] w-[11.25rem] mr-[1.5rem]" size="large" :teleported="false">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
       </el-select>
     </client-only>
@@ -81,6 +81,7 @@ onMounted(()=>{
 :deep(.el-input__wrapper){
   background: #474174;
   box-shadow: none;
+  border-radius: 20px;
 }
 
 :deep(.select-trigger .el-input__wrapper){
@@ -88,5 +89,23 @@ onMounted(()=>{
 }
 :deep(.el-input__inner){
   color: #fff;
+}
+
+
+:deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
+  background-color: #493d6a;
+  border-radius: 0.25rem;
+}
+
+:deep(.el-select-dropdown__item){
+  height: 3rem;
+  line-height: 3rem;
+  color: #fff;
+  margin: 0 0.5rem;
+}
+
+:deep(.el-popper.is-light){
+  background: #322559;
+  border: none;
 }
 </style>

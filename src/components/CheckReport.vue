@@ -14,7 +14,7 @@
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">Token Contract Address</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.owner_address">{{abbr(state.goInfo.owner_address)}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="tokenAddr">{{abbr(tokenAddr)}}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
@@ -29,7 +29,7 @@
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">Total Supply</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]">{{state.goInfo.total_supply || '--'}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem]">{{toShort(state.goInfo.total_supply, 6) || '--'}}</p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">Launch Time</p>
@@ -120,10 +120,6 @@
     <div class="w-full basic-bg rounded-[1.25rem] mt-[1.5rem]">
       <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem] flex justify-between items-center px-[1.5rem]">
         <p class="text-[1.25rem] font-bold text-gradient">Risk Check</p>
-        <p class="text-[#FFFFFF] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
-          View Details
-          <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
-        </p>
       </div>
       <div class="p-[1.5rem]">
         <div class="flex justify-between flex-wrap">
@@ -154,7 +150,7 @@
 import { onMounted, ref, reactive } from 'vue'
 import request from '@/src/utils/request'
 import { userStore } from '@/src/stores/user'
-import { abbr } from '@/src/utils/utils'
+import { abbr, toShort } from '@/src/utils/utils'
 import { storeToRefs } from 'pinia'
 const store = userStore();
 

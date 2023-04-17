@@ -22,7 +22,7 @@ const { t,locale } = useI18n();
 
 <style scoped>
 .top-bg{
-  background: url('/images/top-bg.svg');
+  background: url('/images/top-bg.svg') no-repeat;
 }
 .ground{
   background: 
