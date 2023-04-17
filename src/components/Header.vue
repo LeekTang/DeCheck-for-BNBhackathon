@@ -90,7 +90,7 @@ const connectClick = () => {
             type: 4,
             data: 'Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees.'
           }
-          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data,baseURL:'http://192.168.101.3:9488'}).then(loginres => {
+          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data,baseURL:'https://www.2web3.net/test-user-center'}).then(loginres => {
             localStorage.setItem('token',loginres.tokenValue)
             store.userInfo = { account: signres.account}
             store.isSign = true;

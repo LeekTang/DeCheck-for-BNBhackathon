@@ -22,8 +22,6 @@ export default defineNuxtConfig({
         { name: "keywords", content: "" },
         { name: "description", content: "" },
         { name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" },
-        // <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-        { content:"upgrade-insecure-requests","http-equiv": "content-security-policy"},
       ],
       __dangerouslyDisableSanitizers: ['script'],
     }
