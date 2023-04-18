@@ -106,6 +106,11 @@ const submitClick = () => {
     console.log(res)
     if(res != null){
       ElMessage.success(t('commontsuccess'))
+      checkList.forEach(el => {
+        el.state = false
+      })
+      state.rateValue = 0
+      state.textarea = ""
     }
   })
 }

@@ -1,7 +1,7 @@
 <template>
   <div v-if="Object.keys(state.project).length > 0" class="w-[75rem] mx-auto mt-[1.5rem] flex">
     <div class="info-bg rounded-[0.75rem] mr-[1.5rem]">
-      <img :src="state.project.logo" @error="imgError" class="h-[16rem] w-[16rem] rounded-[0.75rem] pt-[1.5rem] pb-1 mx-auto"/>
+      <img :src="state.project.logo" @error="imgError" class="h-[16rem] w-[16rem] rounded-[0.75rem] mt-[1.5rem] pb-1 mx-auto"/>
       <div class="p-[1.5rem]">
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{ t('Contracts') }}</p>
@@ -15,7 +15,7 @@
         </div>
         <p class="border border-[#FFFFFF1C]"></p>
         <p class="my-[1.5rem] text-[0.88rem] text-[#fff] ">{{ t('tips') }}</p>
-        <div :class="`${state.isSign ? 'bg-[#1E50FF]' : 'bg-[#8a8a8a]'} w-[21rem] h-[3.5rem]  rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]`" @click="reviewClick">{{ t('reviewNow') }}</div>
+        <div class="bg-[#1E50FF] w-[21rem] h-[3.5rem] rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]" @click="reviewClick">{{ t('reviewNow') }}</div>
       </div>
     </div>
     <div class="w-[49.5rem]">
@@ -47,13 +47,14 @@
 <script setup>
 import { ElRate } from 'element-plus'
 import { onMounted,reactive,defineProps } from 'vue'
+import web3js from '@/src/utils/link'
 import request from '@/src/utils/request'
 import { abbr, imgError } from '@/src/utils/utils'
 import { userStore } from '@/src/stores/user'
 import { useI18n } from  'vue-i18n'
 const store = userStore();
 const router = useRouter()
-const { t,locale } = useI18n();
+const { t } = useI18n();
 
 const iconList = [
   {name: 'web', icon: '/images/web-icon.svg', tip: 'Official website', webSrc: ''},
@@ -112,7 +113,33 @@ const reviewClick = () => {
       }
     })
   }else{
-    console.log('aa',state.isSign)
+    web3js.connect().then((res) => {
+		  if(res == undefined) {return;}
+      web3js.change().then(chanres => {
+        if(chanres == true){
+          store.isSign = false;
+	        store.userInfo = {};
+          localStorage.language = ''
+        }
+      })
+      web3js.getSign().then(signres=>{
+        if(signres.signMessage){
+          let data = {
+            aggregateType: 7,
+            appId: "1646086759245303808",
+            authId: signres.account,
+            strSign: signres.signMessage,
+            type: 4,
+            data: 'Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees.'
+          }
+          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data,baseURL:'https://www.2web3.net/test-user-center'}).then(loginres => {
+            localStorage.setItem('token',loginres.tokenValue)
+            store.userInfo = { account: signres.account}
+            store.isSign = true;
+          })
+        }
+      })
+    })
   }
 }
 

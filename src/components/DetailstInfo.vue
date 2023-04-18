@@ -1,21 +1,21 @@
 <template>
   <div v-if="Object.keys(state.project).length > 0" class="w-[75rem] mx-auto mt-[1.5rem] flex">
     <div class="info-bg rounded-[0.75rem] mr-[1.5rem]">
-      <img :src="state.project.logo" @error="imgError" class="h-[16rem] w-[16rem] rounded-[0.75rem] pt-[1.5rem] pb-1 mx-auto"/>
+      <img :src="state.project.logo" @error="imgError" class="h-[16rem] w-[16rem] rounded-[0.75rem] mt-[1.5rem] pb-1 mx-auto"/>
       <div class="p-[1.5rem]">
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
-          <p class="text-[#FFFFFFA8]">Contracts</p>
+          <p class="text-[#FFFFFFA8]">{{t('Contracts')}}</p>
           <p class="text-[#fff] font-bold" v-if="state.project.tokenAddr">{{state.project.tokenList ? abbr(state.project.tokenList[0][1]) : '--'}}</p>
         </div>
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
-          <p class="text-[#FFFFFFA8]">Autids</p>
+          <p class="text-[#FFFFFFA8]">{{t('Autids')}}</p>
           <p class="text-[#fff] font-bold">
-            {{state.project.auditor}}
+            {{state.project.auditor || '--'}}
           </p>
         </div>
         <p class="border border-[#FFFFFF1C]"></p>
-        <p class="my-[1.5rem] text-[0.88rem] text-[#fff] ">I know something about this project!</p>
-        <div class="w-[21rem] h-[3.5rem] bg-[#1E50FF] rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]">REVIEW NOW</div>
+        <p class="my-[1.5rem] text-[0.88rem] text-[#fff] ">{{t('tips')}}</p>
+        <div class="w-[21rem] h-[3.5rem] bg-[#1E50FF] rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]" @click="reviewClick">{{t('reviewNow')}}</div>
       </div>
     </div>
     <div class="w-[49.5rem]">
@@ -32,8 +32,8 @@
           </client-only>
         </div>
       </div>
-      <p class="text-[1rem] text-[#ffffffa8] leading-[1rem] my-[1rem]">Investment Agency</p>
-      <p class="text-[1rem] text-[#fff] font-bold leading-[1rem] my-[1rem]">{{state.project.invest}}</p>
+      <p class="text-[1rem] text-[#ffffffa8] leading-[1rem] my-[1rem]">{{t('Investment')}}</p>
+      <p class="text-[1rem] text-[#fff] font-bold leading-[1rem] my-[1rem]">{{state.project.invest || '--'}}</p>
       <div class="mt-[3.5rem]">
         <div :class="`${state.isEllipsis ? 'text-ellipsis' : 'more-ellipsis'} text-[1rem] text-[#ffffffa8] leading-[2rem]`">
             {{state.project.intro}}
@@ -48,17 +48,21 @@
 import { ElRate } from 'element-plus'
 import { onMounted,reactive } from 'vue'
 import request from '@/src/utils/request'
+import web3js from '@/src/utils/link'
 import { abbr, imgError } from '@/src/utils/utils'
+import { useI18n } from  'vue-i18n'
+const { t } = useI18n();
 import { userStore } from '@/src/stores/user' 
 import { storeToRefs } from 'pinia'
 const store = userStore()
+const router = useRouter()
 
 const iconList = [
   {name: 'web', icon: '/images/web-icon.svg', tip: 'Official website', webSrc: ''},
   {name: 'twitter', icon: '/images/twitter-icon.svg', tip: 'twitter', webSrc: ''},
   {name: 'telegram', icon: '/images/telegram-icon.svg', tip: 'telegram', webSrc: ''},
   {name: 'discord', icon: '/images/discord-icon.svg', tip: 'discord', webSrc: ''},
-  {name: 'cand', icon: '/images/cand-icon.svg', tip: 'cand', webSrc: ''},
+  {name: 'instagram', icon: '/images/cand-icon.svg', tip: 'instagram', webSrc: ''},
   {name: 'github', icon: '/images/github-icon.svg', tip: 'github', webSrc: ''},
   {name: 'gitbook', icon: '/images/gitbook-icon.svg', tip: 'gitbook', webSrc: ''},
 ]
@@ -73,7 +77,8 @@ const { tokenID } = storeToRefs( store )
 
 const state = reactive({
   isEllipsis: true,
-  project: {}
+  project: {},
+  isSign: computed(() => store.getIsSign),
 })
 
 watch(tokenID,() => {
@@ -100,6 +105,46 @@ const projectInfo = () => {
     })
   }else{
     store.searchProjectInfo = state.project = ''
+  }
+}
+
+const reviewClick = () => {
+  if(state.isSign){
+    router.push({
+      name: 'comment',
+      query: {
+        id: tokenID.value,
+        name: state.project.name
+      }
+    })
+  }else{
+    web3js.connect().then((res) => {
+		  if(res == undefined) {return;}
+      web3js.change().then(chanres => {
+        if(chanres == true){
+          store.isSign = false;
+	        store.userInfo = {};
+          localStorage.language = ''
+        }
+      })
+      web3js.getSign().then(signres=>{
+        if(signres.signMessage){
+          let data = {
+            aggregateType: 7,
+            appId: "1646086759245303808",
+            authId: signres.account,
+            strSign: signres.signMessage,
+            type: 4,
+            data: 'Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees.'
+          }
+          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data,baseURL:'https://www.2web3.net/test-user-center'}).then(loginres => {
+            localStorage.setItem('token',loginres.tokenValue)
+            store.userInfo = { account: signres.account}
+            store.isSign = true;
+          })
+        }
+      })
+    })
   }
 }
 

@@ -1,4 +1,4 @@
-import Web3  from 'web3';
+import Web3 from 'web3';
 
 type ethAuth = {
     provider: any,
@@ -22,29 +22,44 @@ export default {
                 })
             })
         } else {
+            window.open('https://metamask.io/download/')
             return false;
         }
     },
 
+    // 监听连接与网络变化
+    change: function () {
+        return new Promise(async (reslove, reject) => {
+            window.ethereum.on('accountsChanged', (accounts: any) => {
+                if(accounts.length == 0){
+                    reslove(true)
+                }else{
+                    reject(false)
+                }
+            });        
+        })
+    },
+
+    //添加/切换网络
     SwitchEthereumChainParameter: async function () {
-        let id = Web3.utils.toHex(137)
+        let id = Web3.utils.toHex(56)
         try {
             await window.ethereum.request({
                 method: "wallet_switchEthereumChain",
-                params: [{chainId: id}]
+                params: [{ chainId: id }]
             });
-        } catch (error:any) {
+        } catch (error: any) {
             if (error.code == 4902) {
                 await window.ethereum.request({
                     method: "wallet_addEthereumChain",
                     params: [
                         {
                             chainId: id,
-                            chainName: 'Polygon Mainnet',
-                            rpcUrls: ['https://polygon-rpc.com'],
+                            chainName: 'Binance Smart Chain Mainnet',
+                            rpcUrls: ['https://bsc-dataseed.binance.org'],
                             nativeCurrency: {
-                                name: 'MATIC',
-                                symbol: 'MATIC',
+                                name: 'BNB',
+                                symbol: 'BNB',
                                 decimals: 18,
                             }
                         }
@@ -60,8 +75,8 @@ export default {
             let accounts = await this.provider.eth.getAccounts()
             // this.provider.request({ method: 'personal_sign', params: [accounts[0], message] }).then ((res: any) => {
             this.provider.eth.personal.sign(message, accounts[0], (err: any, res: unknown) => {
-                reslove({signMessage:res,account:accounts[0]})
-            }).catch((err:any) => {
+                reslove({ signMessage: res, account: accounts[0] })
+            }).catch((err: any) => {
                 reject(err)
             })
         })

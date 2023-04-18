@@ -78,28 +78,31 @@ const onSetLanguage = (value) => {
 };
 
 const connectClick = () => {
-  if(window.ethereum){
-	  web3js.connect().then((res) => {
-			if(res == undefined) {return;}
-			web3js.getSign().then(signres=>{
-        if(signres.signMessage){
-          let data = {
-            aggregateType: 7,
-            appId: "1646086759245303808",
-            authId: signres.account,
-            strSign: signres.signMessage,
-            type: 4,
-            data: 'Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees.'
-          }
-          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data,baseURL:'https://www.2web3.net/test-user-center'}).then(loginres => {
-            localStorage.setItem('token',loginres.tokenValue)
-            store.userInfo = { account: signres.account}
-            store.isSign = true;
-          })
+  web3js.connect().then((res) => {
+		if(res == undefined) {return;}
+    web3js.change().then(chanres => {
+      if(chanres == true){
+        goSignOut()
+      }
+    })
+		web3js.getSign().then(signres=>{
+      if(signres.signMessage){
+        let data = {
+          aggregateType: 7,
+          appId: "1646086759245303808",
+          authId: signres.account,
+          strSign: signres.signMessage,
+          type: 4,
+          data: 'Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees.'
         }
-      })
-		})
-	}
+        request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data,baseURL:'https://www.2web3.net/test-user-center'}).then(loginres => {
+          localStorage.setItem('token',loginres.tokenValue)
+          store.userInfo = { account: signres.account}
+          store.isSign = true;
+        })
+      }
+    })
+	})
 }
 
 const initLanguage = () => {
@@ -119,6 +122,9 @@ onMounted(()=>{
 </script>
 
 <style scoped>
+.chad{
+  height: 90px;
+}
 .logo{
   background: linear-gradient(225deg, #26fff270 0%, #7350ff70 100%);
 }
