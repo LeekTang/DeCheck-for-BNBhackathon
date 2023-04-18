@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[75rem] min-h-[37rem] mx-auto mt-[4rem] py-[4rem] flex">
+  <div class="w-[75rem] minheight mx-auto mt-[4rem] py-[4rem] flex">
     <p class="text-[10rem] font-extrabold text-bg leading-[9rem]">COMING SOON</p>
     <img src="/images/soon-img.svg" class="w-[39rem] h-[20rem]"/>
   </div>
@@ -11,5 +11,8 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+}
+.minheight{
+  height: calc( 100vh - 240px );
 }
 </style>
