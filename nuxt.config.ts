@@ -5,12 +5,16 @@ interface VITE_ENV_CONFIG {
   VITE_API_URL: string
 }
 
-const envScript = process.env.npm_lifecycle_script.split(' ')
-const envName = envScript[envScript.length - 1]
+const envScript = process.env.npm_lifecycle_script?.split('')
+const envName = envScript[envScript?.length - 1]
 const envData = loadEnv(envName, 'env') as unknown as VITE_ENV_CONFIG
 
+console.log('当前环境',envData)
+
 export default defineNuxtConfig({
-  publicRuntimeConfig: envData,
+  runtimeConfig: {
+    public: envData
+  },
   app: {
     head: {
       titleTemplate: "DeCheck",

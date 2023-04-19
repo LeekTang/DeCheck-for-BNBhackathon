@@ -1,27 +1,27 @@
 <template>
   <div class="w-[75rem] mx-auto mt-[4rem]">
     <client-only>
-      <el-select v-model="value" class="h-[3.5rem] w-[11.25rem] my-[1.5rem]" size="large" :teleported="false">
+      <el-select v-model="state.typeValue" class="h-[3.5rem] w-[11.25rem] my-[1.5rem]" size="large" :teleported="false">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
       </el-select>
     </client-only>
     <div>
-        <div v-for="(item, index) in commentList" :key="index" class="w-full common-bg p-[1.5rem] rounded-[0.75rem] mb-[1.75rem]">
+        <div v-for="(item, index) in state.commentList" :key="index" class="w-full common-bg p-[1.5rem] rounded-[0.75rem] mb-[1.75rem]">
           <div class="">
-            <div class="text-[1.5rem] text-[#fff] font-bold leading-[1.5rem]">{{item.title}}</div>
-            <el-rate disabled size="large" v-model="item.rate" />
+            <div class="text-[1.5rem] text-[#fff] font-bold leading-[1.5rem]">{{item.projectName}}</div>
+            <el-rate disabled size="large" v-model="item.score" />
           </div>
           <div class="">
             <div class="flex justify-between my-[1rem]">
               <div class="flex">
-                <p v-for="(com,index) in item.label" :key="index" class="h-[1rem] leading-[1rem] rounded-[0.25rem] text-[0.63rem] text-[#fff] bg-[#FFFFFF1C] mr-[0.5rem] px-[0.5rem]">{{com}}</p>
+                <p v-for="(com,index) in item.tags" :key="index" class="h-[1rem] leading-[1rem] rounded-[0.25rem] text-[0.63rem] text-[#fff] bg-[#FFFFFF1C] mr-[0.5rem] px-[0.5rem]">{{com}}</p>
               </div>
-              <div class="text-[0.75rem] text-[#FFFFFFA8]">{{item.time}}</div>
+              <div class="text-[0.75rem] text-[#FFFFFFA8]">{{timestampToTime(item.createAt)}}</div>
             </div>
-            <div :class="`${isEllipsis ? 'text-ellipsis' : ''} text-[0.88rem] text-[#FFFFFFA8] leading-[1.25rem]`">{{item.content}}</div>
-            <div class="flex mt-[1rem]" @click="isEllipsis = !isEllipsis">
-              <p class="text-[1rem] text-[#fff] font-bold">{{ isEllipsis ? 'View All' : 'Retract'}}</p>
-              <img :src="isEllipsis ? '/images/down.svg' : '/images/up.svg'" class="h-[1.5rem] w-[1.5rem] " />
+            <div :class="`${item.isEllipsis ? 'text-ellipsis' : ''} text-[0.88rem] text-[#FFFFFFA8] leading-[1.25rem]`">{{item.content}}</div>
+            <div v-if="item.isShowMore" class="flex mt-[1rem]" @click="item.isEllipsis = !item.isEllipsis">
+              <p class="text-[1rem] text-[#fff] font-bold">{{ item.isEllipsis ? 'View All' : 'Retract'}}</p>
+              <img :src="item.isEllipsis ? '/images/down.svg' : '/images/up.svg'" class="h-[1.5rem] w-[1.5rem] " />
             </div>
           </div>
           <div v-if="item.images" class="mt-[1.5rem] w-full py-[1.5rem]">
@@ -51,14 +51,15 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ElRate } from 'element-plus'
 import SwiperCore, {Autoplay, Navigation} from 'swiper'
 import Swipers from 'swiper'
-import { onMounted,ref } from 'vue'
-
+import { onMounted, ref, reactive } from 'vue'
+import request from '@/src/utils/request'
+import { timestampToTime } from '@/src/utils/utils'
 SwiperCore.use([Autoplay,Navigation])
-const value = ref(1)
+
 const options = [
   { value: 1, label: 'All', },
   { value: 2, label: 'Audit only', },
@@ -67,13 +68,27 @@ const options = [
   { value: 5, label: 'Not passed', },
 ]
 
-const isEllipsis = ref(true)
+const state = reactive({
+  typeValue: 1,
+  isEllipsis: true,
+  commentList: []
+})
 
-const commentList = [
-  {title: 'Make you DID on Arbitrum—SpaceID X Multichain', rate: 4, label: ['General','Contract','Tokenomics'],time: "2023-02-21 18:23",content:"Within our ventures, the expansion circuit of Ethereum is inevitable. It is just a matter of how to make decisions on different projects with different technical points in different areas. arbitrum was often contrasted with optimism (op) and zksync.At that time, zksync2.0 had not been put on the line yet, and there was a lot of uncertainty about it, but its leading technology was beyond doubt, so we put zkrollup on hold for a while and compared it with op. If not to pick out the details, in general, arbitrum and op have one difference. Is that op at that time can only do 99% compatible with EVM, it does its own EVM execution level some instruction set is not enough support, but arbitrum is the first to do 100% compatible with EVM, Although it may seem a difference of 1%, but compared with op and arbitrum, arbitrum has a very big difference in the rapid roll-out of the market execution level. By the end of '21, there was some money available to try out some local dog projects on arbitrum. And then there were some good projects, like GMX, or some derivatives, because this kind of financial derivative is naturally suitable for layer2 to do. This case fully illustrates the importance of technological innovation itself, as well as how to better advance quickly in the market strategy. ",images:['/images/test.png','images/test.png','/images/test.png','/images/test.png','/images/test.png','/images/test.png','/images/test.png','/images/test.png'], like: 46, islike: false},
-  {title: 'akshakjdhasodhoaihdaiohdia', rate: 5, label: ['Contract','Tokenomics'],time: "2023-02-21 18:23",content:"Within our ventures, the expansion circuit of Ethereum is inevitable. It is just a matter of how to make decisions on different projects with different technical points in different areas. arbitrum was often contrasted with optimism (op) and zksync.At that time, zksync2.0 had not been put on the line yet, and there was a lot of uncertainty about it, but its leading technology was beyond doubt, so we put zkrollup on hold for a while and compared it with op. If not to pick out the details, in general, arbitrum and op have one difference. Is that op at that time can only do 99% compatible with EVM, it does its own EVM execution level some instruction set is not enough support, but arbitrum is the first to do 100% compatible with EVM, Although it may seem a difference of 1%, but compared with op and arbitrum, arbitrum has a very big difference in the rapid roll-out of the market execution level. By the end of '21, there was some money available to try out some local dog projects on arbitrum. And then there were some good projects, like GMX, or some derivatives, because this kind of financial derivative is naturally suitable for layer2 to do. This case fully illustrates the importance of technological innovation itself, as well as how to better advance quickly in the market strategy. ",video:'https://www.youtube.com/live/zUAX0NjR-7c?feature=share', like: 46, islike: true},
-  {title: 'ahsdahjdashdja', rate: 4, label: ['General','Contract','Tokenomics'],time: "2023-02-21 18:23",content:"Within our ventures, the expansion circuit of Ethereum is inevitable. It is just a matter of how to make decisions on different projects with different technical points in different areas. arbitrum was often contrasted with optimism (op) and zksync.At that time, zksync2.0 had not been put on the line yet, and there was a lot of uncertainty about it, but its leading technology was beyond doubt, so we put zkrollup on hold for a while and compared it with op. If not to pick out the details, in general, arbitrum and op have one difference. Is that op at that time can only do 99% compatible with EVM, it does its own EVM execution level some instruction set is not enough support, but arbitrum is the first to do 100% compatible with EVM, Although it may seem a difference of 1%, but compared with op and arbitrum, arbitrum has a very big difference in the rapid roll-out of the market execution level. By the end of '21, there was some money available to try out some local dog projects on arbitrum. And then there were some good projects, like GMX, or some derivatives, because this kind of financial derivative is naturally suitable for layer2 to do. This case fully illustrates the importance of technological innovation itself, as well as how to better advance quickly in the market strategy. ",images:['/images/test.png','/images/test.png','/images/test.png','/images/test.png','/images/test.png','/images/test.png','/images/test.png','/images/test.png'], like: 46, islike: false},
-]
+const getComment = () => {
+  request({url: '/plugin/decheck/api/user/review/page?page=1&pageSize=50',  method: 'get'}).then(res => {
+    console.log(res)
+    if(res.list){
+      state.commentList = res.list
+      state.commentList.forEach(el => {
+        console.log(el.content.length);
+        if(el.content.length < 800){
+          el.isShowMore = false
+        }
+        el.isEllipsis = true
+      })
+    }
+  })
+}
 
 onMounted(()=>{
   new Swipers('.swiper',{
@@ -87,6 +102,7 @@ onMounted(()=>{
       prevEl: '.swiper-button-prev',
     }
   })
+  getComment()
 })
 </script>
 

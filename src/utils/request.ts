@@ -4,8 +4,8 @@ import { ElMessage } from 'element-plus';
 // 配置新建一个 axios 实例
 const service = axios.create({
 	timeout: 50000,
-	baseURL: 'https://test.decheck.io/decheck-apis',
-	// baseURL: 'http://192.168.101.12:9998/decheck-apis/',
+	// baseURL: 'https://test.decheck.io/decheck-apis',
+	baseURL: 'http://192.168.101.12:9998/decheck-apis',
 	headers: { 'Content-Type': 'application/json' },
 });
 

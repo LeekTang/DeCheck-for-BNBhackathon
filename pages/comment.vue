@@ -18,7 +18,7 @@
         <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold mt-[2rem]">Content of review</div>
         <div class="mt-[1rem] w-[48rem] bg-[#FFFFFF1C] rounded-[1.25rem] p-[1.5rem]">
           <el-input v-model="state.textarea" type="textarea" :rows="6" placeholder="Please input"/>
-          <!-- <el-upload action="#" multiple :limit="9" :file-list="uploadFiles" list-type="picture-card" :show-file-list="true" :auto-upload="false" :on-exceed="handleExceed">
+          <!-- <el-upload action="http://192.168.101.12:9998/decheck-apis/fileUploadAndDownload/upload" multiple :limit="9" :file-list="uploadFiles" list-type="picture-card" :show-file-list="true" :auto-upload="false" :on-exceed="handleExceed">
             <div class="flex flex-col items-center text-[#abaaaae0] text-[0.75rem]">
               <el-icon><Plus /></el-icon>
               <p class="mt-[0.75rem]">Pictures and videos</p>
@@ -103,14 +103,13 @@ const submitClick = () => {
     visible: true
   }
   request({url: '/plugin/decheck/api/project/review/add' , data , method: 'post'}).then(res=>{
-    console.log(res)
     if(res != null){
-      ElMessage.success(t('commontsuccess'))
       checkList.forEach(el => {
         el.state = false
       })
       state.rateValue = 0
       state.textarea = ""
+      router.back()
     }
   })
 }

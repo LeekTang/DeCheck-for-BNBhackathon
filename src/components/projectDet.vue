@@ -24,7 +24,7 @@
         <el-rate disabled size="large" v-model="state.project.score" />
         <div class="flex">
           <client-only>
-            <el-tooltip v-for="(item,index) in iconList" :key="index" :content="item.tip" placement="top">
+            <el-tooltip v-for="(item,index) in iconList" :key="index" :hide-after="0" :content="item.tip" placement="top">
               <div v-if="item.webSrc" class="p-[0.69rem] hover:bg-[#4C406C] rounded-full" @click.stop="goUrl(item.webSrc)">
                 <img :src="item.icon" class="h-[1.5rem] w-[1.5rem]"/>
               </div>
@@ -61,7 +61,7 @@ const iconList = [
   {name: 'twitter', icon: '/images/twitter-icon.svg', tip: 'twitter', webSrc: ''},
   {name: 'telegram', icon: '/images/telegram-icon.svg', tip: 'telegram', webSrc: ''},
   {name: 'discord', icon: '/images/discord-icon.svg', tip: 'discord', webSrc: ''},
-  {name: 'cand', icon: '/images/cand-icon.svg', tip: 'cand', webSrc: ''},
+  {name: 'cainstagramnd', icon: '/images/cand-icon.svg', tip: 'instagram', webSrc: ''},
   {name: 'github', icon: '/images/github-icon.svg', tip: 'github', webSrc: ''},
   {name: 'gitbook', icon: '/images/gitbook-icon.svg', tip: 'gitbook', webSrc: ''},
 ]
@@ -120,6 +120,7 @@ const reviewClick = () => {
           store.isSign = false;
 	        store.userInfo = {};
           localStorage.language = ''
+          localStorage.token = ""
         }
       })
       web3js.getSign().then(signres=>{
@@ -132,7 +133,7 @@ const reviewClick = () => {
             type: 4,
             data: 'Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees.'
           }
-          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data,baseURL:'https://www.2web3.net/test-user-center'}).then(loginres => {
+          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data,baseURL:'http://192.168.101.3:9488/'}).then(loginres => {
             localStorage.setItem('token',loginres.tokenValue)
             store.userInfo = { account: signres.account}
             store.isSign = true;
