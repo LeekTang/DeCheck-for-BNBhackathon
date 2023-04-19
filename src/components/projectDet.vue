@@ -5,7 +5,7 @@
       <div class="p-[1.5rem]">
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{ t('Contracts') }}</p>
-          <p class="text-[#fff] font-bold" v-if="state.project.tokenAddr">{{state.project.tokenList ? abbr(state.project.tokenList[0][1]) : '--'}}</p>
+          <p class="text-[#fff] font-bold cursor-pointer" v-if="state.project.tokenAddr" @click="copyClick(state.project.tokenList[0][1])">{{state.project.tokenList ? abbr(state.project.tokenList[0][1]) : '--'}}</p>
         </div>
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{ t('Autids') }}</p>
@@ -45,10 +45,12 @@
   </div>
 </template>
 <script setup>
-import { ElRate } from 'element-plus'
+import { ElRate, ElMessage } from 'element-plus'
 import { onMounted,reactive,defineProps } from 'vue'
 import web3js from '@/src/utils/link'
 import request from '@/src/utils/request'
+import useClipboard from 'vue-clipboard3'
+const { toClipboard } = useClipboard()
 import { abbr, imgError } from '@/src/utils/utils'
 import { userStore } from '@/src/stores/user'
 import { useI18n } from  'vue-i18n'
@@ -83,6 +85,15 @@ const state = reactive({
   project: {},
   isSign: computed(() => store.getIsSign),
 })
+
+const copyClick = async (val) => {
+  try {
+    await toClipboard(val);
+    ElMessage.success('粘贴成功')
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 const projectInfo = () => {
   request.get(`/plugin/decheck/api/project/detail/${props.projectID}`).then((res) => {

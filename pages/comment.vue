@@ -18,13 +18,19 @@
         <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold mt-[2rem]">Content of review</div>
         <div class="mt-[1rem] w-[48rem] bg-[#FFFFFF1C] rounded-[1.25rem] p-[1.5rem]">
           <el-input v-model="state.textarea" type="textarea" :rows="6" placeholder="Please input"/>
-          <!-- <el-upload action="http://192.168.101.12:9998/decheck-apis/fileUploadAndDownload/upload" multiple :limit="9" :file-list="uploadFiles" list-type="picture-card" :auto-upload="false" :on-exceed="handleExceed">
-            <div class="flex flex-col items-center text-[#abaaaae0] text-[0.75rem]">
-              <el-icon><Plus /></el-icon>
-              <p class="mt-[0.75rem]">Pictures and videos</p>
-            </div>
-          </el-upload>
-          <div v-for="(item,index) in uploadFiles" :key="index">111 {{item}}</div> -->
+
+          <div class="flex">
+
+            <el-upload 
+              action="http://192.168.101.12:9998/decheck-apis/plugin/decheck/api/project/apply/upload" 
+              v-model:file-list="state.fileList" list-type="picture-card" :limit="5" :on-exceed="handleExceed"
+              >
+              <div class="flex flex-col items-center text-[#abaaaae0] text-[0.75rem]">
+                <el-icon><Plus /></el-icon>
+                <p class="mt-[0.75rem]">Pictures and videos</p>
+              </div>
+            </el-upload>
+          </div>
         </div>
         <div class="mt-[1.5rem] h-[3rem] w-[11.25rem] bg-[#1E50FF] leading-[3rem] text-center text-[1rem]
          text-[#fff] font-bold rounded-[0.75rem]" @click="submitClick()">Submit</div>
@@ -39,9 +45,12 @@
 import HeaderView from '@/src/components/Header.vue';
 import BottomBar from '@/src/components/BottomBar.vue';
 import { ElMessage } from 'element-plus';
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import request from '@/src/utils/request'
 import { Plus } from '@element-plus/icons-vue'
+import SwiperCore, {Autoplay, Navigation} from 'swiper'
+import Swipers from 'swiper'
+SwiperCore.use([Autoplay,Navigation])
 import { userStore } from '@/src/stores/user'
 import { useI18n } from  'vue-i18n'
 const { t,locale } = useI18n();
@@ -69,16 +78,24 @@ const checkClick = (item) => {
 
 const state = reactive({
   rateValue: 0,
-  textarea: ""
+  textarea: "",
+  fileList: []
 })
 
-const uploadFiles = reactive([])
 const handleExceed  = (files, uploadFiles) => {
   ElMessage.warning(
-    `The limit is 3, you selected ${files.length} files this time, add up to ${
+    `The limit is 5, you selected ${files.length} files this time, add up to ${
       files.length + uploadFiles.length
     } totally`
   )
+}
+
+const handleSuccess = ((res, file, fileList) => {
+  console.log(res,file,fileList)
+})
+
+const changeFiles = (file, fileList) => {
+  console.log(file, fileList);
 }
 
 const back = () => {
@@ -92,6 +109,12 @@ const submitClick = () => {
       tagList.push(item.name)
     }
   })
+  let attachment = [];
+  if(state.fileList){
+    state.fileList.forEach(el => {
+      attachment.push(el.response.data.file.url)
+    })
+  }
   let data = {
     content: state.textarea,
     projectId: route.query.id,
@@ -100,7 +123,8 @@ const submitClick = () => {
     tags: tagList,
     type: 0,
     userId: store.userInfo.account,
-    visible: true
+    visible: true,
+    attachment: attachment
   }
   request({url: '/plugin/decheck/api/project/review/add' , data , method: 'post'}).then(res=>{
     if(res != null){
@@ -113,6 +137,10 @@ const submitClick = () => {
     }
   })
 }
+
+onMounted(()=>{
+
+})
 </script>
 
 <style scoped>
@@ -132,6 +160,18 @@ const submitClick = () => {
   background-color: transparent;
   box-shadow: none;
   color: #FFFFFF;
+}
+
+:deep(.el-upload--picture-card){
+  height: 6rem;
+  width: 9rem;
+  background-color: #FFFFFF1C;
+  border: none;
+}
+
+:deep(.el-upload-list__item){
+  height: 6rem;
+  width: 6rem;
 }
 
 </style>
