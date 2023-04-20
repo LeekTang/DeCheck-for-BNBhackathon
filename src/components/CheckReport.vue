@@ -14,22 +14,22 @@
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{t('tokenContractAddress')}}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="tokenAddr">{{abbr(tokenAddr)}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="tokenAddr" @click="copyClick(tokenAddr)">{{abbr(tokenAddr)}}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{t('contractCreator')}}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.creator_address">{{abbr(state.goInfo.creator_address)}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.creator_address" @click="copyClick(state.goInfo.creator_address)">{{abbr(state.goInfo.creator_address)}}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{t('contractOwner')}}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.owner_address">{{abbr(state.goInfo.owner_address)}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.owner_address" @click="copyClick(state.goInfo.owner_address)">{{abbr(state.goInfo.owner_address)}}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{t('totalSupply')}}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]">{{toShort(state.goInfo.total_supply, 6) || '--'}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem]">{{toShort(state.goInfo.total_supply, 2) || '--'}}</p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{t('launchTime')}}</p>
@@ -54,17 +54,25 @@
             <p class="text-[#FFFFFF] text-[1.5rem] font-bold">{{state.goInfo.price || '-'}}</p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center">
-            <p class="text-[#FFFFFFA8]">Uniswap</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
-              Tread
-              <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
-            </p>
+            <p class="text-[#FFFFFFA8]">DEX</p>
+            <div class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
+              <p v-if="state.goInfo.dex">{{state.goInfo.dex[0].name}}</p>
+              <p v-else>--</p>
+              <div class="flex items-center">
+                Tread
+                <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
+              </div>
+            </div>
           </div>
           <div class="flex justify-between">
             <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem] flex flex-col justify-around">
               <div class="flex justify-between">
                 <p class="text-[1.25rem] text-[#fff] font-medium">{{t('buyTax')}}</p>
                 <p class="text-[1.5rem] text-[#11B466] font-bold">{{state.goInfo.buy_tax}}</p>
+              </div>
+              <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.15rem] bg-[#ffffff14] rounded-[0.5rem]">
+                <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
+                <p class="text-[1rem] text-[#ffffff54] mt-[1rem]">Tax details not found</p>
               </div>
               <div class="flex justify-between">
                 <p class="text-[1.25rem] text-[#fff] font-medium">{{t('buyGas')}}</p>
@@ -75,6 +83,10 @@
               <div class="flex justify-between">
                 <p class="text-[1.25rem] text-[#fff] font-medium">{{t('sellTax')}}</p>
                 <p class="text-[1.5rem] text-[#FF5353FF] font-bold">{{state.goInfo.sell_tax}}</p>
+              </div>
+              <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.15rem] bg-[#ffffff14] rounded-[0.5rem]">
+                <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
+                <p class="text-[1rem] text-[#ffffff54] mt-[1rem]">Tax details not found</p>
               </div>
               <div class="flex justify-between">
                 <p class="text-[1.25rem] text-[#fff] font-medium">{{t('sellGax')}}</p>
@@ -131,7 +143,7 @@
 import { onMounted, ref, reactive } from 'vue'
 import request from '@/src/utils/request'
 import { userStore } from '@/src/stores/user'
-import { abbr, toShort } from '@/src/utils/utils'
+import { abbr, toShort, copyToClipBoard } from '@/src/utils/utils'
 import { useI18n } from  'vue-i18n'
 const { t } = useI18n();
 import { storeToRefs } from 'pinia'
@@ -171,6 +183,13 @@ const state = reactive({
 watch(tokenAddr,() => {
   getGoPlus()
 })
+
+const copyClick = (val) => {
+  if(val){
+    copyToClipBoard(val);
+    ElMessage.success(t('copySuccess'))
+  }
+}
 
 const getGoPlus = () => {
     if(tokenAddr.value){

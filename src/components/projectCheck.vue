@@ -14,22 +14,22 @@
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('tokenContractAddress') }}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.tokenList">{{abbr(state.tokenList[0][1])}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.tokenList" @click="copyClick(state.tokenList[0][1])">{{abbr(state.tokenList[0][1])}}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('contractCreator') }}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.creator_address">{{abbr(state.goInfo.creator_address)}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.creator_address" @click="copyClick(state.goInfo.creator_address)">{{abbr(state.goInfo.creator_address)}}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('contractOwner') }}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.owner_address">{{abbr(state.goInfo.owner_address)}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.owner_address" @click="copyClick(state.goInfo.owner_address)">{{abbr(state.goInfo.owner_address)}}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('totalSupply') }}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.total_supply">{{toShort( state.goInfo.total_supply, 6)}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.total_supply">{{toShort( state.goInfo.total_supply, 2) || '--'}}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
@@ -55,17 +55,25 @@
             <p class="text-[#FFFFFF] text-[1.5rem] font-bold">{{state.goInfo.price || '-'}}</p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center">
-            <p class="text-[#FFFFFFA8]">Uniswap</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
-              Tread
-              <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
-            </p>
+            <p class="text-[#FFFFFFA8]">DEX</p>
+            <div class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
+              <p v-if="state.goInfo.dex">{{state.goInfo.dex[0].name}}</p>
+              <p v-else>--</p>
+              <div class="flex items-center">
+                Tread
+                <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
+              </div>
+            </div>
           </div>
           <div class="flex justify-between">
             <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem] flex flex-col justify-between">
               <div class="flex justify-between">
                 <p class="text-[1.25rem] text-[#fff] font-medium">{{ t('buyTax') }}</p>
                 <p class="text-[1.5rem] text-[#11B466] font-bold">{{state.goInfo.buy_tax || '-'}}</p>
+              </div>
+              <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.15rem] bg-[#ffffff14] rounded-[0.5rem]">
+                <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
+                <p class="text-[1rem] text-[#ffffff54] mt-[1rem]">Tax details not found</p>
               </div>
               <div class="flex justify-between">
                 <p class="text-[1.25rem] text-[#fff] font-medium">Buy Gas</p>
@@ -76,6 +84,10 @@
               <div class="flex justify-between">
                 <p class="text-[1.25rem] text-[#fff] font-medium">{{ t('sellTax') }}</p>
                 <p class="text-[1.5rem] text-[#FF5353FF] font-bold">{{state.goInfo.sell_tax || '-'}}</p>
+              </div>
+              <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.15rem] bg-[#ffffff14] rounded-[0.5rem]">
+                <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
+                <p class="text-[1rem] text-[#ffffff54] mt-[1rem]">Tax details not found</p>
               </div>
               <div class="flex justify-between">
                 <p class="text-[1.25rem] text-[#fff] font-medium">Sell Gas</p>
@@ -96,7 +108,7 @@
       </div>
       <div class="p-[1.5rem]">
         <div class="flex justify-between flex-wrap">
-          <div v-for="(item, index) in listOrder" :key="index">
+          <template v-for="(item, index) in listOrder" :key="index">
             <div v-if="state.goInfo.hasOwnProperty(item.key)" class="h-[3.5rem] w-[33.75rem] flex items-center border-b-2 border-b-[#FFFFFF1C]">
               
               <template v-if="item.grade == 1">
@@ -116,7 +128,7 @@
               </template>
               <p class="text-[0.88rem]" :style="{color: state.goInfo[item.key] == 0 ? item.color0 : item.color1}">{{t(item.key + state.goInfo[item.key])}}</p>
             </div>
-          </div>
+          </template>
         </div>
         <p class="text-[1rem] text-[#fff] font-bold mt-[1.5rem]">{{t('goTitle')}}</p>
         <div class="text-[0.88rem] text-[#FFFFFFA8] leading-[1.38rem] mt-[1rem]">
@@ -132,7 +144,7 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
 import request from '@/src/utils/request'
-import { abbr,toShort } from '@/src/utils/utils'
+import { abbr,toShort, copyToClipBoard } from '@/src/utils/utils'
 import { useI18n } from  'vue-i18n'
 const { t,locale } = useI18n();
 import { userStore } from '@/src/stores/user'
@@ -201,6 +213,13 @@ const projectInfo = () => {
       })
     }
   })
+}
+
+const copyClick = (val) => {
+  if(val){
+    copyToClipBoard(val);
+    ElMessage.success(t('copySuccess'))
+  }
 }
 
 onMounted(() => {

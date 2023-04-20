@@ -11,7 +11,7 @@
     <div class="w-[55.81rem] h-[3.5rem] bg-[#474174] rounded-[1rem]">
       <el-input v-model="state.searchInput" class="h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff]" :placeholder="t('searchplace')" :prefix-icon="Search" >
         <template #suffix>
-          <div class="h-[2rem] w-[4.13rem] input-bg text-[0.88rem] text-[#fff] rounded-[0.5rem]" @click="getHotProject">{{ t('Search') }}</div>
+          <div class="h-[2rem] w-[4.13rem] input-bg text-[0.88rem] text-[#fff] rounded-[0.5rem] cursor-pointer" @click="getHotProject">{{ t('Search') }}</div>
         </template>
       </el-input>
     </div>
@@ -50,16 +50,18 @@ const back = () => {
 }
 
 const getHotProject = () => {
-  router.push({
-    name: 'check',
-    query: {
-      chain : state.chain,
-      searchInput: state.searchInput
-    }
-  })
-  request.get(`/plugin/decheck/api/security/token/${state.chain}/${state.searchInput}`).then((res) => {
-    store.searchInfo = res
-  })
+  if(state.searchInput.length > 0){
+    router.push({
+      name: 'check',
+      query: {
+        chain : state.chain,
+        searchInput: state.searchInput
+      }
+    })
+    request.get(`/plugin/decheck/api/security/token/${state.chain}/${state.searchInput}`).then((res) => {
+      store.searchInfo = res
+    })
+  }
 }
 
 

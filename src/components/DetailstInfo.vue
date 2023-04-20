@@ -5,7 +5,7 @@
       <div class="p-[1.5rem]">
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{t('Contracts')}}</p>
-          <p class="text-[#fff] font-bold" v-if="state.project.tokenAddr">{{state.project.tokenList ? abbr(state.project.tokenList[0][1]) : '--'}}</p>
+          <p class="text-[#fff] font-bold cursor-pointer" v-if="state.project.tokenAddr" @click="copyClick(state.project.tokenList[0][1])">{{state.project.tokenList ? abbr(state.project.tokenList[0][1]) : '--'}}</p>
         </div>
         <div class="flex justify-between text-[1rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{t('Autids')}}</p>
@@ -15,7 +15,7 @@
         </div>
         <p class="border border-[#FFFFFF1C]"></p>
         <p class="my-[1.5rem] text-[0.88rem] text-[#fff] ">{{t('tips')}}</p>
-        <div class="w-[21rem] h-[3.5rem] bg-[#1E50FF] rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]" @click="reviewClick">{{t('reviewNow')}}</div>
+        <div class="w-[21rem] h-[3.5rem] bg-[#1E50FF] rounded-[0.75rem] cursor-pointer text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]" @click="reviewClick">{{t('reviewNow')}}</div>
       </div>
     </div>
     <div class="w-[49.5rem]">
@@ -25,7 +25,7 @@
         <div class="flex">
           <client-only>
             <el-tooltip v-for="(item,index) in iconList" :key="index" :content="item.tip" placement="top">
-              <div v-if="item.webSrc" class="p-[0.69rem] hover:bg-[#4C406C] rounded-full" @click.stop="goUrl(item.webSrc)">
+              <div v-if="item.webSrc" class="p-[0.69rem] hover:bg-[#4C406C] rounded-full cursor-pointer" @click.stop="goUrl(item.webSrc)">
                 <img :src="item.icon" class="h-[1.5rem] w-[1.5rem]"/>
               </div>
             </el-tooltip>
@@ -49,7 +49,7 @@ import { ElRate } from 'element-plus'
 import { onMounted,reactive } from 'vue'
 import request from '@/src/utils/request'
 import web3js from '@/src/utils/link'
-import { abbr, imgError } from '@/src/utils/utils'
+import { abbr, imgError, copyToClipBoard } from '@/src/utils/utils'
 import { useI18n } from  'vue-i18n'
 const { t } = useI18n();
 import { userStore } from '@/src/stores/user' 
@@ -105,6 +105,13 @@ const projectInfo = () => {
     })
   }else{
     store.searchProjectInfo = state.project = ''
+  }
+}
+
+const copyClick = (val) => {
+  if(val){
+    copyToClipBoard(val);
+    ElMessage.success(t('copySuccess'))
   }
 }
 

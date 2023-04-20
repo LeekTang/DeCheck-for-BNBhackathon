@@ -24,10 +24,10 @@
               <img :src="item.isEllipsis ? '/images/down.svg' : '/images/up.svg'" class="h-[1.5rem] w-[1.5rem] " />
             </div>
           </div>
-          <div v-if="item.attachment" class="mt-[1.5rem] w-full py-[1.5rem]">
-            <swiper>
+          <div v-if="item.image" class="mt-[1.5rem] w-full py-[1.5rem]">
+            <swiper :class="`userSwiper${index}`">
               <swiper-slide  v-for="(icon,index) in item.attachment" :key="index">
-                <img :src="icon" class="w-[8.63rem] h-[8.63rem] rounded-[0.75rem] ml-[0.75rem]"/>
+                <el-image fit="scale-down" :preview-src-list="item.attachment" preview-teleported :src="icon" class="w-[8.63rem] h-[8.63rem] rounded-[0.75rem] ml-[0.75rem] bg-[#403582FF]" />
               </swiper-slide>
               <div class="swiper-button-next h-[4rem] w-[4rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">
                 <img src="/images/project-right.svg" class="h-[4rem] w-[4rem]">
@@ -38,8 +38,8 @@
             </swiper>
           </div>
           <div v-if="item.video" class="h-[11.63rem] w-[46.5rem] bg-[#FFFFFF1C] rounded-[0.75rem] mt-[1.75rem] flex justify-center items-center">
-            <video class="h-[8.63rem] w-[43.44rem] rounded-[0.75rem]" controls autoplay>
-              <!-- <source src="/1.mp4" type="video/mp4"> -->
+            <video class="h-[8.63rem] w-[43.44rem] rounded-[0.75rem]" v-for="(video,index) in item.attachment" :key="index"  controls>
+              <source :src="video" type="video/mp4">
             </video>
           </div>
           <div :class="`${item.islike ? 'bg-[#fff] text-[#121D43FF]' : 'text-[#FFFFFFA8]'} h-[2rem] w-[4.88rem] mt-[1.5rem] flex items-center justify-center border-2 border-[#FFFFFFA8] rounded-[0.75rem]`">
@@ -52,12 +52,12 @@
 </template>
 
 <script setup>
-import { ElRate } from 'element-plus'
+import { ElRate,ElImage } from 'element-plus'
 import SwiperCore, {Autoplay, Navigation} from 'swiper'
 import Swipers from 'swiper'
 import { onMounted, ref, reactive } from 'vue'
 import request from '@/src/utils/request'
-import { timestampToTime } from '@/src/utils/utils'
+import { timestampToTime, matchType } from '@/src/utils/utils'
 SwiperCore.use([Autoplay,Navigation])
 
 const options = [
@@ -76,32 +76,36 @@ const state = reactive({
 
 const getComment = () => {
   request({url: '/plugin/decheck/api/user/review/page?page=1&pageSize=50',  method: 'get'}).then(res => {
-    console.log(res)
     if(res.list){
       state.commentList = res.list
-      state.commentList.forEach(el => {
-        console.log(el.content.length);
+      state.commentList.forEach((el,index) => {
         if(el.content.length < 800){
           el.isShowMore = false
         }
         el.isEllipsis = true
+        if(el.attachment){
+          if(matchType(el.attachment[0]) == 'video' && el.attachment.length == 1){
+            el.video = true
+          }else if(matchType(el.attachment[0]) == 'image' && el.attachment.length > 1){
+            el.image = true
+            setTimeout(() => {
+              new Swipers(`.userSwiper${index}`,{
+                slidesPerView : 7,
+                navigation: {
+                  nextEl: '.swiper-button-next',
+                  prevEl: '.swiper-button-prev',
+                }
+              })
+            }, 1000);
+          }
+        }
       })
     }
   })
 }
 
 onMounted(()=>{
-  new Swipers('.swiper',{
-    slidesPerView : 7,
-    loop: true,
-    observer:true,
-    observeParents:true,
-    observeSlideChildren:true,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    }
-  })
+  
   getComment()
 })
 </script>

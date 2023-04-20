@@ -26,10 +26,15 @@
             </div>
             <div class="text-[0.88rem] text-[#fff] leading-[1.25rem]">{{item.content}}</div>
           </div>
-          <div v-if="item.attachment" class="mt-[1.5rem] w-full bg-[#FFFFFF1C] py-[1.5rem]">
-            <swiper>
+          <div v-if="item.video" class="h-[11.63rem] w-[46.5rem] bg-[#FFFFFF1C] rounded-[0.75rem] mt-[1.5rem] flex justify-center items-center">
+            <video class="h-[8.63rem] w-[43.44rem] rounded-[0.75rem]" v-for="(video,index) in item.attachment" :key="index" controls autoplay>
+              <source :src="video" type="video/mp4">
+            </video>
+          </div>
+          <div v-if="item.image" class="mt-[1.5rem] w-full bg-[#FFFFFF1C] py-[1.5rem] rounded-[0.75rem]">
+            <swiper :class="`swiperc${index}`">
               <swiper-slide  v-for="(icon,index) in item.attachment" :key="index">
-                <img :src="icon" class="w-[8.63rem] h-[8.63rem] rounded-[0.75rem] ml-[0.75rem]"/>
+                <el-image fit="scale-down" :preview-src-list="item.attachment" preview-teleported :src="icon" class="w-[8.63rem] h-[8.63rem] bg-[#312963FF] rounded-[0.75rem] ml-[0.75rem]"/>
               </swiper-slide>
               <div class="swiper-button-next h-[4rem] w-[4rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">
                 <img src="/images/project-right.svg" class="h-[4rem] w-[4rem]">
@@ -38,11 +43,6 @@
                 <img src="/images/project-left.svg" class="h-[4rem] w-[4rem]">
               </div>
             </swiper>
-          </div>
-          <div v-if="item.video" class="h-[11.63rem] w-[46.5rem] bg-[#FFFFFF1C] rounded-[0.75rem] mt-[1.75rem] flex justify-center items-center">
-            <video class="h-[8.63rem] w-[43.44rem] rounded-[0.75rem]" controls autoplay>
-              <!-- <source src="/1.mp4" type="video/mp4"> -->
-            </video>
           </div>
           <div :class="`${item.islike ? 'bg-[#fff] text-[#121D43FF]' : 'text-[#FFFFFFA8]'} h-[2rem] w-[4.88rem] mt-[1.5rem] flex items-center justify-center border-2 border-[#FFFFFFA8] rounded-[0.75rem]`">
             <img :src="item.islike ? '/images/like.svg' : '/images/notlike.svg'" class="h-[1rem] w-[1rem] mr-[0.5rem]">
@@ -54,13 +54,13 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { ElRate } from 'element-plus'
+<script setup>
+import { ElRate,ElImage } from 'element-plus'
 import SwiperCore, {Autoplay, Navigation} from 'swiper'
 import Swipers from 'swiper'
 import { onMounted,ref, reactive, defineProps } from 'vue'
 import request from '@/src/utils/request'
-import { abbr,timestampToTime } from '@/src/utils/utils'
+import { abbr,timestampToTime, matchType } from '@/src/utils/utils'
 SwiperCore.use([Autoplay,Navigation])
 
 const options = [
@@ -77,30 +77,36 @@ const props = defineProps({
 
 const state = reactive({
   selectValue: 1,
-  comments: {}
+  comments: []
 })
 
 const projectInfo = () => {
   request.get(`/plugin/decheck/api/project/detail/review/${props.projectID}`).then((res) => {
-    state.comments = res
+    if(res){
+      state.comments = res
+      state.comments.forEach((el,index) => {
+        if(el.attachment){
+          if(matchType(el.attachment[0]) == 'video' && el.attachment.length == 1){
+            el.video = true
+          }else if(matchType(el.attachment[0]) == 'image' && el.attachment.length > 1){
+            el.image = true
+            setTimeout(() => {
+              new Swipers(`.swiperc${index}`,{
+                slidesPerView: 4.5,
+                navigation: {
+                  nextEl: '.swiper-button-next',
+                  prevEl: '.swiper-button-prev',
+                },
+              })
+            }, 1000);
+          }
+        }
+      });
+    }
   })
 }
 
 onMounted(()=>{
-  new Swipers('.swiper',{
-    loop: true,
-    observer:true,
-    observeParents:true,
-    observeSlideChildren:true,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    autoplay: {
-      delay: 2000,
-      disableOnInteraction: false
-    }
-  })
   projectInfo()
 })
 </script>
@@ -109,11 +115,11 @@ onMounted(()=>{
 .common-bg{
   background: linear-gradient(225deg, #363574 0%, #2A1C52 100%);
 }
-
+/* 
 .swiper-slide{
 width: auto!important;
 margin-right: 15px!important;
-}
+} */
 
 :deep(.el-input__wrapper){
   background: #474174;

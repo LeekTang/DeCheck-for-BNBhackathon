@@ -2,7 +2,7 @@
   <div class="w-[75rem] mx-auto mt-[8rem]">
     <div class="text-[1.25rem] text-[#fff] font-extrabold">{{ t('hotProjects')}}</div>
     <div class="mt-[1.5rem]">
-      <swiper>
+      <swiper class="hotSwiper">
         <swiper-slide class="swiper-no-swiping" v-for="(item,index) in state.hotPorject" :key="index">
           <div class="h-[26.13rem] w-[24rem] bg-[#FFFFFF] rounded-[1.25rem] relative" @click="goUrl(item.id)">
             <img :src="item.logo" class="w-full h-[18rem] rounded-[1.25rem]" @error="imgError"/>
@@ -65,7 +65,7 @@ const getHotProject = () => {
 }
 
 onMounted(()=>{
-  new Swipers('.swiper',{
+  new Swipers('.hotSwiper',{
     slidesPerView: 3,
     loop:true,
     observer:true,

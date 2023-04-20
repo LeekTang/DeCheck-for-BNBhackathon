@@ -2,7 +2,7 @@
   <div class="w-full fixed top-0 bg-[#190A43] z-[100]">
     <div class="w-[75rem] mx-auto flex items-center justify-between">
       <div class="flex items-center w-[38.2rem] py-[0.75rem] justify-between text-[1rem] text-[#ffffffa8]">
-        <img src="/images/logo.svg" class="h-[2.5rem] w-[9.14rem] cursor-pointer" />
+        <NuxtLink to="/"><img src="/images/logo.svg" class="h-[2.5rem] w-[9.14rem] cursor-pointer" /></NuxtLink>
         <NuxtLink to="/" activeClass="font-extrabold text-[#fff]">{{ t('Home') }}</NuxtLink>
         <NuxtLink to="/explorer" activeClass="font-extrabold text-[#fff]">{{ t('Explorer') }}</NuxtLink>
         <NuxtLink to="/dao" activeClass="font-extrabold text-[#fff]">{{ t('DeCheckDAO') }}</NuxtLink>
@@ -10,7 +10,7 @@
       </div>
       <div class="flex">
         <client-only>
-          <el-popover :ref="(ref) => {state.languagePop = ref}" placement="bottom" :show-arrow="false" transition="none" :teleported="false"  trigger="click">
+          <el-popover :ref="(ref) => {state.languagePop = ref}" placement="bottom" :hide-after="0" :show-arrow="false" transition="none" :teleported="false"  trigger="click">
             <template #reference>
               <div class="h-[2rem] w-[4.88rem] flex justify-center items-center bg-[#ffffff1c] font-semibold rounded-[0.75rem] mr-[1.5rem] border-2 border-white cursor-pointer">
                 <img src="/images/web.svg" class="h-[1rem] w-[1rem]">
@@ -27,7 +27,7 @@
         </client-only>
         
         <client-only>
-				  <el-popover :ref="(ref) => { state.setPop = ref}" placement="bottom" :width="180" :show-arrow="false" transition="none" :teleported="false" trigger="click" v-if="state.isSign">
+				  <el-popover :ref="(ref) => { state.setPop = ref}" placement="bottom" :hide-after="0" :width="180" :show-arrow="false" transition="none" :teleported="false" trigger="click" v-if="state.isSign">
             <template #reference>
               <div class="text-[#fff] text-[1rem] text-center font-semibold  cursor-pointer flex items-center">
                 <p class="h-[2rem] w-[2rem] rounded-full bg-[#D9D9D9FF] mr-[0.5rem]"></p>
