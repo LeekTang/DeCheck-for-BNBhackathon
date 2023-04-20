@@ -18,7 +18,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { onMounted,reactive } from 'vue'
 import { Search } from '@element-plus/icons-vue'
 import request from '@/src/utils/request'

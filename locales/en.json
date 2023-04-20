@@ -144,8 +144,8 @@
   "external_call1": "External call exists",
   "external_call0": "There is no external call",
   "external_callTips": "It describes whether the contract would call functions of other contracts when primary methods are executed ",
-  "cannot_buy1": "Available for bought",
-  "cannot_buy0": "Not available for bought",
+  "cannot_buy1": "Not available for bought",
+  "cannot_buy0": "Available for bought",
   "cannot_buyTips": "It deiscribes whether the Token can be bought",
   "transfer_pausable1": "It could be suspend trading",
   "transfer_pausable0": "No codes found to suspend trading",
@@ -167,5 +167,6 @@
   "trading_cooldownTips": "If there is a trading cooldown function, the user will not be able to sell the token within a certain time or block after buying",
   "personal_slippage_modifiable1": "Has tax changes found for personal addresses",
   "personal_slippage_modifiable0": "No tax changes found for personal addresses",
-  "personal_slippage_modifiableTips": "No tax changes were found for every assigned address. If it exists, the contract owner may set a very outrageous tax rate for assigned address to block it from trading"
+  "personal_slippage_modifiableTips": "No tax changes were found for every assigned address. If it exists, the contract owner may set a very outrageous tax rate for assigned address to block it from trading",
+  "copySuccess": "copy successfully"
 }

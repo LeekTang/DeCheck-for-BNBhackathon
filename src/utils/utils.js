@@ -24,3 +24,14 @@ export function timestampToTime(timestamp) {
   var s = date.getSeconds();
   return Y + M + D + h + m + s;
 }
+
+export function copyToClipBoard(textToCopy){
+  const tmpTextField = document.createElement("textarea")
+  tmpTextField.textContent = textToCopy
+  tmpTextField.setAttribute("style","position:absolute; right:200%;")
+  document.body.appendChild(tmpTextField)
+  tmpTextField.select()
+  tmpTextField.setSelectionRange(0, 99999)
+  document.execCommand("copy")
+  tmpTextField.remove()
+}

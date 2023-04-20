@@ -27,7 +27,6 @@
     "pinia-plugin-persistedstate": "^3.1.0",
     "swiper": "^9.0.3",
     "vue-awesome-swiper": "^5.0.1",
-    "vue-clipboard3": "^2.0.0",
     "web3": "^1.9.0"
   }
 }

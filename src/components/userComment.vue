@@ -24,9 +24,9 @@
               <img :src="item.isEllipsis ? '/images/down.svg' : '/images/up.svg'" class="h-[1.5rem] w-[1.5rem] " />
             </div>
           </div>
-          <div v-if="item.images" class="mt-[1.5rem] w-full py-[1.5rem]">
+          <div v-if="item.attachment" class="mt-[1.5rem] w-full py-[1.5rem]">
             <swiper>
-              <swiper-slide  v-for="(icon,index) in item.images" :key="index">
+              <swiper-slide  v-for="(icon,index) in item.attachment" :key="index">
                 <img :src="icon" class="w-[8.63rem] h-[8.63rem] rounded-[0.75rem] ml-[0.75rem]"/>
               </swiper-slide>
               <div class="swiper-button-next h-[4rem] w-[4rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">

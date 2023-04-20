@@ -23,7 +23,8 @@
 
             <el-upload 
               action="http://192.168.101.12:9998/decheck-apis/plugin/decheck/api/project/apply/upload" 
-              v-model:file-list="state.fileList" list-type="picture-card" :limit="5" :on-exceed="handleExceed"
+              v-model:file-list="state.fileList" list-type="picture-card" :limit="state.limit" :on-exceed="handleExceed"
+              :before-upload="handleBefore"
               >
               <div class="flex flex-col items-center text-[#abaaaae0] text-[0.75rem]">
                 <el-icon><Plus /></el-icon>
@@ -78,6 +79,7 @@ const checkClick = (item) => {
 
 const state = reactive({
   rateValue: 0,
+  limit: 5,
   textarea: "",
   fileList: []
 })
@@ -90,14 +92,14 @@ const handleExceed  = (files, uploadFiles) => {
   )
 }
 
-const handleSuccess = ((res, file, fileList) => {
-  console.log(res,file,fileList)
-})
-
-const changeFiles = (file, fileList) => {
-  console.log(file, fileList);
+const handleBefore = (files,fileList) => {
+  console.log(files, fileList)
+  if(files.type == 'video/mp4'){
+    state.limit = 1
+  }else{
+    state.limit = 5
+  }
 }
-
 const back = () => {
   router.back()
 }

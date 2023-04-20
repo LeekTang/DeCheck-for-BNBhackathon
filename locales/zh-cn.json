@@ -144,8 +144,8 @@
   "external_call1": "存在外部调用风险",
   "external_call0": "未发现外部合约调用风险",
   "external_callTips": "外部合约调用将导致代币合约高度依赖其他合约，这可能是一个潜在的风险",
-  "cannot_buy1": "支持购买",
-  "cannot_buy0": "不支持购买",
+  "cannot_buy1": "不支持购买",
+  "cannot_buy0": "支持购买",
   "cannot_buyTips": "它描述了Token是否可以被购买",
   "transfer_pausable1": "具有暂停交易功能",
   "transfer_pausable0": "无暂停交易功能",
@@ -167,5 +167,6 @@
   "trading_cooldownTips": "如果有交易冷却功能，用户将无法在购买后的特定时间或区块内出售代币",
   "personal_slippage_modifiable1": "可针对特定地址改税",
   "personal_slippage_modifiable0": "未发现可针对特定地址改税",
-  "personal_slippage_modifiableTips": "每个地址的滑点都没有变化。如果存在，合约所有者可以为指定的地址设置一个非常高的税率，以阻止其交易"
+  "personal_slippage_modifiableTips": "每个地址的滑点都没有变化。如果存在，合约所有者可以为指定的地址设置一个非常高的税率，以阻止其交易",
+  "copySuccess": "复制成功"
 }

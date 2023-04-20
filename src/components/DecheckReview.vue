@@ -22,7 +22,7 @@
               <div class="flex flex-wrap">
                 <p v-for="(com,index) in item.tags" :key="index" class="h-[1rem] max-w-[5rem] overflow-hidden leading-[1rem] rounded-[0.25rem] text-[0.63rem] text-[#fff] bg-[#FFFFFF1C] mr-[0.5rem] mb-[0.5rem] px-[0.5rem]">{{com}}</p>
               </div>
-              <div class="text-[0.75rem] text-[#FFFFFFA8]">{{item.createAt}}</div>
+              <div class="text-[0.75rem] text-[#FFFFFFA8]">{{timestampToTime(item.createAt)}}</div>
             </div>
             <div class="text-[0.88rem] text-[#fff] leading-[1.25rem]">{{item.content}}</div>
           </div>
@@ -60,7 +60,7 @@ import SwiperCore, {Autoplay, Navigation} from 'swiper'
 import Swipers from 'swiper'
 import { onMounted,ref, reactive, defineProps } from 'vue'
 import request from '@/src/utils/request'
-import { abbr } from '@/src/utils/utils'
+import { abbr,timestampToTime } from '@/src/utils/utils'
 SwiperCore.use([Autoplay,Navigation])
 
 const options = [

@@ -49,9 +49,7 @@ import { ElRate, ElMessage } from 'element-plus'
 import { onMounted,reactive,defineProps } from 'vue'
 import web3js from '@/src/utils/link'
 import request from '@/src/utils/request'
-import useClipboard from 'vue-clipboard3'
-const { toClipboard } = useClipboard()
-import { abbr, imgError } from '@/src/utils/utils'
+import { abbr, imgError, copyToClipBoard } from '@/src/utils/utils'
 import { userStore } from '@/src/stores/user'
 import { useI18n } from  'vue-i18n'
 const store = userStore();
@@ -86,15 +84,6 @@ const state = reactive({
   isSign: computed(() => store.getIsSign),
 })
 
-const copyClick = async (val) => {
-  try {
-    await toClipboard(val);
-    ElMessage.success('粘贴成功')
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 const projectInfo = () => {
   request.get(`/plugin/decheck/api/project/detail/${props.projectID}`).then((res) => {
     if(res.tokenAddr){
@@ -112,6 +101,13 @@ const projectInfo = () => {
       }
     })
   })
+}
+
+const copyClick = (val) => {
+  if(val){
+    copyToClipBoard(val);
+    ElMessage.success(t('copySuccess'))
+  }
 }
 
 const reviewClick = () => {
