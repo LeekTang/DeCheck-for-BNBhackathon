@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[75rem] mx-auto mt-[4rem]" v-if="state.comments">
+  <div class="w-[75rem] mx-auto mt-[4rem]  mb-[14rem]" v-if="state.comments">
     <div class="text-[1.25rem] text-[#fff] font-extrabold">DECHECK REVIEW</div>
     <client-only>
       <el-select v-model="state.selectValue" class="h-[3.5rem] w-[11.25rem] my-[1.5rem]" size="large" :teleported="false">

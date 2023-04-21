@@ -5,7 +5,7 @@
     <projectInfo :projectID="state.projectID"/>
     <projectCheck :projectID="state.projectID"/>
     <DecheckReview :projectID="state.projectID"/>
-    <BottomBar />
+    <BottomBar class="bottom-0 absolute"/>
   </div>
 </template>
 

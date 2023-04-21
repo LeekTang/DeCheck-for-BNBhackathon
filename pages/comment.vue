@@ -17,12 +17,12 @@
         </div>
         <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold mt-[2rem]">Content of review</div>
         <div class="mt-[1rem] w-[48rem] bg-[#FFFFFF1C] rounded-[1.25rem] p-[1.5rem]">
-          <el-input v-model="state.textarea" type="textarea" :autosize="{minRows:6,maxRows:20}" placeholder="Please input"/>
+          <el-input v-model="state.textarea" type="textarea" :autosize="{minRows:6,maxRows:20}" resize="none" placeholder="Please input"/>
           <div class="flex">
             <el-upload 
               action="http://192.168.101.12:9998/decheck-apis/plugin/decheck/api/project/apply/upload"
               :file-list="state.elUpList" 
-              list-type="picture-card" :limit="state.limit" :show-file-list="false" multiple
+              list-type="picture-card" :limit="state.limit" :show-file-list="false"
               :on-exceed="handleExceed" :before-upload="handleBefore" :on-success="handleVideo"
               :on-progress="uploadVideoProcess" 
               >
@@ -32,16 +32,21 @@
               </div>
             </el-upload>
             <div v-if="state.video || state.videoFlag" class="relative bg-[#FFFFFF1C] ml-[1rem]">
-              <el-progress v-if="state.videoFlag == true" type="circle" :percentage="state.videoUploadPercent" style="margin-top:30px;"></el-progress>
+              <el-progress v-if="state.videoFlag == true" type="circle" :width="90" :percentage="state.videoUploadPercent"></el-progress>
               <video v-if="state.video" class="h-[6rem] w-[14rem] rounded-[0.75rem]">
                 <source :src="state.video" type="video/mp4">
               </video>
               <img src="/images/close.svg" class="h-[1rem] w-[1rem] cursor-pointer absolute top-[0.5rem] right-[0.5rem]" @click="handleRemove" />
             </div>
-            <div v-if="state.fileList && state.limit == 9" class="w-[35rem] ml-[1rem]">
+            <div v-else class="w-[35rem] ml-[1rem]">
               <swiper class="commentSwiper">
                 <swiper-slide  class="bg-[#312963FF] relative text-center rounded-[0.75rem]" v-for="(item,index) in state.fileList" :key="index" >
-                  <el-image fit="scale-down" :preview-src-list="state.fileList" preview-teleported :src="item" class="h-[6rem] w-[6rem]" />
+                  <el-progress v-if="state.imgFlag && (index == state.fileList.length - 1)" :style="{position:'absolute' ,bottom:0 , 'z-index': 10}" color="red" :width="96" type="circle" :percentage="state.imgPload"></el-progress>
+                  <el-image fit="scale-down" :preview-src-list="state.fileList" preview-teleported :src="item" class="h-[6rem] w-[6rem]" >
+                    <template #error>
+                      <div class="h-[6rem] w-[6rem] bg-[#312963FF] rounded-[0.75rem]"></div>
+                    </template>
+                  </el-image>
                   <img src="/images/close.svg" class="h-[1rem] w-[1rem] cursor-pointer absolute top-[0.5rem] right-[0.5rem]" @click="imgDelete(index)" />
                 </swiper-slide>
                 <div class="swiper-button-next cursor-pointer h-[2rem] w-[2rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">
@@ -111,7 +116,7 @@ const state = reactive({
 
 const handleExceed  = (files, uploadFiles) => {
   ElMessage.warning(
-    `The limit is 3, you selected ${files.length} files this time, add up to ${
+    `The limit is 9, you selected ${files.length} files this time, add up to ${
       files.length + uploadFiles.length
     } totally`
   )
@@ -134,10 +139,13 @@ const handleBefore = (files,fileList) => {
 //在上传成功阶段 将视频转换显示
 const handleVideo = (res, file) => {
   state.videoFlag = false
+  state.imgFlag = false;
   if(res.data.file.tag == 'mp4'){
     state.video = res.data.file.url
   }
+  state.fileList.pop()
   state.fileList.push(res.data.file.url)
+  
 }
 
 //上传视频时，进度条
@@ -146,7 +154,10 @@ const uploadVideoProcess = (event, file, fileList) => {
     state.videoFlag = true;
     state.videoUploadPercent = parseInt(file.percentage.toFixed(0))
   }
+  state.imgFlag = true;
+  state.imgPload = parseInt(file.percentage.toFixed(0))
   state.elUpList = fileList
+  state.fileList.push('..')
 }
 
 //视频删除
