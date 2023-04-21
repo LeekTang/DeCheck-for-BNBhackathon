@@ -20,7 +20,7 @@
           <el-input v-model="state.textarea" type="textarea" :autosize="{minRows:6,maxRows:20}" resize="none" placeholder="Please input"/>
           <div class="flex">
             <el-upload 
-              action="http://192.168.101.12:9998/decheck-apis/plugin/decheck/api/project/apply/upload"
+              action="https://test.decheck.io/decheck-apis/plugin/decheck/api/project/apply/upload"
               :file-list="state.elUpList" 
               list-type="picture-card" :limit="state.limit" :show-file-list="false"
               :on-exceed="handleExceed" :before-upload="handleBefore" :on-success="handleVideo"
