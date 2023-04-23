@@ -16,6 +16,8 @@ import projectNav from '@/src/components/projectNav.vue'
 import projectInfo from '@/src/components/projectDet.vue'
 import projectCheck from '@/src/components/projectCheck.vue'
 import DecheckReview from '@/src/components/DecheckReview.vue'
+import { projectStore } from '@/src/stores/project'
+const proStore = projectStore();
 import { reactive } from 'vue'
 const route = useRoute();
 
@@ -23,4 +25,7 @@ const state = reactive({
   projectID: route.query.id
 })
 
+onBeforeUnmount(()=>{
+  proStore.chain = 0
+})
 </script>

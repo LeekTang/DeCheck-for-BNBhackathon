@@ -1,6 +1,45 @@
 <template>
   <div class="w-[75rem] mx-auto mt-[4rem]" v-if="Object.keys(state.goInfo).length > 0">
     <div class="text-[1.25rem] text-[#fff] font-extrabold">{{t('checkReport')}}</div>
+    <div class="w-full basic-bg rounded-[1.25rem] mt-[1.5rem]">
+      <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem] flex justify-between items-center px-[1.5rem]">
+        <p class="text-[1.25rem] font-bold text-gradient">{{t('riskCheck')}}</p>
+      </div>
+      <div class="p-[1.5rem]">
+        <div class="flex justify-between flex-wrap">
+          <template v-for="(item, index) in listOrder" :key="index" >
+            <div v-if="state.goInfo.hasOwnProperty(item.key)" class="w-[33.75rem] flex flex-col border-b-2 border-b-[#FFFFFF1C]">
+                <div class="flex items-center my-[1rem]">
+                  <template v-if="item.grade == 1">
+                    <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/warning.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+                  </template>
+                  <template v-else-if="item.grade == 2">
+                    <img :src="state.goInfo[item.key] == 1 ? '/images/warning.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+                  </template>
+                  <template v-else-if="item.grade == 3">
+                    <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/danger.svg' : '/images/warning.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+                  </template>
+                  <template v-else-if="item.grade == 4">
+                    <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+                  </template>
+                  <template v-else>
+                    <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/success.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+                  </template>
+                  <p class="text-[0.88rem]" :style="{color: state.goInfo[item.key] == 0 ? item.color0 : item.color1}">{{t(item.key + state.goInfo[item.key])}}</p>
+                </div>
+
+              <p class="text-[0.88rem] text-[#FFFFFFA8] h-[4.13rem] mb-[1rem]">{{t(item.key + 'Tips')}}</p>
+            </div>
+          </template>
+        </div>
+        <p class="text-[1rem] text-[#fff] font-bold mt-[1.5rem]">{{t('goTitle')}}</p>
+        <div class="text-[0.88rem] text-[#FFFFFFA8] leading-[1.38rem] mt-[1rem]">
+          <p>{{t('goTips1')}}</p>
+          <p>{{t('goTips2')}}</p>
+        </div>
+        <a href="https://gopluslabs.io/" target="_blank"><img src="/images/goplus.png" class="h-[1.5rem] w-[10.5rem] mt-[1.5rem] cursor-pointer"/></a>
+      </div>
+    </div>
     <div class="flex justify-between mt-[1.5rem]">
       <div class="w-[36.75rem] h-[31.5rem] rounded-[1.25rem] basic-bg">
         <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem]">
@@ -97,45 +136,6 @@
         </div>
       </div>
     </div>
-    <div class="w-full basic-bg rounded-[1.25rem] mt-[1.5rem]">
-      <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem] flex justify-between items-center px-[1.5rem]">
-        <p class="text-[1.25rem] font-bold text-gradient">{{t('riskCheck')}}</p>
-      </div>
-      <div class="p-[1.5rem]">
-        <div class="flex justify-between flex-wrap">
-          <template v-for="(item, index) in listOrder" :key="index" >
-            <div v-if="state.goInfo.hasOwnProperty(item.key)" class="w-[33.75rem] flex flex-col border-b-2 border-b-[#FFFFFF1C]">
-                <div class="flex items-center my-[1rem]">
-                  <template v-if="item.grade == 1">
-                    <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/warning.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-                  </template>
-                  <template v-else-if="item.grade == 2">
-                    <img :src="state.goInfo[item.key] == 1 ? '/images/warning.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-                  </template>
-                  <template v-else-if="item.grade == 3">
-                    <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/danger.svg' : '/images/warning.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-                  </template>
-                  <template v-else-if="item.grade == 4">
-                    <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-                  </template>
-                  <template v-else>
-                    <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/success.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-                  </template>
-                  <p class="text-[0.88rem]" :style="{color: state.goInfo[item.key] == 0 ? item.color0 : item.color1}">{{t(item.key + state.goInfo[item.key])}}</p>
-                </div>
-
-              <p class="text-[0.88rem] text-[#FFFFFFA8] h-[4.13rem] mb-[1rem]">{{t(item.key + 'Tips')}}</p>
-            </div>
-          </template>
-        </div>
-        <p class="text-[1rem] text-[#fff] font-bold mt-[1.5rem]">{{t('goTitle')}}</p>
-        <div class="text-[0.88rem] text-[#FFFFFFA8] leading-[1.38rem] mt-[1rem]">
-          <p>{{t('goTips1')}}</p>
-          <p>{{t('goTips2')}}</p>
-        </div>
-        <a href="https://gopluslabs.io/" target="_blank"><img src="/images/goplus.png" class="h-[1.5rem] w-[10.5rem] mt-[1.5rem] cursor-pointer"/></a>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -163,7 +163,7 @@ const listOrder = [
   { key: 'is_mintable', grade: 2, color1: '#FFB524', color0: '#1cb071'},
   { key: 'can_take_back_ownership', grade: 1, color1: '#FF5353', color0: '#1cb071'},
   { key: 'hidden_owner', grade: 1, color1: '#FF5353', color0: '#1cb071'},
-  { key: 'selfdestruct', grade: 2, color1: '#FFB524', color0: '#1cb071'},
+  { key: 'selfdestruct', grade: 1, color1: '#FF5353', color0: '#1cb071'},
   { key: 'external_call', grade: 2, color1: '#FFB524', color0: '#1cb071'},
   { key: 'cannot_buy', grade: 2, color1: '#FFB524', color0: '#1cb071'},
   { key: 'transfer_pausable', grade: 1, color1: '#FF5353', color0: '#1cb071'},

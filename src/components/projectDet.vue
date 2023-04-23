@@ -1,24 +1,24 @@
 <template>
   <div v-if="Object.keys(state.project).length > 0" class="w-[75rem] mx-auto mt-[1.5rem] flex">
-    <div class="info-bg rounded-[0.75rem] mr-[1.5rem]">
-      <img :src="state.project.logo" @error="imgError" class="h-[16rem] w-[16rem] rounded-[0.75rem] mt-[1.5rem] pb-1 mx-auto"/>
+    <div class="info-bg w-[17.62rem] rounded-[0.75rem] mr-[1.5rem]">
+      <img :src="state.project.logo" @error="imgError" class="h-[234px] w-[234px] rounded-[0.75rem] mt-[1.5rem] mx-auto"/>
       <div class="p-[1.5rem]">
-        <div class="flex justify-between text-[1rem] mb-[1.5rem]">
+        <div class="flex justify-between text-[0.87rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{ t('Contracts') }}</p>
-          <p class="text-[#fff] font-bold cursor-pointer" v-if="state.project.tokenAddr" @click="copyClick(state.project.tokenList[0][1])">{{state.project.tokenList ? abbr(state.project.tokenList[0][1]) : '--'}}</p>
+          <p class="text-[#fff] font-bold cursor-pointer" v-if="state.project.tokenAddr" @click="copyClick(state.project.tokenList[proStore.chain][1])">{{state.project.tokenList ? abbr(state.project.tokenList[proStore.chain][1]) : '--'}}</p>
         </div>
-        <div class="flex justify-between text-[1rem] mb-[1.5rem]">
+        <div class="flex justify-between text-[0.87rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{ t('Autids') }}</p>
           <p class="text-[#fff] font-bold">
             {{state.project.auditor}}
           </p>
         </div>
         <p class="border border-[#FFFFFF1C]"></p>
-        <p class="my-[1.5rem] text-[0.88rem] text-[#fff] ">{{ t('tips') }}</p>
-        <div class="bg-[#1E50FF] w-[21rem] h-[3.5rem] rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]" @click="reviewClick">{{ t('reviewNow') }}</div>
+        <p class="mt-[1rem] mb-[1.5rem] text-[0.88rem] text-[#fff] ">{{ t('tips') }}</p>
+        <div class="bg-[#1E50FF] w-[14.26rem] h-[2.5rem] rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[2.5rem]" @click="reviewClick">{{ t('reviewNow') }}</div>
       </div>
     </div>
-    <div class="w-[49.5rem]">
+    <div class="flex-1">
       <p class="text-[2.56rem] text-[#fff] font-bold leading-[3rem]">{{state.project.name}}</p>
       <div class="flex justify-between items-center">
         <el-rate disabled size="large" v-model="state.project.score" />
@@ -51,10 +51,13 @@ import web3js from '@/src/utils/link'
 import request from '@/src/utils/request'
 import { abbr, imgError, copyToClipBoard } from '@/src/utils/utils'
 import { userStore } from '@/src/stores/user'
-import { useI18n } from  'vue-i18n'
 const store = userStore();
-const router = useRouter()
+import { projectStore } from '@/src/stores/project'
+const proStore = projectStore();
+import { useI18n } from  'vue-i18n'
 const { t } = useI18n();
+const router = useRouter()
+
 
 const iconList = [
   {name: 'web', icon: '/images/web-icon.svg', tip: 'Official website', webSrc: ''},

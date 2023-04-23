@@ -18,9 +18,9 @@
             <el-rate disabled size="large" v-model="item.score" />
           </div>
           <div class="mt-[1.5rem] bg-[#FFFFFF1C] rounded-[0.75rem] p-[1rem]">
-            <div class="flex justify-between my-[1rem]">
+            <div class="flex justify-between mb-[1rem]">
               <div class="flex flex-wrap">
-                <p v-for="(com,index) in item.tags" :key="index" class="h-[1rem] max-w-[5rem] overflow-hidden leading-[1rem] rounded-[0.25rem] text-[0.63rem] text-[#fff] bg-[#FFFFFF1C] mr-[0.5rem] mb-[0.5rem] px-[0.5rem]">{{com}}</p>
+                <p v-for="(com,index) in item.tags" :key="index" class="h-[1rem] max-w-[5rem] overflow-hidden leading-[1rem] rounded-[0.25rem] text-[0.63rem] text-[#fff] bg-[#FFFFFF1C] mr-[0.5rem] px-[0.5rem]">{{com}}</p>
               </div>
               <div class="text-[0.75rem] text-[#FFFFFFA8]">{{timestampToTime(item.createAt)}}</div>
             </div>
@@ -114,40 +114,5 @@ onMounted(()=>{
 <style scoped>
 .common-bg{
   background: linear-gradient(225deg, #363574 0%, #2A1C52 100%);
-}
-/* 
-.swiper-slide{
-width: auto!important;
-margin-right: 15px!important;
-} */
-
-:deep(.el-input__wrapper){
-  background: #474174;
-  box-shadow: none;
-  border-radius: 1.25rem;
-}
-
-:deep(.select-trigger .el-input__wrapper){
-  height: 3.5rem;
-}
-:deep(.el-input__inner){
-  color: #fff;
-}
-
-:deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
-  background-color: #493d6a;
-  border-radius: 0.25rem;
-}
-
-:deep(.el-select-dropdown__item){
-  height: 3rem;
-  line-height: 3rem;
-  color: #fff;
-  margin: 0 0.5rem;
-}
-
-:deep(.el-popper.is-light){
-  background: #322559;
-  border: none;
 }
 </style>

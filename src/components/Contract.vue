@@ -4,7 +4,9 @@
     <div class="h-[20.94rem] bg-[#F6F5FF] rounded-[1.25rem] relative">
       <div class="w-[42.31rem] h-full py-[4rem] pl-[4rem] z-10 relative flex flex-col justify-between">
         <p class="text-[2.56rem] text-[#121D43] font-extrabold leading-[3rem]">{{ t('selfservice') }}</p>
-        <div class="h-[3.5rem] w-[11.25rem] cursor-pointer div-bg text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]">{{t('start')}}</div>
+        <NuxtLink to="/check">
+          <div class="h-[3.5rem] w-[11.25rem] cursor-pointer div-bg text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]">{{t('start')}}</div>
+        </NuxtLink>
       </div>
       <img src="/images/contract-bg.svg" class="absolute right-0 top-0">
     </div>

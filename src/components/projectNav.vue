@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center h-[3.5rem] w-[75rem] mx-auto mt-[8rem]">
-    <div class="h-full w-[4.88rem] text-center leading-[3.5rem] bg-[#322558] rounded-[0.75rem] mr-[1.5rem]" @click="back" :teleported="false">
+    <div class="h-[56px] w-[78px] text-center leading-[3.5rem] bg-[#322558] rounded-[20px] mr-[1.5rem]" @click="back" :teleported="false">
       <img src="/images/back.svg" class="inline-block"/>
     </div>
     <client-only>
@@ -96,7 +96,11 @@ onMounted(()=>{
 
 :deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
   background-color: #493d6a;
-  border-radius: 0.25rem;
+  border-radius: 8px;
+}
+
+:deep(.el-select-dropdown__wrap){
+  border-radius: 12px;
 }
 
 :deep(.el-select-dropdown__item){
@@ -108,6 +112,12 @@ onMounted(()=>{
 
 :deep(.el-popper.is-light){
   background: #322559;
+  border: none;
+}
+
+:deep(.el-popper__arrow::before){
+  height: 0px;
+  width: 0px;
   border: none;
 }
 </style>

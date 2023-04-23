@@ -17,20 +17,20 @@
         <p class="w-[8rem]">{{ t('Reviews') }}</p>
         <p class="w-[8rem]">{{ t('Score') }}</p>
       </div>
-      <div v-for="(item, index) in state.projectList" :key="index" class="flex flex-row items-center text-[0.88rem] text-[#FFFFFF] h-[4rem] border-b border-[#FFFFFF1C]">
-        <div class="w-[30rem] flex items-center cursor-pointer" @click="goUrl(item.id)">
+      <div v-for="(item, index) in state.projectList" :key="index" class="flex flex-row items-center text-[1rem] text-[#FFFFFF] h-[4rem] border-b border-[#FFFFFF1C]" @click="goUrl(item.id)">
+        <div class="w-[30rem] flex items-center cursor-pointer">
           <img :src="item.logo" class="h-[2.5rem] w-[2.5rem] bg-[#fff] rounded-[0.75rem] mr-[0.88rem]" @error="imgError"/>
           <a>{{item.name}}</a>
         </div>
         <p class="w-[8rem]">{{item.tokenName || '--'}}</p>
         <p class="w-[8rem]">{{item.chain || '--'}}</p>
-        <p class="w-[8rem]">{{item.partake || '--'}}</p>
-        <p class="w-[8rem]">{{item.Reviews || '--'}}</p>
+        <p class="w-[8rem]">{{item.partake || '0'}}</p>
+        <p class="w-[8rem]">{{item.Reviews || '0'}}</p>
         <p class="w-[8rem]"><el-rate disabled size="large" v-model="item.score" /></p>
       </div>
       <div class="flex justify-between items-center h-[4rem]">
         <client-only>
-          <el-select v-model="state.pageSize" class="h-[2rem] w-[11.25rem] m-0" size="large" :teleported="false" @change="pageSizeChange">
+          <el-select v-model="state.pageSize" class="h-[2rem] w-[11.25rem]" size="large" :teleported="false" @change="pageSizeChange">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -152,31 +152,35 @@ onMounted(()=>{
 .input-bg{
   background-color: #1E50FF;
 }
-:deep(.el-input__wrapper){
-  background: #474174;
+
+/* 下拉样式 */
+:deep(.el-select .el-input__wrapper){
+  background: #fff;
   box-shadow: none;
-  border-radius: 16px;
+  border-radius: 8px;
+  height: 2rem;
 }
 
 :deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
-  background-color: #493d6a;
-  border-radius: 0.25rem;
+  background-color: #0000001c;
+  border-radius: 0.5rem;
 }
 
 :deep(.el-select-dropdown__item){
-  height: 3rem;
-  line-height: 3rem;
-  color: #fff;
+  height: 2rem;
+  line-height: 2rem;
+  color: #121D43;
   margin: 0 0.5rem;
 }
 
 :deep(.el-popper.is-light){
-  background: #322559;
+  background: #fff;
   border: none;
 }
 
 :deep(.el-input__inner){
-  color: #fff;
+  color: #121D43;
+;
 }
 
 /* 分页样式修改 */

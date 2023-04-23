@@ -19,7 +19,9 @@
           <p class="text-[2.56rem] text-[#121D43] font-extrabold leading-[3rem]">{{t('publicitytitle')}}</p>
           <p class="text-[1.44rem] text-[#121D43a8] font-normal leading-[1.75rem] mt-[1.5rem]">{{ t('publicitytip') }}</p>
         </div>
-        <div class="h-[3.5rem] w-[11.25rem] div-bg cursor-pointer text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]">{{ t('Explorer') }}</div>
+        <NuxtLink to="/explorer">
+          <div class="h-[3.5rem] w-[11.25rem] div-bg cursor-pointer text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]">{{ t('Explorer') }}</div>
+        </NuxtLink>
       </div>
       <img src="/images/intro-bg.svg" class="absolute right-0">
     </div>

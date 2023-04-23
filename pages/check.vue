@@ -15,11 +15,11 @@ import DetailsNav from '@/src/components/DetailsNav.vue'
 import DetailsInfo from '@/src/components/DetailstInfo.vue'
 import CheckReport from '@/src/components/CheckReport.vue'
 import CheckBottom from '@/src/components/checkBottom.vue'
-import { storeToRefs } from 'pinia'
-
 import {  onMounted, onBeforeUnmount} from 'vue'
 import { userStore } from '@/src/stores/user'
 const store = userStore()
+import { projectStore } from '@/src/stores/project'
+const proStore = projectStore();
 
 onBeforeUnmount(()=>{
   store.searchInfo = ''
@@ -27,14 +27,6 @@ onBeforeUnmount(()=>{
   store.search = ''
   store.tokenAddr = ""
   store.tokenID = ""
-  console.log('页面销毁')
+  proStore.chain = 0
 })
-
-
-const { searchProjectInfo } = storeToRefs( store )
-watch(searchProjectInfo,(old,nwo)=>{
-  console.log(searchProjectInfo.value)
-})
-
-
 </script>

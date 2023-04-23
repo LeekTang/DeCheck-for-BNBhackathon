@@ -4,18 +4,10 @@
     <div class="mt-[1.5rem]">
       <swiper class="hotSwiper">
         <swiper-slide class="swiper-no-swiping" v-for="(item,index) in state.hotPorject" :key="index">
-          <div class="h-[26.13rem] w-[24rem] bg-[#FFFFFF] rounded-[1.25rem] relative" @click="goUrl(item.id)">
-            <img :src="item.logo" class="w-full h-[18rem] rounded-[1.25rem]" @error="imgError"/>
-            <div class="h-[8.13rem] w-full absolute bottom-0 left-0 reviews rounded-[1.25rem] p-[1.5rem] flex flex-col justify-between">
-              <p class="text-[1.13rem] text-[#121D43] font-bold">{{item.name}}</p>
-              <div class="flex justify-between">
-                <div class="flex items-center">
-                  <div class="h-[2.5rem] w-[2.5rem] bg-[#E6E6E6] rounded-full mr-[0.63rem]"></div>
-                  <div class="text-[0.75rem] text-[#121D43] font-bold">{{item.tokenList ? abbr(item.tokenList[0][1]) : '--'}}</div>
-                </div>
-                <el-rate disabled size="large" v-model="item.score" />
-              </div>
-            </div>
+          <div class="h-[23rem] w-[17.62rem] swbg rounded-[1.25rem] p-[1.25rem]" @click="goUrl(item.id)">
+            <img :src="item.logo" class="w-[14.62rem] h-[14.62rem] rounded-[0.75rem]" @error="imgError"/>
+            <p class="text-[1rem] text-[#fff] mt-[1rem] text-ellipsis h-[40px]">{{item.name}}</p>
+            <el-rate disabled size="large" v-model="item.score" />
           </div>
         </swiper-slide>
         <div class="swiper-button-next h-[4rem] w-[4rem] absolute right-[1rem] top-[50%] translate-y-[-50%] z-50">
@@ -61,24 +53,38 @@ const getHotProject = () => {
       }
     });
     state.hotPorject = res
+    new Swipers('.hotSwiper',{
+      slidesPerView: 4,
+      loop:true,
+      observer:true,
+      observeParents:true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false
+      }
+    })
   })
 }
 
 onMounted(()=>{
-  new Swipers('.hotSwiper',{
-    slidesPerView: 3,
-    loop:true,
-    observer:true,
-    observeParents:true,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false
-    }
-  })
   getHotProject();
 })
 </script>
+
+<style scoped>
+.swbg{
+  background: linear-gradient(262.88deg, #363574 0%, #2A1C52 99.99%);
+}
+
+.text-ellipsis{
+  overflow:hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+</style>

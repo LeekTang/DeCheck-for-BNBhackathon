@@ -1,6 +1,10 @@
-<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Group 171">
-<path id="Polygon 8" d="M7.14251 3.42916C7.53091 2.78182 8.46909 2.78182 8.85749 3.42915L13.0913 10.4855C13.4912 11.152 13.0111 12 12.2338 12H3.76619C2.9889 12 2.50878 11.152 2.9087 10.4855L7.14251 3.42916Z" fill="#FF5353"/>
-<path id="Vector 47" d="M8 6.5V10" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_193_713" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+<rect width="24" height="24" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_193_713)">
+<path d="M3 6C3 4.89543 3.89543 4 5 4H7L10.971 1.6174C11.6044 1.23738 12.3956 1.23738 13.029 1.61739L17 4H19C20.1046 4 21 4.89543 21 6V13.4075C21 15.6926 20.0228 17.8686 18.3149 19.3867L15.9862 21.4567C13.7129 23.4775 10.2871 23.4775 8.01382 21.4567L5.68509 19.3867C3.97718 17.8686 3 15.6926 3 13.4075V6Z" fill="#FF5353" stroke="white" stroke-width="2"/>
+<path d="M12 7V13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 16V17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </svg>

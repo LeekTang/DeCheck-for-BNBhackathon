@@ -1,6 +1,50 @@
 <template>
   <div class="w-[75rem] mx-auto mt-[4rem]" v-if="Object.keys(state.goInfo).length > 0">
     <div class="text-[1.25rem] text-[#fff] font-extrabold">{{ t('checkReport') }}</div>
+    <client-only>
+      <el-select v-model="proStore.chain" class="h-[3.5rem] w-[11.25rem] mt-[1.5rem]" size="large" @change="chainChange" :teleported="false">
+        <el-option v-for="(item,index) in state.tokenList" :key="item[0]" :label="item.chain" :value="index"/>
+      </el-select>
+    </client-only>
+    <div class="w-full basic-bg rounded-[1.25rem] mt-[1.5rem]">
+      <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem] flex justify-between items-center px-[1.5rem]">
+        <p class="text-[1.25rem] font-bold text-gradient">{{ t('riskCheck') }}</p>
+        <div class="text-[#FFFFFF] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between" @click="jumpClick">
+          <p class="h-[1rem] leading-[14px]">{{ t('viewDetails') }}</p>
+          <img src="/images/jump.svg" class="h-[1rem] w-[1rem]">
+        </div>
+      </div>
+      <div class="p-[1.5rem]" v-loading="state.load" element-loading-background="rgba(122, 122, 122, 0.8)" element-loading-text="Loading...">
+        <div class="flex justify-between flex-wrap">
+          <template v-for="(item, index) in listOrder" :key="index">
+            <div v-if="state.goInfo.hasOwnProperty(item.key)" class="h-[3.5rem] w-[33.75rem] flex items-center border-b-2 border-b-[#FFFFFF1C]">
+              <template v-if="item.grade == 1">
+                <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/warning.svg')" class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
+              </template>
+              <template v-else-if="item.grade == 2">
+                <img :src="state.goInfo[item.key] == 1 ? '/images/warning.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/danger.svg')" class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
+              </template>
+              <template v-else-if="item.grade == 3">
+                <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/danger.svg' : '/images/warning.svg')" class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
+              </template>
+              <template v-else-if="item.grade == 4">
+                <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/danger.svg')" class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
+              </template>
+              <template v-else>
+                <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/success.svg')" class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
+              </template>
+              <p class="text-[1rem]" :style="{color: state.goInfo[item.key] == 0 ? item.color0 : item.color1}">{{t(item.key + state.goInfo[item.key])}}</p>
+            </div>
+          </template>
+        </div>
+        <p class="text-[1rem] text-[#fff] font-bold mt-[1.5rem]">{{t('goTitle')}}</p>
+        <div class="text-[0.88rem] text-[#FFFFFFA8] leading-[1.38rem] mt-[1rem]">
+          <p>{{t('goTips1')}}</p>
+          <p>{{t('goTips2')}}</p>
+        </div>
+        <a href="https://gopluslabs.io/" target="_blank"><img src="/images/goplus.png" class="h-[1.5rem] w-[10.5rem] mt-[1.5rem] cursor-pointer"/></a>
+      </div>
+    </div>
     <div class="flex justify-between mt-[1.5rem]">
       <div class="w-[36.75rem] h-[31.5rem] rounded-[1.25rem] basic-bg">
         <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem]">
@@ -14,7 +58,7 @@
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('tokenContractAddress') }}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.tokenList" @click="copyClick(state.tokenList[0][1])">{{abbr(state.tokenList[0][1])}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.tokenList" @click="copyClick(state.tokenList[proStore.chain][1])">{{abbr(state.tokenList[proStore.chain][1])}}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
@@ -38,10 +82,12 @@
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('Website') }}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
-              Hexarhong.com
-              <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
-            </p>
+            <a :href="state.projectInfo.website" target="_blank">
+              <p class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
+                {{state.projectInfo.website}}
+                <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
+              </p>
+            </a>
           </div>
         </div>
       </div>
@@ -56,86 +102,46 @@
           </div>
           <div class="h-[3.5rem] flex justify-between items-center">
             <p class="text-[#FFFFFFA8]">DEX</p>
-            <div class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
+            <div class="text-[#FFFFFF] text-[0.75rem] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
               <p v-if="state.goInfo.dex">{{state.goInfo.dex[0].name}}</p>
               <p v-else>--</p>
               <div class="flex items-center">
                 Tread
-                <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
+                <img src="/images/out.svg" class="h-[1rem] w-[1rem] ml-[1rem]">
               </div>
             </div>
           </div>
           <div class="flex justify-between">
-            <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem] flex flex-col justify-between">
-              <div class="flex justify-between">
-                <p class="text-[1.25rem] text-[#fff] font-medium">{{ t('buyTax') }}</p>
-                <p class="text-[1.5rem] text-[#11B466] font-bold">{{state.goInfo.buy_tax || '-'}}</p>
+            <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem]">
+              <div class="flex justify-between leading-[1rem]">
+                <p class="text-[1rem] text-[#fff] font-medium">{{ t('buyTax') }}</p>
+                <p class="text-[1rem] text-[#11B466] font-bold">{{state.goInfo.buy_tax || '-'}}</p>
               </div>
-              <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.15rem] bg-[#ffffff14] rounded-[0.5rem]">
+              <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.12rem] bg-[#ffffff14] rounded-[0.5rem] my-[1rem]">
                 <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
                 <p class="text-[1rem] text-[#ffffff54] mt-[1rem]">Tax details not found</p>
               </div>
-              <div class="flex justify-between">
-                <p class="text-[1.25rem] text-[#fff] font-medium">Buy Gas</p>
-                <p class="text-[1.5rem] text-[#11B466] font-bold">{{state.goInfo.buyGas || '-'}}</p>
+              <div class="flex justify-between leading-[1rem]">
+                <p class="text-[1rem] text-[#fff] font-medium">Buy Gas</p>
+                <p class="text-[1rem] text-[#11B466] font-bold">{{state.goInfo.buyGas || '-'}}</p>
               </div>
             </div>
-            <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem] flex flex-col justify-between">
-              <div class="flex justify-between">
-                <p class="text-[1.25rem] text-[#fff] font-medium">{{ t('sellTax') }}</p>
-                <p class="text-[1.5rem] text-[#FF5353FF] font-bold">{{state.goInfo.sell_tax || '-'}}</p>
+            <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem]">
+              <div class="flex justify-between leading-[1rem]">
+                <p class="text-[1rem] text-[#fff] font-medium">{{ t('sellTax') }}</p>
+                <p class="text-[1rem] text-[#FF5353FF] font-bold">{{state.goInfo.sell_tax || '-'}}</p>
               </div>
-              <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.15rem] bg-[#ffffff14] rounded-[0.5rem]">
+              <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.12rem] bg-[#ffffff14] rounded-[0.5rem] my-[1rem]">
                 <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
                 <p class="text-[1rem] text-[#ffffff54] mt-[1rem]">Tax details not found</p>
               </div>
-              <div class="flex justify-between">
-                <p class="text-[1.25rem] text-[#fff] font-medium">Sell Gas</p>
-                <p class="text-[1.5rem] text-[#FF5353FF] font-bold">{{state.goInfo.sellGas || '-'}}</p>
+              <div class="flex justify-between leading-[1rem]">
+                <p class="text-[1rem] text-[#fff] font-medium">Sell Gas</p>
+                <p class="text-[1rem] text-[#FF5353FF] font-bold">{{state.goInfo.sellGas || '-'}}</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="w-full basic-bg rounded-[1.25rem] mt-[1.5rem]">
-      <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem] flex justify-between items-center px-[1.5rem]">
-        <p class="text-[1.25rem] font-bold text-gradient">{{ t('riskCheck') }}</p>
-        <p class="text-[#FFFFFF] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
-          {{ t('viewDetails') }}
-          <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
-        </p>
-      </div>
-      <div class="p-[1.5rem]">
-        <div class="flex justify-between flex-wrap">
-          <template v-for="(item, index) in listOrder" :key="index">
-            <div v-if="state.goInfo.hasOwnProperty(item.key)" class="h-[3.5rem] w-[33.75rem] flex items-center border-b-2 border-b-[#FFFFFF1C]">
-              
-              <template v-if="item.grade == 1">
-                <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/warning.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-              </template>
-              <template v-else-if="item.grade == 2">
-                <img :src="state.goInfo[item.key] == 1 ? '/images/warning.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-              </template>
-              <template v-else-if="item.grade == 3">
-                <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/danger.svg' : '/images/warning.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-              </template>
-              <template v-else-if="item.grade == 4">
-                <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-              </template>
-              <template v-else>
-                <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/success.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-              </template>
-              <p class="text-[0.88rem]" :style="{color: state.goInfo[item.key] == 0 ? item.color0 : item.color1}">{{t(item.key + state.goInfo[item.key])}}</p>
-            </div>
-          </template>
-        </div>
-        <p class="text-[1rem] text-[#fff] font-bold mt-[1.5rem]">{{t('goTitle')}}</p>
-        <div class="text-[0.88rem] text-[#FFFFFFA8] leading-[1.38rem] mt-[1rem]">
-          <p>{{t('goTips1')}}</p>
-          <p>{{t('goTips2')}}</p>
-        </div>
-        <a href="https://gopluslabs.io/" target="_blank"><img src="/images/goplus.png" class="h-[1.5rem] w-[10.5rem] mt-[1.5rem] cursor-pointer"/></a>
       </div>
     </div>
   </div>
@@ -149,6 +155,9 @@ import { useI18n } from  'vue-i18n'
 const { t,locale } = useI18n();
 import { userStore } from '@/src/stores/user'
 const store = userStore();
+import { projectStore } from '@/src/stores/project'
+const proStore = projectStore();
+const router = useRouter()
 
 const listOrder = [
   { key: 'is_honeypot', grade: 1, color1: '#FF5353', color0: '#1cb071'},
@@ -161,7 +170,7 @@ const listOrder = [
   { key: 'is_mintable', grade: 2, color1: '#FFB524', color0: '#1cb071'},
   { key: 'can_take_back_ownership', grade: 1, color1: '#FF5353', color0: '#1cb071'},
   { key: 'hidden_owner', grade: 1, color1: '#FF5353', color0: '#1cb071'},
-  { key: 'selfdestruct', grade: 2, color1: '#FFB524', color0: '#1cb071'},
+  { key: 'selfdestruct', grade: 1, color1: '#FF5353', color0: '#1cb071'},
   { key: 'external_call', grade: 2, color1: '#FFB524', color0: '#1cb071'},
   { key: 'cannot_buy', grade: 2, color1: '#FFB524', color0: '#1cb071'},
   { key: 'transfer_pausable', grade: 1, color1: '#FF5353', color0: '#1cb071'},
@@ -180,7 +189,9 @@ const props = defineProps({
 
 const state = reactive({
   goInfo: {},
-  tokenList: []
+  tokenList: [],
+  projectInfo: {},
+  load: false
 })
 
 const chainList = [
@@ -206,13 +217,36 @@ const chainList = [
 
 const projectInfo = () => {
   request.get(`/plugin/decheck/api/project/detail/${props.projectID}`).then((res) => {
+    state.projectInfo = res
     if(res.tokenAddr){
       state.tokenList = res.tokenList = Object.entries(res.tokenAddr)
-      request.get(`/plugin/decheck/api/security/token/${res.tokenList[0][0]}/${res.tokenList[0][1]}`).then((ress) => {
-        state.goInfo = ress
+      state.tokenList.forEach(ele => {
+        chainList.forEach(chainItem => {
+          if(ele[0] == chainItem.id){
+            ele.chain = chainItem.label
+          }
+        })
       })
+      getCheck()
     }
   })
+}
+
+const getCheck = () => {
+  state.load = true
+  request.get(`/plugin/decheck/api/security/token/${state.tokenList[proStore.chain][0]}/${state.tokenList[proStore.chain][1]}`).then((res) => {
+    if(res != null){
+      state.goInfo = res
+    }else{
+      state.goInfo = {}
+    }
+    state.load = false
+  })
+}
+
+const chainChange = (val) => {
+  proStore.chain = val
+  getCheck()
 }
 
 const copyClick = (val) => {
@@ -220,6 +254,20 @@ const copyClick = (val) => {
     copyToClipBoard(val);
     ElMessage.success(t('copySuccess'))
   }
+}
+
+const jumpClick = () => {
+  console.log(proStore.chain,state.tokenList[proStore.chain][0],state.tokenList[proStore.chain][1])
+  router.push({
+    name: 'check',
+    query: {
+      chain : state.tokenList[proStore.chain][0],
+      searchInput: state.tokenList[proStore.chain][1]
+    }
+  })
+  request.get(`/plugin/decheck/api/security/token/${state.tokenList[proStore.chain][0]}/${state.tokenList[proStore.chain][1]}`).then((res) => {
+    store.searchInfo = res
+  })
 }
 
 onMounted(() => {

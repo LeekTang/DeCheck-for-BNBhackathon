@@ -1,6 +1,9 @@
-<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Group 153">
-<path id="Rectangle 179" d="M3 6C3 4.34315 4.34315 3 6 3H10C11.6569 3 13 4.34315 13 6V10C13 11.6569 11.6569 13 10 13H8H6C4.34315 13 3 11.6569 3 10V6Z" fill="#FFB524"/>
-<path id="Vector 46" d="M6 8L10 8" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_193_709" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+<rect width="24" height="24" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_193_709)">
+<path d="M3 6C3 4.89543 3.89543 4 5 4H7L10.971 1.6174C11.6044 1.23738 12.3956 1.23738 13.029 1.61739L17 4H19C20.1046 4 21 4.89543 21 6V13.4075C21 15.6926 20.0228 17.8686 18.3149 19.3867L15.9862 21.4567C13.7129 23.4775 10.2871 23.4775 8.01382 21.4567L5.68509 19.3867C3.97718 17.8686 3 15.6926 3 13.4075V6Z" fill="#FFB524" stroke="white" stroke-width="2"/>
+<path d="M8 12H15.9997" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </svg>

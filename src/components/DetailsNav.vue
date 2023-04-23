@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-start w-[75rem] mx-auto mt-[8rem]">
     <client-only>
-      <el-select v-model="state.chain" class="h-[3.5rem] w-[11.25rem] mr-[1.5rem]" size="large" :teleported="false">
+      <el-select v-model="state.chain" class="h-[3.5rem] w-[11.25rem] mr-[1.5rem]" :teleported="false">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
       </el-select>
     </client-only>
@@ -123,34 +123,14 @@ onMounted(()=>{
   background-color: #1E50FF;
 }
 
-:deep(.el-input__wrapper){
-  background: #474174;
-  box-shadow: none;
-  border-radius: 20px;
-}
-
-:deep(.select-trigger .el-input__wrapper){
-  height: 3.5rem;
-}
-:deep(.el-input__inner){
-  color: #fff;
-}
-
-:deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
-  background-color: #493d6a;
-  border-radius: 0.25rem;
-}
-
-:deep(.el-select-dropdown__item){
-  height: 3rem;
-  line-height: 3rem;
-  color: #fff;
-  margin: 0 0.5rem;
-}
-
-:deep(.el-popper.is-light){
-  background: #322559;
+:deep(.el-popper__arrow::before){
+  height: 0px;
+  width: 0px;
   border: none;
-  
+}
+
+:deep(.el-rate__icon){
+  font-size: 19px;
+  margin-right: 3px;
 }
 </style>
