@@ -12,7 +12,7 @@
             <div class="mt-[2rem] text-[1.13rem] text-[#121D43] font-bold only">{{item.projectName}}</div>
             <div class="mt-[0.6rem] text-[0.88rem] text-[#121D43A8] leading-[1.13rem] font-medium text-ellipsis">{{item.content}}</div>
             <div class="h-[5.5rem] w-full absolute bottom-0 left-0 reviews rounded-[1.25rem] p-[1.5rem] flex items-center">
-              <div class="h-[2.5rem] w-[2.5rem] bg-[#E6E6E6FF] rounded-full mr-[0.63rem]"></div>
+              <img src="/images/avatar.png" class="h-[2.5rem] w-[2.5rem] rounded-full mr-[0.63rem]">
               <div class="text-[0.88rem] text-[#FFFFFF] font-medium">0xe04C...1Bc2</div>
             </div>
           </div>

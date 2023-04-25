@@ -144,3 +144,34 @@ export function matchType(fileName) {
   result = 'other';
   return result;
 }
+
+export function getColor(val) {
+  return '#' + getHashCode(val).toString(16).substr(0,6)
+}
+
+function getHashCode (str) {
+  var hash = 1315423911,i,ch;
+  for (i = str.length; i >= 0; i--){
+    ch = str.charCodeAt(i);
+    hash ^= ((hash << 5) + ch + (hash >> 2));
+  }
+  return (hash & 0x7FFFFFFF)
+}
+
+export const webList = [
+  {chain: '1', web: 'https://etherscan.io/',suffix: '#balances'},
+  {chain: '10', web: 'https://optimistic.etherscan.io/',suffix: '#balances'},
+  {chain: '25', web: 'https://cronoscan.com/',suffix: '#balances'},
+  {chain: '56', web: 'https://bscscan.com/',suffix: '#balances'},
+  {chain: '100', web: 'https://blockscout.com/xdai/mainnet/',suffix: '/token-holders'},
+  {chain: '128', web: 'https://www.hecoinfo.com/en-us/',suffix: '?tab=Holders'},
+  {chain: '137', web: 'https://polygonscan.com/address',suffix: '#balances'},
+  {chain: '250', web: 'https://ftmscan.com/',suffix: '#balances'},
+  {chain: '321', web: 'https://explorer.kcc.io/en/',suffix: ''},
+  {chain: '324', web: 'https://explorer.zksync.io/',suffix: '#transactions'},
+  {chain: '201022', web: 'https://fonscan.io/',suffix: '/token-holders'},
+  {chain: '42161', web: 'https://arbiscan.io/',suffix: '#balances'},
+  {chain: '43114', web: 'https://avascan.info/blockchain/all/',suffix: '/holders'},
+  {chain: '1666600000', web: 'https://explorer.harmony.one/',suffix: '?activeTab=4'},
+  {chain: 'tron', web: 'https://tronscan.org/#/',suffix: '/holders'},
+]

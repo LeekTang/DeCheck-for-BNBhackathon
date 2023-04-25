@@ -1,7 +1,7 @@
 <template>
   <div class="relative w-full text-gray-700 bg-[#190A43] min-h-screen">
     <HeaderView />
-    <div class="w-[75rem] mx-auto mt-[8rem]">
+    <div class="w-[75rem] mx-auto mt-[6.5rem]">
       <div class="h-full w-[4.88rem] text-center leading-[3.5rem] bg-[#322558] cursor-pointer rounded-[0.75rem] mr-[1.5rem]" @click="back">
         <img src="/images/back.svg" class="inline-block"/>
       </div>
@@ -116,7 +116,7 @@ const state = reactive({
 
 const handleExceed  = (files, uploadFiles) => {
   ElMessage.warning(
-    `The limit is 9, you selected ${files.length} files this time, add up to ${
+    `The limit is ${state.limit}, you selected ${files.length} files this time, add up to ${
       files.length + uploadFiles.length
     } totally`
   )
@@ -127,6 +127,8 @@ const handleBefore = (files,fileList) => {
     if(files.type == 'video/mp4'){
       ElMessage.error('视频和图片不能共传')
       return false
+    }else{
+      state.fileList.push('..')
     }
   }else{
     if(files.type == 'video/mp4'){
@@ -142,10 +144,10 @@ const handleVideo = (res, file) => {
   state.imgFlag = false;
   if(res.data.file.tag == 'mp4'){
     state.video = res.data.file.url
+  }else{
+    state.fileList.pop()
   }
-  state.fileList.pop()
   state.fileList.push(res.data.file.url)
-  
 }
 
 //上传视频时，进度条
@@ -153,11 +155,11 @@ const uploadVideoProcess = (event, file, fileList) => {
   if(file.raw.type == 'video/mp4'){
     state.videoFlag = true;
     state.videoUploadPercent = parseInt(file.percentage.toFixed(0))
+  }else{
+    state.imgFlag = true;
+    state.imgPload = parseInt(file.percentage.toFixed(0))
   }
-  state.imgFlag = true;
-  state.imgPload = parseInt(file.percentage.toFixed(0))
   state.elUpList = fileList
-  state.fileList.push('..')
 }
 
 //视频删除

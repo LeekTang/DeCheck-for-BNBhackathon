@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center h-[3.5rem] w-[75rem] mx-auto mt-[8rem]">
+  <div class="flex items-center h-[3.5rem] w-[75rem] mx-auto mt-[6.5rem]">
     <div class="h-[56px] w-[78px] text-center leading-[3.5rem] bg-[#322558] rounded-[20px] mr-[1.5rem]" @click="back" :teleported="false">
       <img src="/images/back.svg" class="inline-block"/>
     </div>
@@ -29,20 +29,29 @@ const router = useRouter()
 const store = userStore()
 
 const state = reactive({
-  chain: 1,
+  chain: "1",
   searchInput: ''
 })
 
 const options = [
-  { value: 1, label: 'ETH', },
-  { value: 10, label: 'Optimism', },
-  { value: 25, label: 'Cronos', },
-  { value: 56, label: 'BSC', },
-  { value: 66, label: 'OKC', },
-  { value: 100, label: 'Gnosis', },
-  { value: 128, label: 'HECO', },
-  { value: 137, label: 'Polygon', },
-  { value: 250, label: 'Fantom', },
+  { value: "1", label: "Ethereum" },
+  { value: "10", label: "Optimism" },
+  { value: "25", label: "Cronos" },
+  { value: "56", label: "BSC" },
+  { value: "66", label: "OKC" },
+  { value: "100", label: "Gnosis" },
+  { value: "128", label: "Heco" },
+  { value: "137", label: "Polygon" },
+  { value: "250", label: "Fantom" },
+  { value: "321", label: "KCC" },
+  { value: "324", label: "zkSync Era" },
+  { value: "10001", label: "ETHW" },
+  { value: "201022", label: "FON" },
+  { value: "42161", label: "Arbitrum" },
+  { value: "43114", label: "Avalanche" },
+  { value: "59140", label: "Linea" },
+  { value: "1666600000", label: "Harmony" },
+  { value: "tron", label: "Tron" },
 ]
 
 const back = () => {

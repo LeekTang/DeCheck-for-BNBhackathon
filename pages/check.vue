@@ -30,3 +30,16 @@ onBeforeUnmount(()=>{
   proStore.chain = 0
 })
 </script>
+
+<style scoped>
+:deep(.el-dialog){
+  border-radius: 20px;
+  background: url('/images/diabg.png') no-repeat;
+  background-size: 100% 100%;
+}
+
+:deep(.el-dialog__header){
+  margin: 0;
+  padding-top: 10px;
+}
+</style>

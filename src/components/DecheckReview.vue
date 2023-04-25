@@ -2,7 +2,7 @@
   <div class="w-[75rem] mx-auto mt-[4rem]  mb-[14rem]" v-if="state.comments">
     <div class="text-[1.25rem] text-[#fff] font-extrabold">DECHECK REVIEW</div>
     <client-only>
-      <el-select v-model="state.selectValue" class="h-[3.5rem] w-[11.25rem] my-[1.5rem]" size="large" :teleported="false">
+      <el-select v-model="state.selectValue" class="h-[3.5rem] w-[17.62rem] my-[1.5rem]" size="large" :teleported="false" @change="sortClick">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
       </el-select>
     </client-only>
@@ -11,9 +11,9 @@
         <div v-for="(item, index) in state.comments" :key="index" class="w-full common-bg p-[1.5rem] rounded-[0.75rem] mb-[1.75rem]">
           <div class="flex justify-between items-start">
             <div class="flex items-center">
-              <div class="h-[2.5rem] w-[2.5rem] rounded-full bg-[#e6e6e6] mr-[0.63rem]"></div>
+              <img src="/images/avatar.png" class="h-[2.5rem] w-[2.5rem] rounded-full bg-[#e6e6e6] mr-[0.63rem]" />
               <div class="mr-[0.63rem] text-[0.75rem] text-[#FFFFFFA8] font-bold">{{abbr(item.userId)}}</div>
-              <div class="flex items-center h-[1rem] px-[0.5rem] py-[0.19rem] bg-[#11B466FF] rounded-[1.25rem] text-[#fff] text-[0.63rem] font-semibold">Reviewed: {{item.reviewed || '--'}}</div>
+              <div class="flex items-center h-[1rem] px-[0.5rem] py-[0.19rem] bg-[#11B466FF] rounded-[1.25rem] text-[#fff] text-[0.63rem] font-semibold">Reviewed: {{item.reviewed}}</div>
             </div>
             <el-rate disabled size="large" v-model="item.score" />
           </div>
@@ -27,14 +27,14 @@
             <div class="text-[0.88rem] text-[#fff] leading-[1.25rem]">{{item.content}}</div>
           </div>
           <div v-if="item.video" class="h-[11.63rem] w-[46.5rem] bg-[#FFFFFF1C] rounded-[0.75rem] mt-[1.5rem] flex justify-center items-center">
-            <video class="h-[8.63rem] w-[43.44rem] rounded-[0.75rem]" v-for="(video,index) in item.attachment" :key="index" controls autoplay>
+            <video class="h-[8.63rem] w-[43.44rem] rounded-[0.75rem]" v-for="(video,index) in item.attachment" :key="index" controls>
               <source :src="video" type="video/mp4">
             </video>
           </div>
           <div v-if="item.image" class="mt-[1.5rem] w-full bg-[#FFFFFF1C] py-[1.5rem] rounded-[0.75rem]">
             <swiper :class="`swiperc${index}`">
               <swiper-slide  v-for="(icon,index) in item.attachment" :key="index">
-                <el-image fit="scale-down" :preview-src-list="item.attachment" preview-teleported :src="icon" class="w-[8.63rem] h-[8.63rem] bg-[#312963FF] rounded-[0.75rem] ml-[0.75rem]"/>
+                <el-image fit="scale-down" :preview-src-list="item.attachment" :initial-index="index" preview-teleported :src="icon" class="w-[8.63rem] h-[8.63rem] bg-[#312963FF] rounded-[0.75rem] ml-[0.75rem]"/>
               </swiper-slide>
               <div class="swiper-button-next h-[4rem] w-[4rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">
                 <img src="/images/project-right.svg" class="h-[4rem] w-[4rem]">
@@ -44,9 +44,11 @@
               </div>
             </swiper>
           </div>
-          <div :class="`${item.islike ? 'bg-[#fff] text-[#121D43FF]' : 'text-[#FFFFFFA8]'} h-[2rem] w-[4.88rem] mt-[1.5rem] flex items-center justify-center border-2 border-[#FFFFFFA8] rounded-[0.75rem]`">
-            <img :src="item.islike ? '/images/like.svg' : '/images/notlike.svg'" class="h-[1rem] w-[1rem] mr-[0.5rem]">
-            <p>{{item.like || '--'}}</p>
+          <div 
+            :class="`${item.liked ? 'bg-[#fff] text-[#121D43FF]' : 'text-[#FFFFFFA8]'} h-[2rem] w-[4.88rem] mt-[1.5rem] 
+            flex items-center justify-center border-2 border-[#FFFFFFA8] rounded-[0.75rem] cursor-pointer`" @click="likeClick(item.id)">
+            <img :src="item.liked ? '/images/like.svg' : '/images/notlike.svg'" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+            <p>{{item.helpful}}</p>
           </div>
         </div>
       </div>
@@ -55,7 +57,7 @@
 </template>
 
 <script setup>
-import { ElRate,ElImage } from 'element-plus'
+import { ElRate,ElImage, ElMessage } from 'element-plus'
 import SwiperCore, {Autoplay, Navigation} from 'swiper'
 import Swipers from 'swiper'
 import { onMounted,ref, reactive, defineProps } from 'vue'
@@ -64,9 +66,8 @@ import { abbr,timestampToTime, matchType } from '@/src/utils/utils'
 SwiperCore.use([Autoplay,Navigation])
 
 const options = [
-  { value: 1, label: 'all', },
-  { value: 2, label: 'latest', },
-  { value: 3, label: 'hottest', },
+  { value: 1, label: 'latest', },
+  { value: 2, label: 'hottest', },
 ]
 
 const props = defineProps({
@@ -81,14 +82,14 @@ const state = reactive({
 })
 
 const projectInfo = () => {
-  request.get(`/plugin/decheck/api/project/detail/review/${props.projectID}`).then((res) => {
-    if(res){
-      state.comments = res
+  request.get(`/plugin/decheck/api/project/detail/review/page/${props.projectID}?page=1&pageSize=50&sort=${state.selectValue}`).then((res) => {
+    if(res.list){
+      state.comments = res.list
       state.comments.forEach((el,index) => {
         if(el.attachment){
           if(matchType(el.attachment[0]) == 'video' && el.attachment.length == 1){
             el.video = true
-          }else if(matchType(el.attachment[0]) == 'image' && el.attachment.length > 1){
+          }else if(matchType(el.attachment[0]) == 'image' && el.attachment.length >= 1){
             el.image = true
             setTimeout(() => {
               new Swipers(`.swiperc${index}`,{
@@ -106,6 +107,21 @@ const projectInfo = () => {
   })
 }
 
+const likeClick = (id) => {
+  request.get(`/plugin/decheck/api/user/review/like/${id}`).then(res => {
+    projectInfo()
+    if(res == 1){
+      ElMessage.success('点赞成功')
+    }else if (res == 0){
+      ElMessage.warning('取消点赞')
+    }
+  })
+}
+
+const sortClick = (val) => {
+  projectInfo()
+}
+
 onMounted(()=>{
   projectInfo()
 })
@@ -114,5 +130,34 @@ onMounted(()=>{
 <style scoped>
 .common-bg{
   background: linear-gradient(225deg, #363574 0%, #2A1C52 100%);
+}
+
+/* 下拉选择样式 */
+:deep(.el-input__wrapper){
+  height: 3.5rem;
+  background-color: #474174;
+  box-shadow: none;
+  border-radius: 20px;
+}
+
+:deep(.el-input__inner){
+  color: #fff;
+}
+
+:deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
+  background-color: #493d6a;
+  border-radius: 0.25rem;
+}
+
+:deep(.el-select-dropdown__item){
+  height: 3rem;
+  line-height: 3rem;
+  color: #fff;
+  margin: 0 0.5rem;
+}
+
+:deep(.el-popper.is-light){
+  background-color: #322559;
+  border: none;
 }
 </style>

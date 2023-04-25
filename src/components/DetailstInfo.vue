@@ -1,21 +1,24 @@
 <template>
   <div v-if="Object.keys(state.project).length > 0" class="w-[75rem] mx-auto mt-[1.5rem] flex">
-    <div class="info-bg rounded-[0.75rem] mr-[1.5rem]">
-      <img :src="state.project.logo" @error="imgError" class="h-[16rem] w-[16rem] rounded-[0.75rem] mt-[1.5rem] pb-1 mx-auto"/>
+    <div class="info-bg w-[17.62rem] rounded-[0.75rem] mr-[1.5rem]">
+      <img :src="state.project.logo" @error="imgError" class="h-[14.62rem] w-[14.62rem] rounded-[0.75rem] mt-[1.5rem] mx-auto"/>
       <div class="p-[1.5rem]">
-        <div class="flex justify-between text-[1rem] mb-[1.5rem]">
+        <div class="flex justify-between text-[0.87rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{t('Contracts')}}</p>
-          <p class="text-[#fff] font-bold cursor-pointer" v-if="state.project.tokenAddr" @click="copyClick(state.project.tokenList[0][1])">{{state.project.tokenList ? abbr(state.project.tokenList[0][1]) : '--'}}</p>
+          <div class="text-[#fff] font-bold cursor-pointer flex items-center" v-if="state.project.tokenAddr">
+            <p @click="goToUrl(state.project.tokenList[0][1])">{{state.project.tokenList ? abbr(state.project.tokenList[0][1]) : '--'}}</p>
+            <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.project.tokenList[0][1])"/>
+          </div>
         </div>
-        <div class="flex justify-between text-[1rem] mb-[1.5rem]">
+        <div class="flex justify-between text-[0.87rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{t('Autids')}}</p>
-          <p class="text-[#fff] font-bold">
+          <p class="text-[#fff] w-[10rem] font-bold overflow-hidden whitespace-nowrap text-ellipsis">
             {{state.project.auditor || '--'}}
           </p>
         </div>
         <p class="border border-[#FFFFFF1C]"></p>
         <p class="my-[1.5rem] text-[0.88rem] text-[#fff] ">{{t('tips')}}</p>
-        <div class="w-[21rem] h-[3.5rem] bg-[#1E50FF] rounded-[0.75rem] cursor-pointer text-[1rem] text-[#fff] font-bold text-center leading-[3.5rem]" @click="reviewClick">{{t('reviewNow')}}</div>
+        <div class="w-[14.26rem] h-[2.5rem] bg-[#1E50FF] rounded-[0.75rem] cursor-pointer text-[1rem] text-[#fff] font-bold text-center leading-[2.5rem]" @click="reviewClick">{{t('reviewNow')}}</div>
       </div>
     </div>
     <div class="w-[49.5rem]">
@@ -35,7 +38,7 @@
       <p class="text-[1rem] text-[#ffffffa8] leading-[1rem] my-[1rem]">{{t('Investment')}}</p>
       <p class="text-[1rem] text-[#fff] font-bold leading-[1rem] my-[1rem]">{{state.project.invest || '--'}}</p>
       <div class="mt-[3.5rem]">
-        <div :class="`${state.isEllipsis ? 'text-ellipsis' : 'more-ellipsis'} text-[1rem] text-[#ffffffa8] leading-[2rem]`">
+        <div :class="`${state.isEllipsis ? 'text-ellipsis7' : 'more-ellipsis'} text-[1rem] text-[#ffffffa8] leading-[2rem]`">
             {{state.project.intro}}
         </div>
         <!-- <img v-if="state.isEllipsis" src="images/down.svg" class="h-[1.5rem] w-[1.5rem] mx-auto" @click="state.isEllipsis = !state.isEllipsis"/>
@@ -49,7 +52,7 @@ import { ElRate } from 'element-plus'
 import { onMounted,reactive } from 'vue'
 import request from '@/src/utils/request'
 import web3js from '@/src/utils/link'
-import { abbr, imgError, copyToClipBoard } from '@/src/utils/utils'
+import { abbr, imgError, copyToClipBoard, webList } from '@/src/utils/utils'
 import { useI18n } from  'vue-i18n'
 const { t } = useI18n();
 import { userStore } from '@/src/stores/user' 
@@ -70,6 +73,18 @@ const iconList = [
 const goUrl = (url) => {
   if(url){
     window.open(url,'_blank')
+  }
+}
+
+const goToUrl = (val) => {
+  let url = '';
+  webList.forEach(el => {
+    if(el.chain == store.chain){
+      url = el.web
+    }
+  })
+  if(url){
+    window.open(url + 'address/' + val,'_blank')
   }
 }
 
@@ -161,12 +176,12 @@ const reviewClick = () => {
 .info-bg{
   background: linear-gradient(225deg, #363574 0%, #2A1C52 100%);
 }
-.text-ellipsis{
+.text-ellipsis7{
   overflow:hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 7;
   display: -webkit-box;
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: vertical; 
 }
 .more-ellipsis{
   overflow:hidden;

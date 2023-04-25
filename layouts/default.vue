@@ -9,5 +9,4 @@
 
 <script setup>
   import { ElBacktop } from 'element-plus';
-  import '@/assets/css/common.css'
 </script>

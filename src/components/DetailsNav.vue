@@ -1,13 +1,13 @@
 <template>
-  <div class="flex items-start w-[75rem] mx-auto mt-[8rem]">
+  <div class="flex items-start w-[75rem] mx-auto mt-[6.5rem]">
     <client-only>
-      <el-select v-model="state.chain" class="h-[3.5rem] w-[11.25rem] mr-[1.5rem]" :teleported="false">
+      <el-select v-model="state.chain" class="h-[3.5rem] w-[17.62rem] mr-[1.5rem]" :teleported="false">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
       </el-select>
     </client-only>
 
-    <div class="w-[62.25rem] h-[3.5rem] bg-[#474174] rounded-[1rem] ">
-      <el-input v-model="state.searchInput" class="h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff]" @keyup.enter="getHotProject" :placeholder="t('searchplace')" :prefix-icon="Search" >
+    <div class="w-[55.87rem] h-[3.5rem] bg-[#474174] rounded-[1rem] ">
+      <el-input v-model="state.searchInput" class="inputClass h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff]" @keyup.enter="getHotProject" :placeholder="t('searchplace')" :prefix-icon="Search" >
         <template #suffix>
           <div ref="buttonRef" class="h-[2rem] w-[4.13rem] input-bg text-[0.88rem] text-[#fff] rounded-[0.5rem] cursor-pointer" @click="getHotProject">{{t('Search')}}</div>
         </template>
@@ -46,15 +46,24 @@ const state = reactive({
 })
 
 const options = [
-  { value: "1", label: 'ETH', },
-  { value: "10", label: 'Optimism', },
-  { value: "25", label: 'Cronos', },
-  { value: "56", label: 'BSC', },
-  { value: "66", label: 'OKC', },
-  { value: "100", label: 'Gnosis', },
-  { value: "128", label: 'HECO', },
-  { value: "137", label: 'Polygon', },
-  { value: "250", label: 'Fantom', },
+  { value: "1", label: "Ethereum" },
+  { value: "10", label: "Optimism" },
+  { value: "25", label: "Cronos" },
+  { value: "56", label: "BSC" },
+  { value: "66", label: "OKC" },
+  { value: "100", label: "Gnosis" },
+  { value: "128", label: "Heco" },
+  { value: "137", label: "Polygon" },
+  { value: "250", label: "Fantom" },
+  { value: "321", label: "KCC" },
+  { value: "324", label: "zkSync Era" },
+  { value: "10001", label: "ETHW" },
+  { value: "201022", label: "FON" },
+  { value: "42161", label: "Arbitrum" },
+  { value: "43114", label: "Avalanche" },
+  { value: "59140", label: "Linea" },
+  { value: "1666600000", label: "Harmony" },
+  { value: "tron", label: "Tron" },
 ]
 
 
@@ -95,16 +104,12 @@ onMounted(()=>{
   store.tokenAddr = ""
   store.tokenID = ""
   if(route.query.searchInput != null){
-    console.log(route.query)
     getHotProject()
   }
 })
 </script>
 
 <style scoped>
-.li{
-  height: calc( 100vh - 23.38rem );
-}
 
 .scroll{
   overflow-x: auto;
@@ -123,14 +128,57 @@ onMounted(()=>{
   background-color: #1E50FF;
 }
 
+/* 选择框下拉标识隐藏 */
 :deep(.el-popper__arrow::before){
   height: 0px;
   width: 0px;
   border: none;
 }
 
+/* 评分大小 */
 :deep(.el-rate__icon){
   font-size: 19px;
   margin-right: 3px;
+}
+
+/* input输入框 */
+:deep(.inputClass .el-input__wrapper ){
+  height: 3.5rem;
+  background-color: #474174;
+  box-shadow: none;
+  border-radius: 20px;
+}
+
+:deep(.inputClass .el-input__inner){
+  color: #fff;
+}
+
+/* 下拉选择样式 */
+:deep(.el-input__wrapper){
+  height: 3.5rem;
+  background-color: #474174;
+  box-shadow: none;
+  border-radius: 20px;
+}
+
+:deep(.el-input__inner){
+  color: #fff;
+}
+
+:deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
+  background-color: #493d6a;
+  border-radius: 0.25rem;
+}
+
+:deep(.el-select-dropdown__item){
+  height: 3rem;
+  line-height: 3rem;
+  color: #fff;
+  margin: 0 0.5rem;
+}
+
+:deep(.el-popper.is-light){
+  background-color: #322559;
+  border: none;
 }
 </style>

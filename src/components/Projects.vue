@@ -3,7 +3,7 @@
     <div class="text-[1.25rem] text-[#fff] font-extrabold mb-[1.5rem]">{{ t('PROJECTS')}}</div>
     <div class="project-bg w-full p-[1.5rem] rounded-[0.75rem]">
       <div class="w-[43rem] h-[3.5rem] bg-[#474174] rounded-[1rem] mb-[2rem]">
-        <el-input v-model="state.searchInput" class="h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff]" :placeholder="t('searchplace')" :prefix-icon="Search" >
+        <el-input v-model="state.searchInput" class="inputClass h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff]" :placeholder="t('searchplace')" :prefix-icon="Search" >
           <template #suffix>
             <div class="h-[2rem] w-[4.13rem] input-bg text-[0.88rem] text-[#fff] rounded-[0.5rem]" @click="searchClick">{{ t('Search') }}</div>
           </template>
@@ -25,7 +25,7 @@
         <p class="w-[8rem]">{{item.tokenName || '--'}}</p>
         <p class="w-[8rem]">{{item.chain || '--'}}</p>
         <p class="w-[8rem]">{{item.partake || '0'}}</p>
-        <p class="w-[8rem]">{{item.Reviews || '0'}}</p>
+        <p class="w-[8rem]">{{item.reviews || '0'}}</p>
         <p class="w-[8rem]"><el-rate disabled size="large" v-model="item.score" /></p>
       </div>
       <div class="flex justify-between items-center h-[4rem]">
@@ -126,6 +126,7 @@ const goUrl = (id) => {
 
 const pageSizeChange = (val) => {
   state.pageSize = val;
+  state.page = 1;
   getProject();
 }
 
@@ -178,10 +179,22 @@ onMounted(()=>{
   border: none;
 }
 
-:deep(.el-input__inner){
+:deep(.select-trigger .el-input__inner){
   color: #121D43;
-;
 }
+
+/* input输入框 */
+:deep(.inputClass .el-input__wrapper ){
+  height: 3.5rem;
+  background-color: #474174;
+  box-shadow: none;
+  border-radius: 20px;
+}
+
+:deep(.inputClass .el-input__inner){
+  color: #fff;
+}
+
 
 /* 分页样式修改 */
 :deep(.el-pagination.is-background .el-pager li){

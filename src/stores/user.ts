@@ -6,6 +6,7 @@ export const userStore = defineStore('user',{
       userInfo: {},
       searchInfo: {},
       searchProjectInfo: {},
+      userColor: '',
       isSign: false,
       chain: 1,
       tokenID: "",
@@ -18,6 +19,9 @@ export const userStore = defineStore('user',{
     },
     getIsSign(state) {
       return state.isSign
+    },
+    getUserColor(state) {
+      return state.userColor
     },
     getSearchInfo(state) {
       return state.searchInfo

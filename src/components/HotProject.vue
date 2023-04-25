@@ -1,11 +1,11 @@
 <template>
-  <div class="w-[75rem] mx-auto mt-[8rem]">
+  <div class="w-[75rem] mx-auto mt-[6.5rem]">
     <div class="text-[1.25rem] text-[#fff] font-extrabold">{{ t('hotProjects')}}</div>
     <div class="mt-[1.5rem]">
       <swiper class="hotSwiper">
         <swiper-slide class="swiper-no-swiping" v-for="(item,index) in state.hotPorject" :key="index">
           <div class="h-[23rem] w-[17.62rem] swbg rounded-[1.25rem] p-[1.25rem]" @click="goUrl(item.id)">
-            <img :src="item.logo" class="w-[14.62rem] h-[14.62rem] rounded-[0.75rem]" @error="imgError"/>
+            <img :src="item.logo" class="w-[14.62rem] h-[14.62rem] rounded-[0.75rem] m-auto" @error="imgError"/>
             <p class="text-[1rem] text-[#fff] mt-[1rem] text-ellipsis h-[40px]">{{item.name}}</p>
             <el-rate disabled size="large" v-model="item.score" />
           </div>
@@ -17,6 +17,14 @@
           <img src="/images/project-left.svg" class="h-[4rem] w-[4rem]">
         </div>
       </swiper>
+      <el-skeleton :loading="state.loading" animated>
+        <template #template>
+          <el-skeleton-item variant="rect" style="width: 282px; height: 368px; border-radius: 20px; background: #363574;margin-right: 24px"/>
+          <el-skeleton-item variant="rect" style="width: 282px; height: 368px; border-radius: 20px; background: #363574;margin-right: 24px"/>
+          <el-skeleton-item variant="rect" style="width: 282px; height: 368px; border-radius: 20px; background: #363574;margin-right: 24px"/>
+          <el-skeleton-item variant="rect" style="width: 282px; height: 368px; border-radius: 20px; background: #363574"/>
+        </template>
+      </el-skeleton>
     </div>
   </div>
 </template>
@@ -29,13 +37,14 @@ import { onMounted, ref, reactive } from 'vue'
 import { abbr, imgError } from '@/src/utils/utils'
 import request from '@/src/utils/request'
 import { useI18n } from  'vue-i18n'
-const { t,locale } = useI18n();
+const { t } = useI18n();
 
 SwiperCore.use([Autoplay,Navigation])
 const router = useRouter()
 
 const state = reactive({
-  hotPorject: []
+  hotPorject: [],
+  loading: true
 })
 
 const goUrl = (id) => {
@@ -47,6 +56,7 @@ const goUrl = (id) => {
 
 const getHotProject = () => {
   request.get(`/plugin/decheck/api/project/hot`).then((res) => {
+    state.loading = false
     res.forEach(ele => {
       if(ele.tokenAddr){
         ele.tokenList = Object.entries(ele.tokenAddr)

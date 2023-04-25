@@ -4,9 +4,9 @@
       <div class="w-[36.75rem] div-bg rounded-[1.25rem]">
         <div class="flex items-center justify-between bg-[#FFFFFF1C] h-[4rem] w-full px-[1.5rem] rounded-t-[1.25rem]">
           <div class="text-[1.25rem] text-[#4972FFFF] font-bold">{{t('tokenHoldersInfo')}}</div>
-          <div class="h-[2rem] w-[16.13rem] bg-[#1E50FFFF] flex items-center justify-between px-[1rem] rounded-[0.75rem]">
+          <div class="h-[2rem] w-[16.13rem] bg-[#1E50FFFF] flex items-center justify-between px-[1rem] rounded-[0.75rem]" @click="goUrl(1,store.tokenAddr)">
             <p class="text-[0.88rem] text-[#fff] font-bold">View on Browser</p>
-            <img class="h-[0.63rem] w-[0.63rem]"/>
+            <img src="/images/out.svg" class="h-[1rem] w-[1rem]"/>
           </div>
         </div>
         <template v-if="state.goInfo.holders">
@@ -22,9 +22,22 @@
           </div>
           <div class="px-[1.5rem] mt-[1rem]">
             <p class="text-[1rem] text-[#fff] font-bold mb-[1rem]">{{t('top10holders')}}</p>
-            <div class="flex justify-between mb-[1rem]" v-for="(item,index) in state.goInfo.holders" :key="item">
-              <p class="text-[0.88rem] text-[#FFFFFFA8] leading-[0.88rem] font-medium">{{index}}. {{abbr(item.address)}}</p>
-              <p class="text-[0.88rem] text-[#fff] leading-[0.88rem] font-bold">{{toShort(item.balance, 2)}}({{tosix(item.percent)}})</p>
+            <div class="flex justify-between mb-[1rem] h-[1.25rem]" v-for="(item,index) in state.goInfo.holders" :key="item">
+              <div class="flex">
+                <div class="flex text-[0.88rem] text-[#FFFFFFA8] leading-[0.88rem] font-medium hover:underline hover:cursor-pointer" @click="goUrl(2,item.address)">
+                  <img v-if="index == 0" src="/images/no1.svg" class="h-[1.25rem] w-[1.12rem] mr-[0.62rem]"/>
+                  <img v-else-if="index == 1" src="/images/no2.svg" class="h-[1.25rem] w-[1.12rem] mr-[0.62rem]"/>
+                  <img v-else-if="index == 2" src="/images/no3.svg" class="h-[1.25rem] w-[1.12rem] mr-[0.62rem]"/>
+                  <p v-else class="text-[0.82rem] text-[#fff] font-black w-[1.8rem] block pl-[0.2rem]">{{index + 1}}</p>
+                  <p>{{item.tag ? item.tag : abbr(item.address)}}</p>
+                </div>
+                <img v-if="item.is_contract == 1" src="/images/contract_icon.svg" class="h-[1rem] w-[1rem] ml-[0.37rem]"/>
+                <img v-if="item.is_locked == 1" src="/images/locked_icon.svg" class="h-[1rem] w-[1rem] ml-[0.37rem]"/>
+              </div>
+              <p class="text-[0.88rem] text-[#fff] leading-[0.88rem] font-bold">
+                <span>{{toShort(item.balance, 2)}}</span>
+                <span class="text-[#11B466] w-[4rem] inline-block text-right">({{tosix(item.percent)}})</span>
+              </p>
             </div>
           </div>
         </template>
@@ -56,9 +69,22 @@
           </div>
           <div class="px-[1.5rem] mt-[1rem]">
             <p class="text-[1rem] text-[#fff] font-bold mb-[1rem]">{{t('percentageOfLP')}}</p>
-            <div class="flex justify-between mb-[1rem]" v-for="(item,index) in state.goInfo.lp_holders" :key="item">
-              <p class="text-[0.88rem] text-[#FFFFFFA8] leading-[0.88rem] font-medium">{{index}}. {{abbr(item.address)}}</p>
-              <p class="text-[0.88rem] text-[#fff] leading-[0.88rem] font-bold">{{toShort(item.balance, 2)}}({{tosix(item.percent)}})</p>
+            <div class="flex justify-between mb-[1rem] h-[1.25rem]" v-for="(item,index) in state.goInfo.lp_holders" :key="item">
+              <div class="flex">
+                <div class="flex text-[0.88rem] text-[#FFFFFFA8] leading-[0.88rem] font-medium hover:underline hover:cursor-pointer" @click="goUrl(2,item.address)">
+                  <img v-if="index == 0" src="/images/no1.svg" class="h-[1.25rem] w-[1.12rem] mr-[0.62rem]"/>
+                  <img v-else-if="index == 1" src="/images/no2.svg" class="h-[1.25rem] w-[1.12rem] mr-[0.62rem]"/>
+                  <img v-else-if="index == 2" src="/images/no3.svg" class="h-[1.25rem] w-[1.12rem] mr-[0.62rem]"/>
+                  <p v-else class="text-[0.82rem] text-[#fff] font-black w-[1.8rem] block pl-[0.2rem]">{{index + 1}}</p>
+                  <p>{{item.tag ? item.tag : abbr(item.address)}}</p>
+                </div>
+                <img v-if="item.is_contract == 1" src="/images/contract_icon.svg" class="h-[1rem] w-[1rem] ml-[0.37rem]"/>
+                <img v-if="item.is_locked == 1" src="/images/locked_icon.svg" class="h-[1rem] w-[1rem] ml-[0.37rem]"/>
+              </div>
+              <p class="text-[0.88rem] text-[#fff] leading-[0.88rem] font-bold">
+                <span>{{toShort(item.balance, 2)}}</span>
+                <span class="text-[#11B466] w-[4rem] inline-block text-right">({{tosix(item.percent)}})</span>
+              </p>
             </div>
           </div>
         </template>
@@ -77,7 +103,7 @@
 import { onMounted, ref, reactive } from 'vue'
 import request from '@/src/utils/request'
 import { userStore } from '@/src/stores/user'
-import { abbr, toShort } from '@/src/utils/utils'
+import { abbr, toShort,webList } from '@/src/utils/utils'
 import { useI18n } from  'vue-i18n'
 const { t } = useI18n();
 import { storeToRefs } from 'pinia'
@@ -143,6 +169,24 @@ const LPALL = () => {
     });
     state.LPNow = (sum * 100).toFixed(2)
     return (sum * 100).toFixed(2) + '%'
+  }
+}
+
+const goUrl = (type,val) => {
+  let url = '';
+  let suffix = '';
+  webList.forEach(el => {
+    if(el.chain == store.chain){
+      url = el.web
+      suffix = el.suffix
+    }
+  })
+  if(url){
+    if(type == 1){
+      window.open(url + 'token/' + val + suffix + '','_blank')
+    }else{
+      window.open(url + 'address/' + val,'_blank')
+    }
   }
 }
 

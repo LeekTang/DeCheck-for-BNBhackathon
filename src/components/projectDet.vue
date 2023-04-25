@@ -5,11 +5,14 @@
       <div class="p-[1.5rem]">
         <div class="flex justify-between text-[0.87rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{ t('Contracts') }}</p>
-          <p class="text-[#fff] font-bold cursor-pointer" v-if="state.project.tokenAddr" @click="copyClick(state.project.tokenList[proStore.chain][1])">{{state.project.tokenList ? abbr(state.project.tokenList[proStore.chain][1]) : '--'}}</p>
+          <div class="flex items-center text-[#fff] font-bold cursor-pointer" v-if="state.project.tokenAddr">
+            <p @click="goToUrl(state.project.tokenList[proStore.chain][1])">{{state.project.tokenList ? abbr(state.project.tokenList[proStore.chain][1]) : '--'}}</p>
+            <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.project.tokenList[proStore.chain][1])"/>
+          </div>
         </div>
         <div class="flex justify-between text-[0.87rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{ t('Autids') }}</p>
-          <p class="text-[#fff] font-bold">
+          <p class="text-[#fff] font-bold w-[10rem] overflow-hidden whitespace-nowrap text-ellipsis text-right">
             {{state.project.auditor}}
           </p>
         </div>
@@ -35,7 +38,7 @@
       <p class="text-[1rem] text-[#ffffffa8] leading-[1rem] my-[1rem]">{{ t('Investment') }}</p>
       <p class="text-[1rem] text-[#fff] font-bold leading-[1rem] my-[1rem]">{{state.project.invest || '--'}}</p>
       <div class="mt-[3.5rem]">
-        <div :class="`${state.isEllipsis ? 'text-ellipsis' : 'more-ellipsis'} text-[1rem] text-[#ffffffa8] leading-[2rem]`">
+        <div :class="`${state.isEllipsis ? 'text-ellipsis7' : 'more-ellipsis'} text-[1rem] text-[#ffffffa8] leading-[2rem]`">
             {{state.project.intro}}
         </div>
         <!-- <img v-if="state.isEllipsis" src="images/down.svg" class="h-[1.5rem] w-[1.5rem] mx-auto" @click="state.isEllipsis = !state.isEllipsis"/>
@@ -49,7 +52,7 @@ import { ElRate, ElMessage } from 'element-plus'
 import { onMounted,reactive,defineProps } from 'vue'
 import web3js from '@/src/utils/link'
 import request from '@/src/utils/request'
-import { abbr, imgError, copyToClipBoard } from '@/src/utils/utils'
+import { abbr, imgError, copyToClipBoard,webList } from '@/src/utils/utils'
 import { userStore } from '@/src/stores/user'
 const store = userStore();
 import { projectStore } from '@/src/stores/project'
@@ -72,6 +75,18 @@ const iconList = [
 const goUrl = (url) => {
   if(url){
     window.open(url,'_blank')
+  }
+}
+
+const goToUrl = (val) => {
+  let url = '';
+  webList.forEach(el => {
+    if(el.chain == state.project.tokenList[proStore.chain][0]){
+      url = el.web
+    }
+  })
+  if(url){
+    window.open(url + 'address/' + val,'_blank')
   }
 }
 
@@ -165,7 +180,7 @@ onMounted(()=>{
 .info-bg{
   background: linear-gradient(225deg, #363574 0%, #2A1C52 100%);
 }
-.text-ellipsis{
+.text-ellipsis7{
   overflow:hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 7;

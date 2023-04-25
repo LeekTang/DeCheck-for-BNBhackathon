@@ -2,7 +2,7 @@
   <div class="w-[75rem] mx-auto mt-[4rem]" v-if="Object.keys(state.goInfo).length > 0">
     <div class="text-[1.25rem] text-[#fff] font-extrabold">{{ t('checkReport') }}</div>
     <client-only>
-      <el-select v-model="proStore.chain" class="h-[3.5rem] w-[11.25rem] mt-[1.5rem]" size="large" @change="chainChange" :teleported="false">
+      <el-select v-model="proStore.chain" class="h-[3.5rem] w-[17.62rem] mt-[1.5rem]" size="large" @change="chainChange" :teleported="false">
         <el-option v-for="(item,index) in state.tokenList" :key="item[0]" :label="item.chain" :value="index"/>
       </el-select>
     </client-only>
@@ -58,17 +58,26 @@
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('tokenContractAddress') }}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.tokenList" @click="copyClick(state.tokenList[proStore.chain][1])">{{abbr(state.tokenList[proStore.chain][1])}}</p>
+            <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.tokenList">
+              <p @click="goToUrl(state.tokenList[proStore.chain][1])">{{abbr(state.tokenList[proStore.chain][1])}}</p>
+              <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.tokenList[proStore.chain][1])"/>
+            </div>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('contractCreator') }}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.creator_address" @click="copyClick(state.goInfo.creator_address)">{{abbr(state.goInfo.creator_address)}}</p>
+            <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.creator_address">
+              <p @click="goToUrl(state.goInfo.creator_address)">{{abbr(state.goInfo.creator_address)}}</p>
+              <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.goInfo.creator_address)"/>
+            </div>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('contractOwner') }}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.owner_address" @click="copyClick(state.goInfo.owner_address)">{{abbr(state.goInfo.owner_address)}}</p>
+            <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.owner_address">
+              <p @click="goToUrl(state.goInfo.owner_address)">{{abbr(state.goInfo.owner_address)}}</p>
+              <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.goInfo.owner_address)"/>
+            </div>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
@@ -83,10 +92,10 @@
           <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('Website') }}</p>
             <a :href="state.projectInfo.website" target="_blank">
-              <p class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
-                {{state.projectInfo.website}}
+              <div class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
+                <p class="overflow-hidden whitespace-nowrap text-ellipsis">{{state.projectInfo.website}}</p>
                 <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
-              </p>
+              </div>
             </a>
           </div>
         </div>
@@ -122,7 +131,7 @@
                 <p class="text-[1rem] text-[#ffffff54] mt-[1rem]">Tax details not found</p>
               </div>
               <div class="flex justify-between leading-[1rem]">
-                <p class="text-[1rem] text-[#fff] font-medium">Buy Gas</p>
+                <p class="text-[1rem] text-[#fff] font-medium">{{t('buyGas')}}</p>
                 <p class="text-[1rem] text-[#11B466] font-bold">{{state.goInfo.buyGas || '-'}}</p>
               </div>
             </div>
@@ -136,7 +145,7 @@
                 <p class="text-[1rem] text-[#ffffff54] mt-[1rem]">Tax details not found</p>
               </div>
               <div class="flex justify-between leading-[1rem]">
-                <p class="text-[1rem] text-[#fff] font-medium">Sell Gas</p>
+                <p class="text-[1rem] text-[#fff] font-medium">{{t('sellGax')}}</p>
                 <p class="text-[1rem] text-[#FF5353FF] font-bold">{{state.goInfo.sellGas || '-'}}</p>
               </div>
             </div>
@@ -150,7 +159,7 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
 import request from '@/src/utils/request'
-import { abbr,toShort, copyToClipBoard } from '@/src/utils/utils'
+import { abbr,toShort, copyToClipBoard,webList } from '@/src/utils/utils'
 import { useI18n } from  'vue-i18n'
 const { t,locale } = useI18n();
 import { userStore } from '@/src/stores/user'
@@ -257,7 +266,6 @@ const copyClick = (val) => {
 }
 
 const jumpClick = () => {
-  console.log(proStore.chain,state.tokenList[proStore.chain][0],state.tokenList[proStore.chain][1])
   router.push({
     name: 'check',
     query: {
@@ -268,6 +276,18 @@ const jumpClick = () => {
   request.get(`/plugin/decheck/api/security/token/${state.tokenList[proStore.chain][0]}/${state.tokenList[proStore.chain][1]}`).then((res) => {
     store.searchInfo = res
   })
+}
+
+const goToUrl = (val) => {
+  let url = '';
+  webList.forEach(el => {
+    if(el.chain == state.tokenList[proStore.chain][0]){
+      url = el.web
+    }
+  })
+  if(url){
+    window.open(url + 'address/' + val,'_blank')
+  }
 }
 
 onMounted(() => {
@@ -285,5 +305,34 @@ onMounted(() => {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+}
+
+/* 下拉选择样式 */
+:deep(.el-input__wrapper){
+  height: 3.5rem;
+  background-color: #474174;
+  box-shadow: none;
+  border-radius: 20px;
+}
+
+:deep(.el-input__inner){
+  color: #fff;
+}
+
+:deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
+  background-color: #493d6a;
+  border-radius: 0.25rem;
+}
+
+:deep(.el-select-dropdown__item){
+  height: 3rem;
+  line-height: 3rem;
+  color: #fff;
+  margin: 0 0.5rem;
+}
+
+:deep(.el-popper.is-light){
+  background-color: #322559;
+  border: none;
 }
 </style>
