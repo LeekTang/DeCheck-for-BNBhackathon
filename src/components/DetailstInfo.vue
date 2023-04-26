@@ -21,7 +21,7 @@
         <div class="w-[14.26rem] h-[2.5rem] bg-[#1E50FF] rounded-[0.75rem] cursor-pointer text-[1rem] text-[#fff] font-bold text-center leading-[2.5rem]" @click="reviewClick">{{t('reviewNow')}}</div>
       </div>
     </div>
-    <div class="w-[49.5rem]">
+    <div class="w-[55.87rem]">
       <p class="text-[2.56rem] text-[#fff] font-bold leading-[3rem]">{{state.project.name}}</p>
       <div class="flex justify-between items-center">
         <el-rate disabled size="large" v-model="state.project.score" />
