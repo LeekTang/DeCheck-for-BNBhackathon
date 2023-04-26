@@ -19,9 +19,11 @@ service.interceptors.request.use(
 		}
 		//登录接口与其他接口不一样
 		if(config.url == "/center/apis/user/user-login/login"){
-			con.baseURL=useRuntimeConfig().public.VITE_LOGIN_URL;
+			// con.baseURL=useRuntimeConfig().public.VITE_LOGIN_URL;
+			con.baseURL = 'https://www.2web3.net/test-user-center';
 		}else{
-			con.baseURL=useRuntimeConfig().public.VITE_API_URL;
+			// con.baseURL=useRuntimeConfig().public.VITE_API_URL;
+			con.baseURL = "https://test.decheck.io/decheck-apis";
 		}
 		con.headers.language = language
 		return con;
