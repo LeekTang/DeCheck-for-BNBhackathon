@@ -4,7 +4,7 @@
       <div class="w-[36.75rem] div-bg rounded-[1.25rem]">
         <div class="flex items-center justify-between bg-[#FFFFFF1C] h-[4rem] w-full px-[1.5rem] rounded-t-[1.25rem]">
           <div class="text-[1.25rem] text-[#4972FFFF] font-bold">{{t('tokenHoldersInfo')}}</div>
-          <div class="h-[2rem] w-[16.13rem] bg-[#1E50FFFF] flex items-center justify-between px-[1rem] rounded-[0.75rem]" @click="goUrl(1,store.tokenAddr)">
+          <div class="h-[2rem] w-[16.13rem] bg-[#1E50FFFF] flex items-center justify-between px-[1rem] rounded-[0.75rem] cursor-pointer" @click="goUrl(1,store.tokenAddr)">
             <p class="text-[0.88rem] text-[#fff] font-bold">View on Browser</p>
             <img src="/images/out.svg" class="h-[1rem] w-[1rem]"/>
           </div>

@@ -6,18 +6,18 @@
         <img src="/images/back.svg" class="inline-block"/>
       </div>
       <div class="mt-[1.5rem] w-[51rem] p-[1.5rem] com-bg rounded-[1.25rem]">
-        <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold">Select Tags</div>
-        <div class="text-[0.88rem] text-[#FFFFFFA8] leading-[0.88rem] mt-[1rem]">You can choose up to three tags</div>
+        <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold">{{t('selectTags')}}</div>
+        <div class="text-[0.88rem] text-[#FFFFFFA8] leading-[0.88rem] mt-[1rem]">{{t('threeTags')}}</div>
         <div class="mt-[1rem]">
           <el-check-tag class="mr-[1rem]" v-for="(item, index) in checkList" :key="index" :checked="item.state" @click="checkClick(item)">{{item.name}}</el-check-tag>
         </div>
-        <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold mt-[2rem]">Score</div>
+        <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold mt-[2rem]">{{t('score')}}</div>
         <div class="mt-[1rem]">
           <el-rate v-model="state.rateValue" size="large"></el-rate>
         </div>
-        <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold mt-[2rem]">Content of review</div>
+        <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold mt-[2rem]">{{t('contentReview')}}</div>
         <div class="mt-[1rem] w-[48rem] bg-[#FFFFFF1C] rounded-[1.25rem] p-[1.5rem]">
-          <el-input v-model="state.textarea" type="textarea" :autosize="{minRows:6,maxRows:20}" resize="none" placeholder="Please input"/>
+          <el-input v-model="state.textarea" type="textarea" :autosize="{minRows:6,maxRows:20}" resize="none" :placeholder="t('pleaseInput')"/>
           <div class="flex">
             <el-upload 
               action="https://test.decheck.io/decheck-apis/plugin/decheck/api/project/apply/upload"
@@ -28,7 +28,7 @@
               >
               <div class="flex flex-col items-center text-[#abaaaae0] text-[0.75rem]">
                 <el-icon><Plus /></el-icon>
-                <p class="mt-[0.75rem]">Pictures and videos</p>
+                <p class="mt-[0.75rem]">{{t('uploadType')}}</p>
               </div>
             </el-upload>
             <div v-if="state.video || state.videoFlag" class="relative bg-[#FFFFFF1C] ml-[1rem]">
@@ -60,7 +60,7 @@
           </div>
         </div>
         <div class="mt-[1.5rem] h-[3rem] w-[11.25rem] cursor-pointer bg-[#1E50FF] leading-[3rem] text-center text-[1rem]
-         text-[#fff] font-bold rounded-[0.75rem]" @click="submitClick()">Submit</div>
+         text-[#fff] font-bold rounded-[0.75rem]" @click="submitClick()">{{t('submit')}}</div>
       </div>
     </div>
     
@@ -80,7 +80,7 @@ import Swipers from 'swiper'
 SwiperCore.use([Autoplay,Navigation])
 import { userStore } from '@/src/stores/user'
 import { useI18n } from  'vue-i18n'
-const { t,locale } = useI18n();
+const { t } = useI18n();
 const store = userStore();
 const route = useRoute();
 const router = useRouter()
@@ -99,7 +99,7 @@ const checkClick = (item) => {
   if(checkList.filter(ele => ele.state ).length < 3 || item.state){
     item.state = !item.state
   }else{
-    ElMessage.error('标签不能超过3个')
+    ElMessage.error(t('tagLimit'))
   }
 }
 
@@ -115,17 +115,16 @@ const state = reactive({
 })
 
 const handleExceed  = (files, uploadFiles) => {
-  ElMessage.warning(
-    `The limit is ${state.limit}, you selected ${files.length} files this time, add up to ${
-      files.length + uploadFiles.length
-    } totally`
-  )
+  ElMessage.warning({
+    dangerouslyUseHTMLString: true,
+    message: `${t('limit' ,{limit: state.limit, files: files.length, all: files.length + uploadFiles.length})}`
+  })
 }
 //在上传阶段先判断是图片还是视频
 const handleBefore = (files,fileList) => {
   if(state.fileList.length >= 1){
     if(files.type == 'video/mp4'){
-      ElMessage.error('视频和图片不能共传')
+      ElMessage.error(t('videoAndImg'))
       return false
     }else{
       state.fileList.push('..')
@@ -189,10 +188,10 @@ const submitClick = () => {
     }
   })
   if(state.textarea.length == 0) {
-    ElMessage.error('请输入点评')
+    ElMessage.error(t('reviewNull'))
     return false
   }else if(state.videoFlag){
-    ElMessage.error('请等待上传成功')
+    ElMessage.error(t('uploadNow'))
     return false
   }else {
     let data = {
@@ -208,12 +207,15 @@ const submitClick = () => {
     }
     request({url: '/plugin/decheck/api/project/review/add' , data , method: 'post'}).then(res=>{
       if(res != null){
+        ElMessage.success(t('submitSuccess'))
         checkList.forEach(el => {
           el.state = false
         })
         state.rateValue = 0
         state.textarea = ""
-        router.back()
+        setTimeout(() => {
+          router.back()
+        }, 2000);
       }
     })
   }
@@ -244,6 +246,7 @@ onMounted(()=>{
 
 :deep(.el-check-tag){
   background-color: #FFFFFF1C;
+  color: #fff
 }
 :deep(.el-check-tag.is-checked){
   background-color: #FFFFFF;

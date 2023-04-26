@@ -1,9 +1,8 @@
 <template>
   <div class="relative w-full text-gray-700 bg-[#190A43] min-h-screen">
     <HeaderView />
-
     <UserCommnet />
-    <BottomBar />
+    <BottomBar class="bottom-0 absolute"/>
   </div>
 </template>
 

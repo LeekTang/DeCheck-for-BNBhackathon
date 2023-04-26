@@ -1,11 +1,10 @@
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
+import { useRuntimeConfig } from '../../node_modules/nuxt/dist/app'
 
 // 配置新建一个 axios 实例
 const service = axios.create({
 	timeout: 50000,
-	// baseURL: 'https://test.decheck.io/decheck-apis',
-	baseURL: 'http://192.168.101.12:9998/decheck-apis',
 	headers: { 'Content-Type': 'application/json' },
 });
 
@@ -17,6 +16,12 @@ service.interceptors.request.use(
 		const con: any = config || {}
 		if (token) {
 			con.headers.token = token
+		}
+		//登录接口与其他接口不一样
+		if(config.url == "/center/apis/user/user-login/login"){
+			con.baseURL=useRuntimeConfig().public.VITE_LOGIN_URL;
+		}else{
+			con.baseURL=useRuntimeConfig().public.VITE_API_URL;
 		}
 		con.headers.language = language
 		return con;

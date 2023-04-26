@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[75rem] mx-auto mt-[4rem]">
+  <div class="w-[75rem] mx-auto mt-[4rem] mb-[12rem]">
     <client-only>
       <el-select v-model="state.typeValue" class="h-[3.5rem] w-[11.25rem] my-[1.5rem]" size="large" :teleported="false">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
@@ -8,7 +8,7 @@
     <div>
         <div v-for="(item, index) in state.commentList" :key="index" class="w-full common-bg p-[1.5rem] rounded-[0.75rem] mb-[1.75rem]">
           <div class="">
-            <div class="text-[1.5rem] text-[#fff] font-bold leading-[1.5rem]">{{item.projectName}}</div>
+            <div class="text-[1.5rem] text-[#fff] font-bold leading-[1.5rem] cursor-pointer" @click="goProject(item.projectId)">{{item.projectName}}</div>
             <el-rate disabled size="large" v-model="item.score" />
           </div>
           <div class="">
@@ -59,6 +59,7 @@ import { onMounted, ref, reactive } from 'vue'
 import request from '@/src/utils/request'
 import { timestampToTime, matchType } from '@/src/utils/utils'
 SwiperCore.use([Autoplay,Navigation])
+const router = useRouter()
 
 const options = [
   { value: 1, label: 'All', },
@@ -104,8 +105,14 @@ const getComment = () => {
   })
 }
 
+const goProject = (id) => {
+  router.push({
+    name: "ProjectDetails",
+    query: { id: id}
+  })
+}
+
 onMounted(()=>{
-  
   getComment()
 })
 </script>
