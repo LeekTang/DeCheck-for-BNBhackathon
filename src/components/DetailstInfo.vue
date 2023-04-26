@@ -155,11 +155,11 @@ const reviewClick = () => {
         if(signres.signMessage){
           let data = {
             aggregateType: 7,
-            appId: runConfig.public.VITE_LOGIN_ID,
+            appId: "1646086759245303808",
             authId: signres.account,
             strSign: signres.signMessage,
             type: 4,
-            data: runConfig.public.VITE_SIGN_TEXT
+            data: "Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees."
           }
           request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data, baseURL: runConfig.public.VITE_LOGIN_URL}).then(loginres => {
             localStorage.setItem('token',loginres.tokenValue)
