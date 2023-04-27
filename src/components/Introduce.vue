@@ -31,7 +31,7 @@
 
     </div>
     <div class="mt-[98px] pt-[129px] h-[360px] bottom_bg relative rounded-[1.25rem] mb-[405px]">
-      <img class="mx-auto w-[40px] h-[40px]" src="../../public/images/home/star.png" alt="">
+      <img class="mx-auto w-[40px] h-[40px]" src="/images/home/star.png" alt="">
       <div class="keep-px-tips" v-html="t('publicitytitle')">
       </div>
       <div class="keep-px-intruduce" v-html="t('publicitytip')">
@@ -79,7 +79,7 @@ const list = [
 }
 
 .bottom_bg {
-  background: url('../../public/images/home/top_light_line.png') no-repeat;
+  background: url('../../images/home/top_light_line.png') no-repeat;
   background-size: 100% 100%;
 }
 

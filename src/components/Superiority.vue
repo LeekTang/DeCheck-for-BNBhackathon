@@ -9,7 +9,7 @@
         <div class="magical-borders-content flex justify-between my-[64px] px-[40px]">
           <div class="w-[272px] h-[204px] myhoverbox" v-for="item,index in superiList" :key="item.id">
             <div class="magical-borders-inner relative">
-                <img class="mx-auto w-[260px] h-[156px]" alt="" src="../../public/images/home/card-gridline.png">
+                <img class="mx-auto w-[260px] h-[156px]" alt="" src="/images/home/card-gridline.png">
                 <img v-if="index==0" class="absolute top-[24px] left-[24px]" :src="item.num" alt="">
                 <img v-else class="absolute top-[24px] left-[24px] w-[48px] h-[48px]" :src="item.num" alt="">
                 <div class="content text-[18px]" v-html="item.content"></div>
@@ -50,12 +50,12 @@ const superiList = [
 }
 
 .top_line {
-  background: url('../../public/images/home/about_top_line.png') no-repeat;
+  background: url('../../images/home/about_top_line.png') no-repeat;
   background-size: 100% 100%;
 }
 
 .bottom_line {
-  background: url('../../public/images/home/about_bottom_line.png') no-repeat;
+  background: url('../../images/home/about_bottom_line.png') no-repeat;
   background-size: 100% 100%;
 }
 

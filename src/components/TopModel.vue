@@ -8,10 +8,10 @@
           </div>
         </div>
         <div class="hero-background-bottom h-[198px] relative">
-          <img class="-translate-y-16 mx-auto mt-[32px] w-[40px] h-[40px]" src="../../public/images/home/star.png" alt="">
+          <img class="-translate-y-16 mx-auto mt-[32px] w-[40px] h-[40px]" src="/images/home/star.png" alt="">
           <div class="hero-background-bottom-background h-[198px]">
             <picture>
-              <img class="h-[198px]" src="../../public/images/home/bottom_bg.png" alt="">
+              <img class="h-[198px]" src="/images/home/bottom_bg.png" alt="">
             </picture>
             <div
               class="hero-background-bottom-line-1 h-[198px] lazy-background-image lazy-background-image-maskImage-line-1 hero-background-top-animation hero-background-bottom-line-animation">
@@ -67,7 +67,7 @@ const { t, locale } = useI18n();
 
 .hero-background-top {
   margin: 0 auto;
-  background-image: url('../../public/images/home/top_bg.png');
+  background-image: url('/images/home/top_bg.png');
   background-size: 75rem 100%;
   height: 150px;
   width: 75rem;
@@ -84,8 +84,8 @@ const { t, locale } = useI18n();
 }
 
 .lazy-background-image-maskImage {
-  -webkit-mask-image: url('../../public/images/home/mask_bg.png');
-  mask-image: url('../../public/images/home/mask_bg.png');
+  -webkit-mask-image: url('/images/home/mask_bg.png');
+  mask-image: url('/images/home/mask_bg.png');
 }
 
 .lazy-background-image {
@@ -163,7 +163,7 @@ const { t, locale } = useI18n();
 }
 
 .hero-background-bottom {
-  background: url('../../public/images/home/bottom_bg.png');
+  background: url('/images/home/bottom_bg.png');
   background-size: 75rem 100%;
 }
 
@@ -183,41 +183,41 @@ const { t, locale } = useI18n();
   position: absolute;
   bottom: 0;
   transform: translate(-50%, 10%);
-  background: url('../../public/images/home/background_light.png') no-repeat;
+  background: url('/images/home/background_light.png') no-repeat;
   background-size: 100% 100%;
 }
 
 
 .hero-background-bottom-line-1 {
-  background: url('../../public/images/home/hero-background-bottom-line-1.png') no-repeat;
+  background: url('/images/home/hero-background-bottom-line-1.png') no-repeat;
   background-size: 100% 100%;
   overflow: hidden;
 }
 
 .lazy-background-image-maskImage-line-1 {
-  -webkit-mask-image: url('../../public/images/home/hero-background-bottom-line-1.png');
-  mask-image: url('../../public/images/home/hero-background-bottom-line-1.png');
+  -webkit-mask-image: url('/images/home/hero-background-bottom-line-1.png');
+  mask-image: url('/images/home/hero-background-bottom-line-1.png');
 }
 
 .hero-background-bottom-line-2 {
-  background: url('../../public/images/home/hero-background-bottom-line-2.png') no-repeat;
+  background: url('../../images/home/hero-background-bottom-line-2.png') no-repeat;
   background-size: 100% 100%;
   overflow: hidden;
 }
 
 .lazy-background-image-maskImage-line-2 {
-  -webkit-mask-image: url('../../public/images/home/hero-background-bottom-line-2.png');
-  mask-image: url('../../public/images/home/hero-background-bottom-line-2.png');
+  -webkit-mask-image: url('../../images/home/hero-background-bottom-line-2.png');
+  mask-image: url('../../images/home/hero-background-bottom-line-2.png');
 }
 
 .hero-background-bottom-line-3 {
-  background: url('../../public/images/home/hero-background-bottom-line-3.png') no-repeat;
+  background: url('/images/home/hero-background-bottom-line-3.png') no-repeat;
   background-size: 100% 100%;
   overflow: hidden;
 }
 
 .lazy-background-image-maskImage-line-3 {
-  -webkit-mask-image: url('../../public/images/home/hero-background-bottom-line-3.png');
-  mask-image: url('../../public/images/home/hero-background-bottom-line-3.png');
+  -webkit-mask-image: url('/images/home/hero-background-bottom-line-3.png');
+  mask-image: url('/images/home/hero-background-bottom-line-3.png');
 }
 </style>
