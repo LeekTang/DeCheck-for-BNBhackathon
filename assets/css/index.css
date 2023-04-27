@@ -1,0 +1,75 @@
+.myhoverbox{
+    position: relative;
+    overflow: hidden;
+}
+
+.myhoverbox .light {
+    /* 默认隐藏，鼠标放置后再显示 */
+    display: none;
+    /* 添加绝对定位 方便等下用js绑定位置 */
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background-color: #fff;
+    border-radius: 50%;
+    filter: blur(50px);
+  }
+
+  .magical-borders-content>*{
+    background: linear-gradient(180deg,rgba(169,163,194,.2) 0%,rgba(169,163,194,.048) 100%);
+    border-radius: 16px;
+    position: relative;
+  }
+  .magical-borders-content>*:before{
+    background: radial-gradient(var(--circle-size, 600px) circle at var(--mouse-x) var(--mouse-y),rgba(255,255,255,.06),transparent 40%);
+    z-index: 15;
+  }
+
+  .magical-borders-content>* .magical-borders-inner{
+    background-color:rgba(10, 1, 24,.8);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    inset: 1px;
+    position: absolute;
+    z-index: 2;
+  }
+
+  .magical-borders-content>*:before, .magical-borders-content>*:after{
+    border-radius: inherit;
+    content: "";
+    height: 100%;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    transition: opacity .5s;
+    width: 100%;
+  }
+  .magical-borders-content>*:after{
+    background: radial-gradient(var(--circle-size, 600px) circle at var(--mouse-x) var(--mouse-y),rgba(255,255,255,.4),transparent 40%);
+    z-index: 1;
+  }
+
+  .magical-borders-content>*:before{
+    background: radial-gradient(var(--circle-size, 600px) circle at var(--mouse-x) var(--mouse-y),rgba(255,255,255,.06),transparent 40%);
+    z-index: 15;
+  }
+
+  .magical-borders-content>*:hover:before{
+    opacity: 1 !important;
+  }
+
+
+  .magical-borders-content>*:after{
+    opacity: 1;
+  }
+  .magical-borders:hover{
+    opacity: 1;
+  }
+
+  ::-webkit-scrollbar-thumb:hover{
+    background: rgba(255,255,255,.1);
+  }

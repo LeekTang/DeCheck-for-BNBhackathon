@@ -8,7 +8,17 @@
         </div>
         <img class="w-[40px] h-[40px]" src="../../public/images/home/line_star.png" alt="">
       </div>
-      <img class="mt-[80px] h-[340px]" src="../../public/images/home/self_check.png" alt="">
+
+      <div class="magical-borders mt-[80px]">
+        <div class="magical-borders-content">
+          <div class="w-[1200px] h-[340px] mx-auto myhoverbox">
+            <div class="magical-borders-inner">
+              <img class="mt-[80px] h-[340px]" src="../../public/images/home/self_check.png" alt="">
+            </div>
+            <div class="light"></div>
+          </div>
+        </div>
+      </div>
       <NuxtLink to="/check">
         <button class="mb-[200px]">
           {{ t('start') }}</button>
@@ -25,7 +35,7 @@
           <img class="w-[40px] h-[40px]" src="../../public/images/home/star.png" alt="">
         </div>
         <div class="feel_tips">
-          {{t(t('check_tips'))}}
+          {{ t(t('check_tips')) }}
         </div>
         <NuxtLink to="/dao">
           <button class="mt-[32px]">

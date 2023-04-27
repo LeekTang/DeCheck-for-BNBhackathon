@@ -185,5 +185,11 @@
   "uploadNow": "请等待上传成功",
   "limit": "最多上传{ limit }个, 您本次选择了{ files }个文件, 加起来一共{ all }个",
   "tagLimit": "标签不能超过3个",
-  "join": "参与"
+  "join": "参与",
+  "check":"随意定义您的点评",
+  "check_tips":"发表你的评论并进行自我增值",
+  "card_one":"一个围绕项目点评的<br/>DAO组织",
+  "card_two":"加入DeChcek DAO即可参与<br/>项目点评",
+  "card_three":"完成项目点评获取<br/>空投激励",
+  "card_four":"认证社区角色获取<br/>更多空投"
 }

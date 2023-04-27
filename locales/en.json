@@ -187,5 +187,9 @@
   "tagLimit": "Tags cannot exceed 3",
   "join": "JOIN",
   "check":"Feel free to customize<br/>your reviews",
-  "check_tips":"Publish your review and make self-increment"
+  "check_tips":"Publish your review and make self-increment",
+  "card_one":"An organization for<br/>project reviews",
+  "card_two":"Join DeCheck for project<br/>reviews",
+  "card_three":"Complete project reviews<br/>for airdrop",
+  "card_four":"More airdrops if you're a<br/>developer"
 }
