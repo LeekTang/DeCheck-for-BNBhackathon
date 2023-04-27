@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full text-gray-700 bg-[#190A43] min-h-screen">
+  <div class="relative w-full text-gray-700 bg-[#0a041a] min-h-screen">
     <HeaderView />
     <projectNav />
     <projectInfo :projectID="state.projectID"/>

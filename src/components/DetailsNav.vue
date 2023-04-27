@@ -1,30 +1,45 @@
 <template>
-  <div class="flex items-start w-[75rem] mx-auto mt-[6.5rem]">
-    <client-only>
-      <el-select v-model="state.chain" class="h-[3.5rem] w-[17.62rem] mr-[1.5rem]" :teleported="false">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
-      </el-select>
-    </client-only>
+  <div class="relative w-[75rem] mx-auto mt-[6.5rem]">
+    <div class="flex items-start w-[75rem] mx-auto mt-[6.5rem]">
+      <client-only>
+        <el-select v-model="state.chain" class="h-[3.5rem] w-[17.62rem] mr-[1.5rem]" :teleported="false">
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
+        </el-select>
+      </client-only>
 
-    <div class="w-[55.87rem] h-[3.5rem] bg-[#474174] rounded-[1rem] ">
-      <el-input v-model="state.searchInput" class="inputClass h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff]" @keyup.enter="getHotProject" :placeholder="t('searchplace')" :prefix-icon="Search" >
-        <template #suffix>
-          <div ref="buttonRef" class="h-[2rem] w-[4.13rem] input-bg text-[0.88rem] text-[#fff] rounded-[0.5rem] cursor-pointer" @click="getHotProject">{{t('Search')}}</div>
-        </template>
-      </el-input>
-
-      <div class="w-[55.87rem] max-h-[30rem] scroll p-[0.5rem] mt-[0.5rem] bg-[#322558FF] rounded-[0.75rem] z-40" v-if="state.isShowAll">
-        <div class="h-[3rem] text-[#fff] flex justify-between items-center px-[1rem] rounded-[0.75rem] hover:bg-[#FFFFFF1C]" 
-          v-for="(item,index) in state.allList" :key="index" @click="showProject(item)">
-          <p class="text-[0.88rem]">{{item.name}}</p>
-          <p class="text-[0.75rem]">{{item.tokenAddr[state.chain]}}</p>
-        </div>
-      </div>  
-    </div>
-
-          
-  </div>
+      <div class="w-[55.87rem] h-[3.5rem] rounded-[1rem]">
+        <el-input v-model="state.searchInput" class="inputClass h-[3.5rem] rounded-[1rem] text-[#fff]" @keyup.enter="getHotProject" :placeholder="t('searchplace')" :prefix-icon="Search" >
+          <template #suffix>
+            <div ref="buttonRef" class="h-[2rem] w-[4.13rem] input-bg text-[0.88rem] text-[#fff] rounded-[0.5rem] cursor-pointer" @click="getHotProject">{{t('Search')}}</div>
+          </template>
+        </el-input>
   
+      </div>
+    </div>
+    <div class="w-[55.87rem] max-h-[30rem] scroll p-[0.5rem] mt-[0.5rem] bg-[#252033] rounded-[0.75rem] absolute right-0 z-2100" v-if="state.isShowAll">
+      <div class="h-[3rem] text-[#fff] flex justify-between items-center px-[1rem] rounded-[0.75rem] hover:bg-[#FFFFFF1C]" 
+        v-for="(item,index) in state.allList" :key="index" @click="showProject(item)">
+        <p class="text-[0.88rem]">{{item.name}}</p>
+        <p class="text-[0.75rem]">{{item.tokenAddr[state.chain]}}</p>
+      </div>
+    </div>
+    <div class="w-[75rem] scroll p-[0.5rem] mt-[0.5rem]" v-if="state.hotShow">
+      <div class="text-[1rem] text-[#ffffffa8] font-normal my-[1rem]">Most Searches</div>
+      <div class="flex flex-wrap justify-between">
+        <div class="h-[3rem] w-[36rem] text-[#fff] flex items-center justify-between border border-solid border-[#ffffff1c] px-[1.5rem] mb-[1rem] rounded-full hover:bg-[#FFFFFF1C]" 
+          v-for="(item,index) in hot" :key="index" @click="hotJump(item)">
+          <div class="flex">
+            <p class="text-[0.88rem] text-[#ffffffa8] font-medium mr-[1rem] w-[4rem]">{{item.name}}</p>
+            <p class="text-[0.88rem] text-[#fff] font-medium mr-[1rem] w-[6rem]:">{{item.chainName}}</p>
+          </div>
+          <div class="flex items-center">
+            <p class="text-[0.88rem] text-[#fff] font-medium">{{item.address}}</p>
+            <img src="/images/right-icon.svg" class="h-[1rem] w-[0.8rem] ml-[0.8rem]"/>
+          </div>
+        </div>
+      </div>
+      </div> 
+  </div>
 </template>
 
 <script setup >
@@ -42,7 +57,8 @@ const state = reactive({
   chain: "1",
   searchInput: '',
   allList: {},
-  isShowAll: false
+  isShowAll: false,
+  hotShow: true,
 })
 
 const options = [
@@ -64,6 +80,20 @@ const options = [
   { value: "59140", label: "Linea" },
   { value: "1666600000", label: "Harmony" },
   { value: "tron", label: "Tron" },
+]
+
+
+const hot = [
+  {name: "PEPE", chain: '1', chainName: 'Ethereum',address: "0x6982508145454ce325ddbe47a25d4ec3d2311933"},
+  {name: "AIDOGE", chain: '42161',chainName: 'Arbitrum', address: "0x09e18590e8f76b6cf471b3cd75fe1a1a9d2b2c2b"},
+  {name: "DOGE", chain: '56',chainName: 'BSC', address: "0xba2ae424d960c26247dd6c32edc70b295c744c43"},
+  {name: "LINK", chain: '1',chainName: 'Ethereum', address: "0x514910771af9ca656af840dff83e8264ecf986ca"},
+  {name: "UNI", chain: '1',chainName: 'Ethereum', address: "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984"},
+  {name: "ARB", chain: '42161',chainName: 'Arbitrum', address: "0x912CE59144191C1204E64559FE8253a0e49E6548"},
+  {name: "GMX", chain: '1',chainName: 'Ethereum', address: "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a"},
+  {name: "OP", chain: '10',chainName: 'Optimism', address: "0x4200000000000000000000000000000000000042"},
+  {name: "BLUR", chain: '1',chainName: 'Ethereum', address: "0x5283d291dbcf85356a21ba090e6db59121208b44"},
+  {name: "LOOKS", chain: '1',chainName: 'Ethereum', address: "0xf4d2888d29d722226fafa5d9b24f9164c092421e"},
 ]
 
 
@@ -94,6 +124,15 @@ const showProject = (item) => {
   store.tokenID = item.id;
   store.tokenAddr = item.tokenAddr[state.chain];
   state.isShowAll = false
+  state.hotShow = false
+}
+
+
+const hotJump = (item) => {
+  state.hotShow = false 
+  store.chain = item.chain;
+  store.tokenAddr = item.address;
+  state.isShowAll = false
 }
 
 onMounted(()=>{
@@ -103,9 +142,11 @@ onMounted(()=>{
   store.searchProjectInfo = ''
   store.tokenAddr = ""
   store.tokenID = ""
+  state.hotShow = true
   if(route.query.searchInput != null){
     getHotProject()
   }
+
 })
 </script>
 
@@ -144,7 +185,6 @@ onMounted(()=>{
 /* input输入框 */
 :deep(.inputClass .el-input__wrapper ){
   height: 3.5rem;
-  background-color: #474174;
   box-shadow: none;
   border-radius: 20px;
 }
@@ -156,7 +196,7 @@ onMounted(()=>{
 /* 下拉选择样式 */
 :deep(.el-input__wrapper){
   height: 3.5rem;
-  background-color: #474174;
+  background-color: #ffffff1c;
   box-shadow: none;
   border-radius: 20px;
 }
@@ -178,7 +218,7 @@ onMounted(()=>{
 }
 
 :deep(.el-popper.is-light){
-  background-color: #322559;
+  background-color: #252033;
   border: none;
 }
 </style>

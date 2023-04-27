@@ -1,11 +1,11 @@
 <template>
-  <div class="relative w-full text-gray-700 bg-[#190A43] min-h-screen">
+  <div class="relative w-full text-gray-700 bg-[#0a041a] min-h-screen">
     <HeaderView />
     <div class="w-[75rem] mx-auto mt-[6.5rem]">
-      <div class="h-full w-[4.88rem] text-center leading-[3.5rem] bg-[#322558] cursor-pointer rounded-[0.75rem] mr-[1.5rem]" @click="back">
+      <div class="h-full w-[4.88rem] text-center leading-[3.5rem] bg-[#ffffff1c] cursor-pointer rounded-[0.75rem] mr-[1.5rem]" @click="back">
         <img src="/images/back.svg" class="inline-block"/>
       </div>
-      <div class="mt-[1.5rem] w-[51rem] p-[1.5rem] com-bg rounded-[1.25rem]">
+      <div class="mt-[1.5rem] w-[51rem] p-[1.5rem] bg-[#110921] border border-solid border-[#ffffff1c] rounded-[1.25rem]">
         <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold">{{t('selectTags')}}</div>
         <div class="text-[0.88rem] text-[#FFFFFFA8] leading-[0.88rem] mt-[1rem]">{{t('threeTags')}}</div>
         <div class="mt-[1rem]">
@@ -38,9 +38,9 @@
               </video>
               <img src="/images/close.svg" class="h-[1rem] w-[1rem] cursor-pointer absolute top-[0.5rem] right-[0.5rem]" @click="handleRemove" />
             </div>
-            <div v-else class="w-[35rem] ml-[1rem]">
-              <swiper class="commentSwiper">
-                <swiper-slide  class="bg-[#312963FF] relative text-center rounded-[0.75rem]" v-for="(item,index) in state.fileList" :key="index" >
+            <div v-else class="w-[35rem] ml-[1rem] relative">
+              <swiper class="commentSwiper swiper-no-swiping" :style="`${ state.fileList.length > 3 ? 'margin: 0 3rem' : ''}`">
+                <swiper-slide  class="bg-[#ffffff1c] relative text-center rounded-[0.75rem]" v-for="(item,index) in state.fileList" :key="index" >
                   <el-progress v-if="state.imgFlag && (index == state.fileList.length - 1)" :style="{position:'absolute' ,bottom:0 , 'z-index': 10}" color="red" :width="96" type="circle" :percentage="state.imgPload"></el-progress>
                   <el-image fit="scale-down" :preview-src-list="state.fileList" preview-teleported :src="item" class="h-[6rem] w-[6rem]" >
                     <template #error>
@@ -49,13 +49,13 @@
                   </el-image>
                   <img src="/images/close.svg" class="h-[1rem] w-[1rem] cursor-pointer absolute top-[0.5rem] right-[0.5rem]" @click="imgDelete(index)" />
                 </swiper-slide>
-                <div class="swiper-button-next cursor-pointer h-[2rem] w-[2rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">
-                  <img src="/images/project-right.svg" class="h-[2rem] w-[2rem]">
-                </div>
-                <div class="swiper-button-prev cursor-pointer h-[2rem] w-[2rem] absolute left-0 top-[50%] translate-y-[-50%] z-50">
-                  <img src="/images/project-left.svg" class="h-[2rem] w-[2rem]">
-                </div>
               </swiper>
+              <div v-show="state.fileList.length > 3" class="swiper-button-next cursor-pointer h-[2rem] w-[2rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">
+                <img src="/images/project-right.svg" class="h-[2rem] w-[2rem]">
+              </div>
+              <div v-show="state.fileList.length > 3" class="swiper-button-prev cursor-pointer h-[2rem] w-[2rem] absolute left-0 top-[50%] translate-y-[-50%] z-50">
+                <img src="/images/project-left.svg" class="h-[2rem] w-[2rem]">
+              </div>
             </div>
           </div>
         </div>
@@ -223,8 +223,7 @@ const submitClick = () => {
 
 onMounted(()=>{
   new Swipers('.commentSwiper',{
-      slidesPerView: 5,
-      spaceBetween: 16,
+      slidesPerView: 3,
       navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
@@ -246,7 +245,8 @@ onMounted(()=>{
 
 :deep(.el-check-tag){
   background-color: #FFFFFF1C;
-  color: #fff
+  color: #fff;
+  font-weight: 400;
 }
 :deep(.el-check-tag.is-checked){
   background-color: #FFFFFF;

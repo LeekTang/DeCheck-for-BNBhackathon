@@ -1,7 +1,7 @@
 <template>
   <div class="w-[75rem] mx-auto mt-[4rem]" v-if="Object.keys(state.goInfo).length > 0">
     <div class="text-[1.25rem] text-[#fff] font-extrabold">{{t('checkReport')}}</div>
-    <div class="w-full basic-bg rounded-[1.25rem] mt-[1.5rem]">
+    <div class="w-full border border-solid border-[#ffffff1c] rounded-[1.25rem] mt-[1.5rem]">
       <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem] flex justify-between items-center px-[1.5rem]">
         <p class="text-[1.25rem] font-bold text-gradient">{{t('riskCheck')}}</p>
       </div>
@@ -11,24 +11,24 @@
             <div v-if="state.goInfo.hasOwnProperty(item.key)" class="w-[33.75rem] flex flex-col border-b-2 border-b-[#FFFFFF1C]">
                 <div class="flex items-center my-[1rem]">
                   <template v-if="item.grade == 1">
-                    <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/warning.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+                    <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/warning.svg')" class="h-[1.5rem] w-[1.12rem] mr-[0.5rem]">
                   </template>
                   <template v-else-if="item.grade == 2">
-                    <img :src="state.goInfo[item.key] == 1 ? '/images/warning.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+                    <img :src="state.goInfo[item.key] == 1 ? '/images/warning.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/danger.svg')" class="h-[1.5rem] w-[1.12rem] mr-[0.5rem]">
                   </template>
                   <template v-else-if="item.grade == 3">
-                    <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/danger.svg' : '/images/warning.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+                    <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/danger.svg' : '/images/warning.svg')" class="h-[1.5rem] w-[1.12rem] mr-[0.5rem]">
                   </template>
                   <template v-else-if="item.grade == 4">
-                    <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/danger.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+                    <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/danger.svg')" class="h-[1.5rem] w-[1.12rem] mr-[0.5rem]">
                   </template>
                   <template v-else>
-                    <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/success.svg')" class="h-[1rem] w-[1rem] mr-[0.5rem]">
+                    <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/success.svg')" class="h-[1.5rem] w-[1.12rem] mr-[0.5rem]">
                   </template>
-                  <p class="text-[0.88rem]" :style="{color: state.goInfo[item.key] == 0 ? item.color0 : item.color1}">{{t(item.key + state.goInfo[item.key])}}</p>
+                  <p class="text-[1rem]" :style="{color: state.goInfo[item.key] == 0 ? item.color0 : item.color1}">{{t(item.key + state.goInfo[item.key])}}</p>
                 </div>
 
-              <p class="text-[0.88rem] text-[#FFFFFFA8] h-[4.13rem] mb-[1rem]">{{t(item.key + 'Tips')}}</p>
+              <p class="text-[0.87rem] text-[#FFFFFFA8] h-[4.13rem] mb-[1rem]">{{t(item.key + 'Tips')}}</p>
             </div>
           </template>
         </div>
@@ -41,52 +41,52 @@
       </div>
     </div>
     <div class="flex justify-between mt-[1.5rem]">
-      <div class="w-[36.75rem] h-[31.5rem] rounded-[1.25rem] basic-bg">
+      <div class="w-[36.75rem] h-[31.5rem] rounded-[1.25rem] border border-solid border-[#ffffff1c]">
         <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem]">
           <p class="text-[1.25rem] font-bold text-gradient pl-[1.5rem] ">{{t('basicInfo')}}</p>
         </div>
         <div class="p-[1.5rem] text-[0.88rem]">
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{t('tokenName')}}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.token_symbol">{{state.goInfo.token_symbol}} ({{state.goInfo.token_name}})</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
+            <p class="text-[#FFFFFF] font-bold w-[16.12rem]" v-if="state.goInfo.token_symbol">{{state.goInfo.token_symbol}} ({{state.goInfo.token_name}})</p>
+            <p class="text-[#FFFFFF] font-bold w-[16.12rem]" v-else> -- </p>
           </div>
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{t('tokenContractAddress')}}</p>
-            <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="tokenAddr">
+            <div class="flex items-center text-[#FFFFFF] font-bold w-[16.12rem] cursor-pointer" v-if="tokenAddr">
               <p @click="goToUrl(tokenAddr)">{{abbr(tokenAddr)}}</p>
               <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(tokenAddr)"/>
             </div>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{t('contractCreator')}}</p>
-            <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.creator_address">
+            <div class="flex items-center text-[#FFFFFF] font-bold w-[16.12rem] cursor-pointer" v-if="state.goInfo.creator_address">
               <p @click="goToUrl(state.goInfo.creator_address)">{{abbr(state.goInfo.creator_address)}}</p>
               <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.goInfo.creator_address)"/>
             </div>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
+            <p class="text-[#FFFFFF] font-bold w-[16.12rem]" v-else> -- </p>
           </div>
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{t('contractOwner')}}</p>
-            <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.owner_address">
+            <div class="flex items-center text-[#FFFFFF] font-bold w-[16.12rem] cursor-pointer" v-if="state.goInfo.owner_address">
               <p @click="goToUrl(state.goInfo.owner_address)">{{abbr(state.goInfo.owner_address)}}</p>
               <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.goInfo.owner_address)"/>
             </div>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
+            <p class="text-[#FFFFFF] font-bold w-[16.12rem]" v-else> -- </p>
           </div>
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{t('totalSupply')}}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]">{{toShort(state.goInfo.total_supply, 2) || '--'}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[16.12rem]">{{toShort(state.goInfo.total_supply, 2) || '--'}}</p>
           </div>
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{t('launchTime')}}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]">{{state.goInfo.time || '-'}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[16.12rem]">{{state.goInfo.time || '-'}}</p>
           </div>
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center">
             <p class="text-[#FFFFFFA8]">{{t('Website')}}</p>
             <a :href="store.searchProjectInfo.website" target="_blank">
-              <div class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
+              <div class="text-[#FFFFFF] font-bold w-[16.12rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
                 <p class="overflow-hidden whitespace-nowrap text-ellipsis">{{store.searchProjectInfo.website}}</p>
                 <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
               </div>
@@ -94,18 +94,18 @@
           </div>
         </div>
       </div>
-      <div class="w-[36.75rem] h-[31.5rem] rounded-[1.25rem] basic-bg">
+      <div class="w-[36.75rem] h-[31.5rem] rounded-[1.25rem] border border-solid border-[#ffffff1c]">
         <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem]">
           <p class="text-[1.25rem] font-bold text-gradient pl-[1.5rem] ">{{t('transactionInfo')}}</p>
         </div>
         <div class="p-[1.5rem] text-[0.88rem]">
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{t('price')}}</p>
             <p class="text-[#FFFFFF] text-[1.5rem] font-bold">{{state.goInfo.price || '-'}}</p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center">
             <p class="text-[#FFFFFFA8]">DEX</p>
-            <div class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between cursor-pointer">
+            <div class="text-[#FFFFFF] font-bold w-[16.12rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between cursor-pointer">
               <p v-if="state.goInfo.dex">{{state.goInfo.dex[0].name}}</p>
               <p v-else>--</p>
               <div class="flex items-center">
@@ -118,7 +118,7 @@
             <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem]">
               <div class="flex justify-between leading-[1rem]">
                 <p class="text-[1rem] text-[#fff] font-medium">{{t('buyTax')}}</p>
-                <p class="text-[1rem] text-[#11B466] font-bold">{{state.goInfo.buy_tax}}</p>
+                <p class="text-[1rem] text-[#11B466] font-bold">{{state.goInfo.buy_tax + '%'}}</p>
               </div>
               <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.15rem] bg-[#ffffff14] rounded-[0.5rem] my-[1rem]">
                 <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
@@ -132,7 +132,7 @@
             <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem]">
               <div class="flex justify-between leading-[1rem]">
                 <p class="text-[1rem] text-[#fff] font-medium">{{t('sellTax')}}</p>
-                <p class="text-[1rem] text-[#FF5353FF] font-bold">{{state.goInfo.sell_tax}}</p>
+                <p class="text-[1rem] text-[#FF5353FF] font-bold">{{state.goInfo.sell_tax + '%'}}</p>
               </div>
               <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.15rem] bg-[#ffffff14] rounded-[0.5rem] my-[1rem]">
                 <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>

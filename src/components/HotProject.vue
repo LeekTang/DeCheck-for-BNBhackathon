@@ -4,7 +4,7 @@
     <div class="mt-[1.5rem]">
       <swiper class="hotSwiper">
         <swiper-slide class="swiper-no-swiping" v-for="(item,index) in state.hotPorject" :key="index">
-          <div class="h-[23rem] w-[17.62rem] swbg rounded-[1.25rem] p-[1.25rem]" @click="goUrl(item.id)">
+          <div class="h-[23rem] w-[17.62rem] bg-[#110921] rounded-[1.25rem] p-[1.25rem] border border-solid border-[#ffffff1c]" @click="goUrl(item.id)">
             <img :src="item.logo" class="w-[14.62rem] h-[14.62rem] rounded-[0.75rem] m-auto cursor-pointer" @error="imgError"/>
             <p class="text-[1rem] text-[#fff] mt-[1rem] text-ellipsis h-[40px]">{{item.name}}</p>
             <el-rate disabled size="large" v-model="item.score" />
@@ -19,10 +19,10 @@
       </swiper>
       <el-skeleton :loading="state.loading" animated>
         <template #template>
-          <el-skeleton-item variant="rect" style="width: 282px; height: 368px; border-radius: 20px; background: #363574;margin-right: 24px"/>
-          <el-skeleton-item variant="rect" style="width: 282px; height: 368px; border-radius: 20px; background: #363574;margin-right: 24px"/>
-          <el-skeleton-item variant="rect" style="width: 282px; height: 368px; border-radius: 20px; background: #363574;margin-right: 24px"/>
-          <el-skeleton-item variant="rect" style="width: 282px; height: 368px; border-radius: 20px; background: #363574"/>
+          <el-skeleton-item variant="rect" style="width: 282px; height: 368px; border-radius: 20px; background: #110921;border: 1px solid #ffffff1c; margin-right: 24px"/>
+          <el-skeleton-item variant="rect" style="width: 282px; height: 368px; border-radius: 20px; background: #110921;border: 1px solid #ffffff1c; margin-right: 24px"/>
+          <el-skeleton-item variant="rect" style="width: 282px; height: 368px; border-radius: 20px; background: #110921;border: 1px solid #ffffff1c; margin-right: 24px"/>
+          <el-skeleton-item variant="rect" style="width: 282px; height: 368px; border-radius: 20px; background: #110921;border: 1px solid #ffffff1c;"/>
         </template>
       </el-skeleton>
     </div>

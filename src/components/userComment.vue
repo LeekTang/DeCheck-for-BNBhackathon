@@ -6,7 +6,7 @@
       </el-select>
     </client-only>
     <div>
-        <div v-for="(item, index) in state.commentList" :key="index" class="w-full common-bg p-[1.5rem] rounded-[0.75rem] mb-[1.75rem]">
+        <div v-for="(item, index) in state.commentList" :key="index" class="w-full bg-[#110921] border border-solid border-[#ffffff1c] p-[1.5rem] rounded-[1.25rem] mb-[1.75rem]">
           <div class="">
             <div class="text-[1.5rem] text-[#fff] font-bold leading-[1.5rem] cursor-pointer" @click="goProject(item.projectId)">{{item.projectName}}</div>
             <el-rate disabled size="large" v-model="item.score" />
@@ -14,7 +14,7 @@
           <div class="">
             <div class="flex justify-between my-[1rem]">
               <div class="flex">
-                <p v-for="(com,index) in item.tags" :key="index" class="h-[1rem] leading-[1rem] rounded-[0.25rem] text-[0.63rem] text-[#fff] bg-[#FFFFFF1C] mr-[0.5rem] px-[0.5rem]">{{com}}</p>
+                <p v-for="(com,index) in item.tags" :key="index" class="h-[1rem] leading-[1rem] rounded-[0.25rem] text-[0.62rem] text-[#fff] bg-[#FFFFFF1C] mr-[0.5rem] px-[0.5rem]">{{com}}</p>
               </div>
               <div class="text-[0.75rem] text-[#FFFFFFA8]">{{timestampToTime(item.createAt)}}</div>
             </div>
@@ -24,18 +24,18 @@
               <img :src="item.isEllipsis ? '/images/down.svg' : '/images/up.svg'" class="h-[1.5rem] w-[1.5rem] " />
             </div>
           </div>
-          <div v-if="item.image" class="mt-[1.5rem] w-full py-[1.5rem]">
-            <swiper :class="`userSwiper${index}`">
+          <div v-if="item.image" class="mt-[1.5rem] w-full py-[1.5rem] relative">
+            <swiper :class="`userSwiper${index}`" class="swiper-no-swiping" :style="`${ item.attachment.length > 6 ? 'margin: 0 4rem' : ''}`">
               <swiper-slide  v-for="(icon,index) in item.attachment" :key="index">
-                <el-image fit="scale-down" :preview-src-list="item.attachment" preview-teleported :src="icon" class="w-[8.63rem] h-[8.63rem] rounded-[0.75rem] ml-[0.75rem] bg-[#403582FF]" />
+                <el-image :hide-on-click-modal="true" fit="cover" :preview-src-list="item.attachment" preview-teleported :src="icon" class="w-[8.63rem] h-[8.63rem] rounded-[0.75rem] ml-[0.75rem] bg-[#403582FF]" />
               </swiper-slide>
-              <div class="swiper-button-next h-[4rem] w-[4rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">
-                <img src="/images/project-right.svg" class="h-[4rem] w-[4rem]">
-              </div>
-              <div class="swiper-button-prev h-[4rem] w-[4rem] absolute left-0 top-[50%] translate-y-[-50%] z-50">
-                <img src="/images/project-left.svg" class="h-[4rem] w-[4rem]">
-              </div>
             </swiper>
+            <div v-if="item.attachment.length > 6" class="swiper-button-next h-[4rem] w-[4rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">
+              <img src="/images/project-right.svg" class="h-[4rem] w-[4rem]">
+            </div>
+            <div v-if="item.attachment.length > 6" class="swiper-button-prev h-[4rem] w-[4rem] absolute left-0 top-[50%] translate-y-[-50%] z-50">
+              <img src="/images/project-left.svg" class="h-[4rem] w-[4rem]">
+            </div>
           </div>
           <div v-if="item.video" class="h-[11.63rem] w-[46.5rem] bg-[#FFFFFF1C] rounded-[0.75rem] mt-[1.75rem] flex justify-center items-center">
             <video class="h-[8.63rem] w-[43.44rem] rounded-[0.75rem]" v-for="(video,index) in item.attachment" :key="index"  controls>
@@ -119,12 +119,13 @@ onMounted(()=>{
 
 <style scoped>
 :deep(.el-popper.is-light){
-  background: #322559;
+  background: #252033;
   border: none;
 }
 
 :deep(.el-select-dropdown__item){
   color: #fff;
+  margin: 0 0.5rem;
 }
 
 :deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
@@ -132,9 +133,6 @@ onMounted(()=>{
   border-radius: 0.25rem;
 }
 
-.common-bg{
-  background: linear-gradient(225deg, #363574 0%, #2A1C52 100%);
-}
 
 .text-ellipsis{
   overflow:hidden;
@@ -145,7 +143,7 @@ onMounted(()=>{
 }
 
 :deep(.el-input__wrapper){
-  background: #474174;
+  background: #ffffff1c;
   box-shadow: none;
   border-radius: 1.25rem;
 }

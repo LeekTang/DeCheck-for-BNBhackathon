@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full fixed top-0 bg-[#190A43] z-[100]">
+  <div class="w-full fixed top-0 bg-[#0a041a] z-[100]">
     <div class="w-[75rem] mx-auto flex items-center justify-between">
       <div class="flex items-center w-[38.2rem] py-[0.75rem] justify-between text-[1rem] text-[#ffffffa8]">
         <NuxtLink to="/"><img src="/images/logo.svg" class="h-[2.5rem] w-[9.14rem] cursor-pointer" /></NuxtLink>

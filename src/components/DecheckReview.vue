@@ -8,7 +8,8 @@
     </client-only>
     <div class="flex">
       <div class="w-[49.5rem]">
-        <div v-for="(item, index) in state.comments" :key="index" class="w-full common-bg p-[1.5rem] rounded-[0.75rem] mb-[1.75rem]">
+        <div v-for="(item, index) in state.comments" :key="index" 
+          class="w-full bg-[#110921] p-[1.5rem] rounded-[1.25rem] mb-[1.75rem] border border-solid border-[#ffffff1c]">
           <div class="flex justify-between items-start">
             <div class="flex items-center">
               <img src="/images/avatar.png" class="h-[2.5rem] w-[2.5rem] rounded-full bg-[#e6e6e6] mr-[0.63rem]" />
@@ -31,18 +32,18 @@
               <source :src="video" type="video/mp4">
             </video>
           </div>
-          <div v-if="item.image" class="mt-[1.5rem] w-full bg-[#FFFFFF1C] py-[1.5rem] rounded-[0.75rem]">
-            <swiper :class="`swiperc${index}`">
-              <swiper-slide  v-for="(icon,index) in item.attachment" :key="index">
-                <el-image fit="scale-down" :preview-src-list="item.attachment" :initial-index="index" preview-teleported :src="icon" class="w-[8.63rem] h-[8.63rem] bg-[#312963FF] rounded-[0.75rem] ml-[0.75rem]"/>
+          <div v-if="item.image" class="mt-[1.5rem] w-full relative bg-[#FFFFFF1C] py-[1.5rem] rounded-[0.75rem]">
+            <swiper :class="`swiperc${index}`" class="swiper-no-swiping" :style="`${ item.attachment.length > 4 ? 'margin: 0 4rem' : ''}`">
+              <swiper-slide  v-for="(icon,index) in item.attachment" :key="index" >
+                <el-image :hide-on-click-modal="true" fit="cover" :preview-src-list="item.attachment" :initial-index="index" preview-teleported :src="icon" class="w-[8.63rem] h-[8.63rem] bg-[#312963FF] rounded-[0.75rem] ml-[0.75rem]"/>
               </swiper-slide>
-              <div class="swiper-button-next h-[4rem] w-[4rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">
+            </swiper>
+            <div v-if="item.attachment.length > 4" class="swiper-button-next h-[4rem] w-[4rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">
                 <img src="/images/project-right.svg" class="h-[4rem] w-[4rem]">
               </div>
-              <div class="swiper-button-prev h-[4rem] w-[4rem] absolute left-0 top-[50%] translate-y-[-50%] z-50">
+              <div v-if="item.attachment.length > 4" class="swiper-button-prev h-[4rem] w-[4rem] absolute left-0 top-[50%] translate-y-[-50%] z-50">
                 <img src="/images/project-left.svg" class="h-[4rem] w-[4rem]">
               </div>
-            </swiper>
           </div>
           <div 
             :class="`${item.liked ? 'bg-[#fff] text-[#121D43FF]' : 'text-[#FFFFFFA8]'} h-[2rem] w-[4.88rem] mt-[1.5rem] 
@@ -95,7 +96,7 @@ const projectInfo = () => {
             el.image = true
             setTimeout(() => {
               new Swipers(`.swiperc${index}`,{
-                slidesPerView: 4.5,
+                slidesPerView: 4,
                 navigation: {
                   nextEl: '.swiper-button-next',
                   prevEl: '.swiper-button-prev',
@@ -111,13 +112,13 @@ const projectInfo = () => {
 
 const likeClick = (type,id) => {
   state.comments.forEach((el,index) => {
-    if(el.liked){
-      el.helpful = el.helpful - 1;
-    }else{
-      el.helpful = el.helpful + 1;
-    }
     if(el.id == id){
       el.liked = !type
+      if(el.liked){
+        el.helpful = el.helpful + 1;
+      }else{
+        el.helpful = el.helpful - 1;
+      }
     }
   });
   request.get(`/plugin/decheck/api/user/review/like/${id}`).then(res => {
@@ -135,14 +136,11 @@ onMounted(()=>{
 </script>
 
 <style scoped>
-.common-bg{
-  background: linear-gradient(225deg, #363574 0%, #2A1C52 100%);
-}
 
 /* 下拉选择样式 */
 :deep(.el-input__wrapper){
   height: 3.5rem;
-  background-color: #474174;
+  background-color: #ffffff1c;
   box-shadow: none;
   border-radius: 20px;
 }
@@ -164,7 +162,7 @@ onMounted(()=>{
 }
 
 :deep(.el-popper.is-light){
-  background-color: #322559;
+  background-color: #252033;
   border: none;
 }
 </style>

@@ -2,7 +2,7 @@
   <div class="w-[75rem] mx-auto mt-[6.5rem]">
     <div class="text-[1.25rem] text-[#fff] font-extrabold">DID</div>
     <div class="flex justify-between items-center flex-wrap mt-[1.5rem]">
-      <div class="h-[21.62rem] w-[36.75rem] rounded-[1.25rem] bg-[#363574] p-[1.5rem] mb-[1.5rem]" v-for="(item,index) in state.didList" :key="index">
+      <div class="h-[21.62rem] w-[36.75rem] rounded-[1.25rem] bg-[#110921] p-[1.5rem] mb-[1.5rem] border border-solid border-[#ffffff1c]" v-for="(item,index) in state.didList" :key="index">
         <div class="flex justify-between">
           <img src="/images/nft.png" class="h-[14.62rem] w-[14.62rem] rounded-[0.75rem] mr-[1.5rem]">
           <div class="relative">

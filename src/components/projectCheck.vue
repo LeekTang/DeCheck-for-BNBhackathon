@@ -6,10 +6,10 @@
         <el-option v-for="(item,index) in state.tokenList" :key="item[0]" :label="item.chain" :value="index"/>
       </el-select>
     </client-only>
-    <div class="w-full basic-bg rounded-[1.25rem] mt-[1.5rem]">
+    <div class="w-full border border-solid border-[#ffffff1c] rounded-[1.25rem] mt-[1.5rem]">
       <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem] flex justify-between items-center px-[1.5rem]">
         <p class="text-[1.25rem] font-bold text-gradient">{{ t('riskCheck') }}</p>
-        <div class="text-[#FFFFFF] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between cursor-pointer" @click="jumpClick">
+        <div class="text-[#FFFFFF] text-[0.88rem] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between cursor-pointer" @click="jumpClick">
           <p class="h-[1rem] leading-[14px]">{{ t('viewDetails') }}</p>
           <img src="/images/jump.svg" class="h-[1rem] w-[1rem]">
         </div>
@@ -46,17 +46,17 @@
       </div>
     </div>
     <div class="flex justify-between mt-[1.5rem]">
-      <div class="w-[36.75rem] h-[31.5rem] rounded-[1.25rem] basic-bg">
+      <div class="w-[36.75rem] h-[31.5rem] rounded-[1.25rem] basic-bg border border-solid border-[#ffffff1c]">
         <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem]">
           <p class="text-[1.25rem] font-bold text-gradient pl-[1.5rem] ">{{ t('basicInfo') }}</p>
         </div>
         <div class="p-[1.5rem] text-[0.88rem]">
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('tokenName') }}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.token_symbol">{{state.goInfo.token_symbol}} ({{state.goInfo.token_name}})</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('tokenContractAddress') }}</p>
             <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.tokenList">
               <p @click="goToUrl(state.tokenList[proStore.chain][1])">{{abbr(state.tokenList[proStore.chain][1])}}</p>
@@ -64,7 +64,7 @@
             </div>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('contractCreator') }}</p>
             <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.creator_address">
               <p @click="goToUrl(state.goInfo.creator_address)">{{abbr(state.goInfo.creator_address)}}</p>
@@ -72,7 +72,7 @@
             </div>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('contractOwner') }}</p>
             <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.owner_address">
               <p @click="goToUrl(state.goInfo.owner_address)">{{abbr(state.goInfo.owner_address)}}</p>
@@ -80,16 +80,16 @@
             </div>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('totalSupply') }}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.total_supply">{{toShort( state.goInfo.total_supply, 2) || '--'}}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('launchTime') }}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]">{{state.goInfo.time || '-'}}</p>
           </div>
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center">
             <p class="text-[#FFFFFFA8]">{{ t('Website') }}</p>
             <a :href="state.projectInfo.website" target="_blank">
               <div class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
@@ -100,12 +100,12 @@
           </div>
         </div>
       </div>
-      <div class="w-[36.75rem] h-[31.5rem] rounded-[1.25rem] basic-bg">
+      <div class="w-[36.75rem] h-[31.5rem] rounded-[1.25rem] basic-bg border border-solid border-[#ffffff1c]">
         <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem]">
           <p class="text-[1.25rem] font-bold text-gradient pl-[1.5rem] ">{{ t('transactionInfo') }}</p>
         </div>
         <div class="p-[1.5rem] text-[0.88rem]">
-          <div class="h-[3.5rem] flex justify-between items-center border-b-2 border-b-[#FFFFFF1C]">
+          <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('price') }}</p>
             <p class="text-[#FFFFFF] text-[1.5rem] font-bold">{{state.goInfo.price || '-'}}</p>
           </div>
@@ -124,7 +124,7 @@
             <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem]">
               <div class="flex justify-between leading-[1rem]">
                 <p class="text-[1rem] text-[#fff] font-medium">{{ t('buyTax') }}</p>
-                <p class="text-[1rem] text-[#11B466] font-bold">{{state.goInfo.buy_tax || '-'}}</p>
+                <p class="text-[1rem] text-[#11B466] font-bold">{{state.goInfo.buy_tax + '%' || '-'}}</p>
               </div>
               <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.12rem] bg-[#ffffff14] rounded-[0.5rem] my-[1rem]">
                 <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
@@ -138,7 +138,7 @@
             <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem]">
               <div class="flex justify-between leading-[1rem]">
                 <p class="text-[1rem] text-[#fff] font-medium">{{ t('sellTax') }}</p>
-                <p class="text-[1rem] text-[#FF5353FF] font-bold">{{state.goInfo.sell_tax || '-'}}</p>
+                <p class="text-[1rem] text-[#FF5353FF] font-bold">{{state.goInfo.sell_tax + '%' || '-'}}</p>
               </div>
               <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.12rem] bg-[#ffffff14] rounded-[0.5rem] my-[1rem]">
                 <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
@@ -297,9 +297,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.basic-bg{
-  background: linear-gradient(225deg, #363574 0%, #2A1C52 100%);
-}
 .text-gradient{
   background: linear-gradient(69deg, #4972FF 0%, #1E93FF 100%);
   -webkit-background-clip: text;
@@ -310,7 +307,7 @@ onMounted(() => {
 /* 下拉选择样式 */
 :deep(.el-input__wrapper){
   height: 3.5rem;
-  background-color: #474174;
+  background-color: #ffffff1c;
   box-shadow: none;
   border-radius: 20px;
 }
@@ -332,7 +329,7 @@ onMounted(() => {
 }
 
 :deep(.el-popper.is-light){
-  background-color: #322559;
+  background-color: #0a041a;
   border: none;
 }
 </style>
