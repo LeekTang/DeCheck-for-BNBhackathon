@@ -9,7 +9,7 @@
   "myreviews": "我的点评",
   "logout": "退出登录",
   "decheck": "DeCheck",
-  "highly": "高度审查区块链项目，你值得信任",
+  "highly": "多个领域的专业人士保障您的投资安全<br/>高度审查区块链项目，你值得信任",
   "introtitle": "检查所有主要区块链网络项目",
   "publicitytitle": "收录了绝大部分的主流项目",
   "publicitytip": "由专业的社区开发人员帮助您从各个维度了解您的目标项目",
@@ -184,5 +184,6 @@
   "reviewNull": "请输入点评",
   "uploadNow": "请等待上传成功",
   "limit": "最多上传{ limit }个, 您本次选择了{ files }个文件, 加起来一共{ all }个",
-  "tagLimit": "标签不能超过3个"
+  "tagLimit": "标签不能超过3个",
+  "join": "参与"
 }

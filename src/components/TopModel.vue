@@ -12,10 +12,7 @@
       <div class="top_text">
         A DAO for Project Review
       </div>
-      <div class="bottom_text">
-        Professionals in multiple fields protect your investment security<br /> HIGHLY - VETTED blockchain projects you
-        can
-        trust.
+      <div class="bottom_text" v-html="t('highly')">
       </div>
       <img class="translate-y-8 mx-auto mt-[32px] w-[40px] h-[40px]" src="../../public/images/home/star.png" alt="">
       <div class="keep-px-hero-bottom"></div>

@@ -14,19 +14,17 @@
         <p class="text-[1rem] text-[#ffffffa8] font-semibold">{{ item.name }}</p>
       </div>
     </div>
-    <div class="mt-[6.13rem] h-[26.5rem] bottom-bg flex relative rounded-[1.25rem]">
-      <div class="w-[42.31rem] py-[4rem] pl-[4rem] flex flex-col justify-between">
-        <div>
-          <p class="text-[2.56rem] text-[#121D43] font-extrabold leading-[3rem]">{{ t('publicitytitle') }}</p>
-          <p class="text-[1.44rem] text-[#121D43a8] font-normal leading-[1.75rem] mt-[1.5rem]">{{ t('publicitytip') }}</p>
-        </div>
-        <NuxtLink to="/explorer">
-          <div
-            class="h-[3.5rem] w-[11.25rem] div-bg cursor-pointer text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]">
-            {{ t('Explorer') }}</div>
-        </NuxtLink>
+    <div class="mt-[98px] pt-[129px] h-[360px] bottom_bg relative rounded-[1.25rem] mb-[405px]">
+      <img class="mx-auto w-[40px] h-[40px]" src="../../public/images/home/star.png" alt="">
+      <div class="keep-px-tips" v-html="t('publicitytitle')">
       </div>
-      <img src="/images/intro-bg.svg" class="absolute right-0">
+      <div class="keep-px-intruduce" v-html="t('publicitytip')">
+      </div>
+      <NuxtLink to="/explorer">
+        <button class="keep-px-Explorer">
+          {{t('Explorer')}}
+        </button>
+      </NuxtLink>
     </div>
   </div>
 </template>
@@ -66,11 +64,46 @@ const list = [
   color: transparent;
 }
 
-.bottom-bg {
-  background: linear-gradient(60deg, #F1F4FF 0%, #ADC4FF 100%);
-}
-
 .div-bg {
   background: linear-gradient(180deg, #263B85 0%, #263B85 0%, #121D43 100%);
+}
+
+.bottom_bg {
+  background: url('../../public/images/home/top_light_line.png') no-repeat;
+  background-size: 100% 100%;
+}
+
+.keep-px-tips {
+  margin-top: 100px;
+  font-weight: 700;
+  font-size: 60px;
+  line-height: 60px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.keep-px-intruduce {
+  margin-top: 32px;
+  font-weight: 500;
+  font-size: 23px;
+  line-height: 28px;
+  text-align: center;
+  color: #FFFFFF;
+  opacity: 0.44;
+}
+
+.keep-px-Explorer {
+  margin-top: 32px;
+  position: relative;
+  left: 50%;
+  width: 180px;
+  height: 56px;
+  background: linear-gradient(180deg, #F1F5FF 0%, #8B96AF 100%);
+  border: 1px solid #E6E9EE;
+  border-radius: 100px;
+  font-weight: 500;
+  font-size: 20px;
+  color: #151515;
+  transform: translateX(-50%);
 }
 </style>

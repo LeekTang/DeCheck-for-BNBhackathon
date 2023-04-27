@@ -1,13 +1,13 @@
 <template>
-  <div class="relative w-full text-gray-700 bg-[#000]">
+  <div class="relative min-w-[1200px] w-full text-gray-700 bg-[#000]">
     <HeaderView />
     <TopView/>
     <Introduce/>
     <HotReviews/>
     <Superiority/>
     <Contract/>
-    <Decheck/>
-    <ToOther/>
+    <!-- <Decheck/> -->
+    <!-- <ToOther/> -->
     <BottomBar/>
   </div>
 </template>
