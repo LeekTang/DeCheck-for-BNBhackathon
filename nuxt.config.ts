@@ -3,13 +3,14 @@ import {loadEnv } from 'vite'
 
 interface VITE_ENV_CONFIG {
   VITE_API_URL: string
+  VITE_SIGN_TEXT: string
+  VITE_LOGIN_URL: string
+  VITE_LOGIN_ID: string
 }
 
-const envScript = process.env.npm_lifecycle_script?.split('')
-const envName = envScript[envScript?.length - 1]
+const envScript = process.env.npm_lifecycle_script.split('')
+const envName = envScript[envScript.length - 1]
 const envData = loadEnv(envName, 'env') as unknown as VITE_ENV_CONFIG
-
-console.log('当前环境',envData)
 
 export default defineNuxtConfig({
   runtimeConfig: {

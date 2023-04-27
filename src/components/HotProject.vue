@@ -5,7 +5,7 @@
       <swiper class="hotSwiper">
         <swiper-slide class="swiper-no-swiping" v-for="(item,index) in state.hotPorject" :key="index">
           <div class="h-[23rem] w-[17.62rem] swbg rounded-[1.25rem] p-[1.25rem]" @click="goUrl(item.id)">
-            <img :src="item.logo" class="w-[14.62rem] h-[14.62rem] rounded-[0.75rem] m-auto" @error="imgError"/>
+            <img :src="item.logo" class="w-[14.62rem] h-[14.62rem] rounded-[0.75rem] m-auto cursor-pointer" @error="imgError"/>
             <p class="text-[1rem] text-[#fff] mt-[1rem] text-ellipsis h-[40px]">{{item.name}}</p>
             <el-rate disabled size="large" v-model="item.score" />
           </div>

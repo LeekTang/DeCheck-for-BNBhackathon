@@ -13,7 +13,7 @@
         </div>
         <div class="flex justify-between mt-[1.5rem]">
           <div class="tip relative h-[2.5rem] w-[14.62rem] text-center leading-[2.5rem] text-[0.87rem] text-[#121D43] bg-[#fff] font-bold rounded-[0.5rem]">{{item.tip}}</div>
-          <div class="h-[2.5rem] w-[17.62rem] text-center leading-[2.5rem] text-[1rem] text-[#fff] bg-[#1E50FF] font-bold rounded-[0.5rem]">{{item.button}}</div>
+          <div :class="`${ index > 1 ? 'bg-[#ffffff38]' : 'bg-[#1E50FF]'} h-[2.5rem] w-[17.62rem] text-center leading-[2.5rem] text-[1rem] text-[#fff] font-bold rounded-[0.5rem]`">{{item.button}}</div>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center h-[3.5rem] w-[75rem] mx-auto mt-[6.5rem]">
     <div class="h-[56px] w-[78px] text-center leading-[3.5rem] bg-[#322558] rounded-[20px] mr-[1.5rem]" @click="back" :teleported="false">
-      <img src="/images/back.svg" class="inline-block"/>
+      <img src="/images/back.svg" class="inline-block cursor-pointer"/>
     </div>
     <client-only>
       <el-select v-model="state.chain" class="h-[3.5rem] w-[11.25rem] mr-[1.5rem]" size="large" :teleported="false">

@@ -3,7 +3,7 @@
     <div class="text-[1.25rem] text-[#fff] font-extrabold mb-[1.5rem]">{{ t('PROJECTS')}}</div>
     <div class="project-bg w-full p-[1.5rem] rounded-[0.75rem]">
       <div class="w-[43rem] h-[3.5rem] bg-[#474174] rounded-[1rem] mb-[2rem]">
-        <el-input v-model="state.searchInput" class="inputClass h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff]" :placeholder="t('searchplace')" :prefix-icon="Search" >
+        <el-input v-model="state.searchInput" class="inputClass h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff] cursor-pointer" :placeholder="t('searchplace')" :prefix-icon="Search" >
           <template #suffix>
             <div class="h-[2rem] w-[4.13rem] input-bg text-[0.88rem] text-[#fff] rounded-[0.5rem]" @click="searchClick">{{ t('Search') }}</div>
           </template>
@@ -17,8 +17,8 @@
         <p class="w-[8rem]">{{ t('Reviews') }}</p>
         <p class="w-[8rem]">{{ t('Score') }}</p>
       </div>
-      <div v-for="(item, index) in state.projectList" :key="index" class="flex flex-row items-center text-[1rem] text-[#FFFFFF] h-[4rem] border-b border-[#FFFFFF1C]" @click="goUrl(item.id)">
-        <div class="w-[30rem] flex items-center cursor-pointer">
+      <div v-for="(item, index) in state.projectList" :key="index" class="flex flex-row items-center cursor-pointer text-[1rem] text-[#FFFFFF] h-[4rem] border-b border-[#FFFFFF1C]" @click="goUrl(item.id)">
+        <div class="w-[30rem] flex items-center">
           <img :src="item.logo" class="h-[2.5rem] w-[2.5rem] bg-[#fff] rounded-[0.75rem] mr-[0.88rem]" @error="imgError"/>
           <a>{{item.name}}</a>
         </div>

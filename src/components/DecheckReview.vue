@@ -1,9 +1,9 @@
 <template>
   <div class="w-[75rem] mx-auto mt-[4rem]  mb-[14rem]" v-if="state.comments">
-    <div class="text-[1.25rem] text-[#fff] font-extrabold">DECHECK REVIEW</div>
+    <div class="text-[1.25rem] text-[#fff] font-extrabold">{{t('decheckReview')}}</div>
     <client-only>
       <el-select v-model="state.selectValue" class="h-[3.5rem] w-[17.62rem] my-[1.5rem]" size="large" :teleported="false" @change="sortClick">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
+        <el-option v-for="item in options" :key="item.value" :label=item.label :value="item.value" />
       </el-select>
     </client-only>
     <div class="flex">
@@ -24,7 +24,7 @@
               </div>
               <div class="text-[0.75rem] text-[#FFFFFFA8]">{{timestampToTime(item.createAt)}}</div>
             </div>
-            <div class="text-[0.88rem] text-[#fff] leading-[1.25rem]">{{item.content}}</div>
+            <p class="text-[0.88rem] text-[#fff] leading-[1.25rem] whitespace-pre-wrap" v-html="item.content"></p>
           </div>
           <div v-if="item.video" class="h-[11.63rem] w-[46.5rem] bg-[#FFFFFF1C] rounded-[0.75rem] mt-[1.5rem] flex justify-center items-center">
             <video class="h-[8.63rem] w-[43.44rem] rounded-[0.75rem]" v-for="(video,index) in item.attachment" :key="index" controls>
@@ -46,7 +46,7 @@
           </div>
           <div 
             :class="`${item.liked ? 'bg-[#fff] text-[#121D43FF]' : 'text-[#FFFFFFA8]'} h-[2rem] w-[4.88rem] mt-[1.5rem] 
-            flex items-center justify-center border-2 border-[#FFFFFFA8] rounded-[0.75rem] cursor-pointer`" @click="likeClick(item.id)">
+            flex items-center justify-center border-2 border-[#FFFFFFA8] rounded-[0.75rem] cursor-pointer`" @click="likeClick(item.liked,item.id)">
             <img :src="item.liked ? '/images/like.svg' : '/images/notlike.svg'" class="h-[1rem] w-[1rem] mr-[0.5rem]">
             <p>{{item.helpful}}</p>
           </div>
@@ -64,10 +64,12 @@ import { onMounted,ref, reactive, defineProps } from 'vue'
 import request from '@/src/utils/request'
 import { abbr,timestampToTime, matchType } from '@/src/utils/utils'
 SwiperCore.use([Autoplay,Navigation])
+import { useI18n } from  'vue-i18n'
+const { t } = useI18n();
 
 const options = [
-  { value: 1, label: 'latest', },
-  { value: 2, label: 'hottest', },
+  { value: 1, label: t('latest'), },
+  { value: 2, label: t('hottest'), },
 ]
 
 const props = defineProps({
@@ -107,14 +109,19 @@ const projectInfo = () => {
   })
 }
 
-const likeClick = (id) => {
+const likeClick = (type,id) => {
+  state.comments.forEach((el,index) => {
+    if(el.liked){
+      el.helpful = el.helpful - 1;
+    }else{
+      el.helpful = el.helpful + 1;
+    }
+    if(el.id == id){
+      el.liked = !type
+    }
+  });
   request.get(`/plugin/decheck/api/user/review/like/${id}`).then(res => {
     projectInfo()
-    if(res == 1){
-      ElMessage.success('点赞成功')
-    }else if (res == 0){
-      ElMessage.warning('取消点赞')
-    }
   })
 }
 

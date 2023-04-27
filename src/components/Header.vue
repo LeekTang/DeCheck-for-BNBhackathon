@@ -56,9 +56,12 @@ import { userStore } from '@/src/stores/user'
 import { onMounted, reactive} from 'vue'
 import request from '@/src/utils/request'
 import { useI18n } from  'vue-i18n'
+import { useRuntimeConfig } from 'nuxt/app'
 const { t,locale } = useI18n();
 const store = userStore()
 const router = useRouter()
+const route = useRoute();
+const runConfig = useRuntimeConfig()
 
 const state = reactive ({
   language: computed(() => { return locale.value }),
@@ -93,9 +96,9 @@ const connectClick = () => {
           authId: signres.account,
           strSign: signres.signMessage,
           type: 4,
-          data: 'Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees.'
+          data: "Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees."
         }
-        request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data,baseURL:'http://192.168.101.3:9488'}).then(loginres => {
+        request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data, baseURL: runConfig.public.VITE_LOGIN_URL}).then(loginres => {
           localStorage.setItem('token',loginres.tokenValue)
           store.userInfo = { account: signres.account}
           store.isSign = true;
@@ -114,6 +117,11 @@ const goSignOut = () => {
 	store.userInfo = {};
   localStorage.language = ''
   localStorage.token = ""
+  if(route.name == "comment" || route.name == "userInfo"){
+    router.replace({
+      name: 'explorer'
+    })
+  }
 }
 
 onMounted(()=>{

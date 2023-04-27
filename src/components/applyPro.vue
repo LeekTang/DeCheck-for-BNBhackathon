@@ -49,16 +49,20 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="Attachment">
-              <div v-if="Form.imageUrl" class="relative">
-                <img :src="Form.imageUrl" class="h-[11.88rem] w-[16.25rem] rounded-[0.25rem]" />
-                <img src="/images/close.svg" @click="Form.imageUrl = ''" class="h-[1rem] w-[1rem] absolute top-[0.5rem] right-[0.5rem]">
+              <div class="h-[12.4rem] w-[16.25rem] bg-[#FFFFFF1C] text-[#fff] flex items-center 
+                justify-center flex-col relative" v-if="Form.imageUrl || Form.progress">
+                <el-progress v-if="Form.progress" type="circle" :width="90" :percentage="Form.uploadPercent"></el-progress>
+                <img v-else  src="/images/file.svg" class="h-[3.5rem] w-[4rem]" />
+                <img src="/images/close.svg" class="h-[1rem] w-[1rem] cursor-pointer absolute top-[0.5rem] right-[0.5rem]" @click="deleteClick" />
+                <span>{{Form.fileName}}</span>
               </div>
               <el-upload
-                class="h-[11.88rem] w-[16.25rem] bg-[#FFFFFF1C] flex items-center justify-center"
-                action="#"
+                v-else
+                class="h-[12.4rem] w-[16.25rem] bg-[#FFFFFF1C] flex items-center justify-center"
+                action="https://test.decheck.io/decheck-apis/plugin/decheck/api/project/apply/upload"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
-                v-else
+                :on-progress="uploadVideoProcess" 
               >
                 <img src="/images/plus.svg" class="h-[5rem] w-[5rem]">
               </el-upload>
@@ -72,11 +76,10 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, reactive } from 'vue'
 import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
-import type { UploadProps } from 'element-plus'
 const router = useRouter()
 const Form = reactive({
   type: '',
@@ -86,15 +89,27 @@ const Form = reactive({
   telegram: '',
   website: '',
   message: '',
-  imageUrl: ''
+  imageUrl: '',
+  fileName: '',
+  progress: false,
+  uploadPercent: 0,
 })
 
 
-const handleAvatarSuccess: UploadProps['onSuccess'] = (
-  response,
-  uploadFile
-) => {
-  Form.imageUrl = URL.createObjectURL(uploadFile.raw!)
+const handleAvatarSuccess = (res,file) => {
+  Form.progress = false;
+  Form.imageUrl = res.data.file.url
+  Form.fileName = res.data.file.name
+}
+
+const uploadVideoProcess = (event, file, fileList) => {
+  Form.progress = true;
+  Form.uploadPercent = parseInt(file.percentage.toFixed(0))
+}
+
+const deleteClick = () => {
+  Form.imageUrl = ''
+  Form.fileName = ''
 }
 
 const back = () => {

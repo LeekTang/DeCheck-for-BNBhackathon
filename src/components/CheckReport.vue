@@ -105,7 +105,7 @@
           </div>
           <div class="h-[3.5rem] flex justify-between items-center">
             <p class="text-[#FFFFFFA8]">DEX</p>
-            <div class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
+            <div class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between cursor-pointer">
               <p v-if="state.goInfo.dex">{{state.goInfo.dex[0].name}}</p>
               <p v-else>--</p>
               <div class="flex items-center">

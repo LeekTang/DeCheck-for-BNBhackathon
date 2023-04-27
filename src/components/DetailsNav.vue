@@ -13,7 +13,7 @@
         </template>
       </el-input>
 
-      <div class="w-[62.25rem] max-h-[30rem] scroll p-[0.5rem] mt-[0.5rem] bg-[#322558FF] rounded-[0.75rem] z-40" v-if="state.isShowAll">
+      <div class="w-[55.87rem] max-h-[30rem] scroll p-[0.5rem] mt-[0.5rem] bg-[#322558FF] rounded-[0.75rem] z-40" v-if="state.isShowAll">
         <div class="h-[3rem] text-[#fff] flex justify-between items-center px-[1rem] rounded-[0.75rem] hover:bg-[#FFFFFF1C]" 
           v-for="(item,index) in state.allList" :key="index" @click="showProject(item)">
           <p class="text-[0.88rem]">{{item.name}}</p>

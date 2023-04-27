@@ -10,8 +10,8 @@
             <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.project.tokenList[0][1])"/>
           </div>
         </div>
-        <div class="flex justify-between text-[0.87rem] mb-[1.5rem]">
-          <p class="text-[#FFFFFFA8]">{{t('Autids')}}</p>
+        <div class="flex justify-between text-[0.87rem] mb-[1.5rem] text-right">
+          <p class="text-[#FFFFFFA8]">{{t('Audits')}}</p>
           <p class="text-[#fff] w-[10rem] font-bold overflow-hidden whitespace-nowrap text-ellipsis">
             {{state.project.auditor || '--'}}
           </p>
@@ -21,7 +21,7 @@
         <div class="w-[14.26rem] h-[2.5rem] bg-[#1E50FF] rounded-[0.75rem] cursor-pointer text-[1rem] text-[#fff] font-bold text-center leading-[2.5rem]" @click="reviewClick">{{t('reviewNow')}}</div>
       </div>
     </div>
-    <div class="w-[49.5rem]">
+    <div class="w-[55.87rem]">
       <p class="text-[2.56rem] text-[#fff] font-bold leading-[3rem]">{{state.project.name}}</p>
       <div class="flex justify-between items-center">
         <el-rate disabled size="large" v-model="state.project.score" />
@@ -59,6 +59,7 @@ import { userStore } from '@/src/stores/user'
 import { storeToRefs } from 'pinia'
 const store = userStore()
 const router = useRouter()
+const runConfig = useRuntimeConfig()
 
 const iconList = [
   {name: 'web', icon: '/images/web-icon.svg', tip: 'Official website', webSrc: ''},
@@ -158,9 +159,9 @@ const reviewClick = () => {
             authId: signres.account,
             strSign: signres.signMessage,
             type: 4,
-            data: 'Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees.'
+            data: "Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees."
           }
-          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data,baseURL:'https://www.2web3.net/test-user-center'}).then(loginres => {
+          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data, baseURL: runConfig.public.VITE_LOGIN_URL}).then(loginres => {
             localStorage.setItem('token',loginres.tokenValue)
             store.userInfo = { account: signres.account}
             store.isSign = true;

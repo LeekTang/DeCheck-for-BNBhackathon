@@ -9,7 +9,7 @@
     <div class="w-full basic-bg rounded-[1.25rem] mt-[1.5rem]">
       <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem] flex justify-between items-center px-[1.5rem]">
         <p class="text-[1.25rem] font-bold text-gradient">{{ t('riskCheck') }}</p>
-        <div class="text-[#FFFFFF] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between" @click="jumpClick">
+        <div class="text-[#FFFFFF] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between cursor-pointer" @click="jumpClick">
           <p class="h-[1rem] leading-[14px]">{{ t('viewDetails') }}</p>
           <img src="/images/jump.svg" class="h-[1rem] w-[1rem]">
         </div>
@@ -111,7 +111,7 @@
           </div>
           <div class="h-[3.5rem] flex justify-between items-center">
             <p class="text-[#FFFFFFA8]">DEX</p>
-            <div class="text-[#FFFFFF] text-[0.75rem] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
+            <div class="text-[#FFFFFF] text-[0.75rem] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between cursor-pointer">
               <p v-if="state.goInfo.dex">{{state.goInfo.dex[0].name}}</p>
               <p v-else>--</p>
               <div class="flex items-center">

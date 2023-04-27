@@ -11,14 +11,18 @@
           </div>
         </div>
         <div class="flex justify-between text-[0.87rem] mb-[1.5rem]">
-          <p class="text-[#FFFFFFA8]">{{ t('Autids') }}</p>
+          <p class="text-[#FFFFFFA8]">{{ t('Audits') }}</p>
           <p class="text-[#fff] font-bold w-[10rem] overflow-hidden whitespace-nowrap text-ellipsis text-right">
             {{state.project.auditor}}
           </p>
         </div>
         <p class="border border-[#FFFFFF1C]"></p>
         <p class="mt-[1rem] mb-[1.5rem] text-[0.88rem] text-[#fff] ">{{ t('tips') }}</p>
-        <div class="bg-[#1E50FF] w-[14.26rem] h-[2.5rem] rounded-[0.75rem] text-[1rem] text-[#fff] font-bold text-center leading-[2.5rem]" @click="reviewClick">{{ t('reviewNow') }}</div>
+        <div 
+          class="bg-[#1E50FF] w-[14.26rem] h-[2.5rem] rounded-[0.75rem] text-[1rem] text-[#fff] 
+          font-bold text-center leading-[2.5rem] cursor-pointer" @click="reviewClick">
+          {{ t('reviewNow') }}
+        </div>
       </div>
     </div>
     <div class="flex-1">
@@ -28,7 +32,7 @@
         <div class="flex">
           <client-only>
             <el-tooltip v-for="(item,index) in iconList" :key="index" :hide-after="0" :content="item.tip" placement="top">
-              <div v-if="item.webSrc" class="p-[0.69rem] hover:bg-[#4C406C] rounded-full" @click.stop="goUrl(item.webSrc)">
+              <div v-if="item.webSrc" class="p-[0.69rem] hover:bg-[#4C406C] rounded-full cursor-pointer" @click.stop="goUrl(item.webSrc)">
                 <img :src="item.icon" class="h-[1.5rem] w-[1.5rem]"/>
               </div>
             </el-tooltip>
@@ -60,6 +64,7 @@ const proStore = projectStore();
 import { useI18n } from  'vue-i18n'
 const { t } = useI18n();
 const router = useRouter()
+const runConfig = useRuntimeConfig()
 
 
 const iconList = [
@@ -156,9 +161,9 @@ const reviewClick = () => {
             authId: signres.account,
             strSign: signres.signMessage,
             type: 4,
-            data: 'Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees.'
+            data: "Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees."
           }
-          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data,baseURL:'https://www.2web3.net/test-user-center'}).then(loginres => {
+          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data, baseURL: runConfig.public.VITE_LOGIN_URL}).then(loginres => {
             localStorage.setItem('token',loginres.tokenValue)
             store.userInfo = { account: signres.account}
             store.isSign = true;
