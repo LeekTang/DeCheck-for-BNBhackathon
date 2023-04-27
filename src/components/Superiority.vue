@@ -1,5 +1,5 @@
 <template>
-  <div class="keep-px">
+  <div class="keep-px bg-[#0a0118]">
     <div class="w-[75rem] mx-auto mt-[110px]">
 
       <div class="top_line">

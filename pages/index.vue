@@ -14,7 +14,7 @@
     <HeaderView />
     <TopView />
     <Introduce />
-    <HotReviews />
+    <HotRevi />
     <Superiority />
     <Contract />
     <!-- <Decheck/> -->
@@ -27,7 +27,7 @@ import { onMounted } from 'vue'
 import HeaderView from '@/src/components/Header.vue';
 import TopView from '@/src/components/TopModel.vue'
 import Introduce from '@/src/components/Introduce.vue'
-import HotReviews from '@/src/components/HotReviews.vue'
+import HotRevi from '@/src/components/hotRevi.vue'
 import Superiority from '@/src/components/Superiority.vue'
 import Contract from '@/src/components/Contract.vue'
 import Decheck from '@/src/components/DecheckDao.vue'

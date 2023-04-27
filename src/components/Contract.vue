@@ -1,6 +1,6 @@
 <template>
-  <div class="keep-px">
-    <div class="w-[75rem] mx-auto mt-[4rem]">
+  <div class="keep-px bg-[#0a0118]">
+    <div class="w-[75rem] mx-auto pt-[4rem]">
       <div class="text-[1.25rem] text-[#fff] font-extrabold mb-[1.5rem] text-center">{{ t('contractcheck') }}</div>
       <div class="self flex items-center justify-center">
         <img class="w-[40px] h-[40px]" src="../../public/images/home/line_star.png" alt="">
