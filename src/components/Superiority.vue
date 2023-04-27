@@ -2,7 +2,7 @@
   <div class="keep-px">
     <div class="w-[75rem] mx-auto mt-[110px]">
 
-      <div class="top_line">
+      <div class="top_line h-[108px]">
       </div>
 
       <div class="magical-borders w-full">
@@ -26,7 +26,7 @@
           <div class="light"></div>
         </div>
       </div> -->
-      <div class="bottom_line"></div>
+      <div class="bottom_line h-[108px]"></div>
     </div>
   </div>
 </template>
@@ -50,13 +50,11 @@ const superiList = [
 }
 
 .top_line {
-  height: 143px;
   background: url('../../public/images/home/about_top_line.png') no-repeat;
   background-size: 100% 100%;
 }
 
 .bottom_line {
-  height: 143px;
   background: url('../../public/images/home/about_bottom_line.png') no-repeat;
   background-size: 100% 100%;
 }
