@@ -1,11 +1,11 @@
 <template>
   <div v-if="Object.keys(state.project).length > 0" class="w-[75rem] mx-auto mt-[1.5rem] flex">
-    <div class="info-bg w-[17.62rem] rounded-[0.75rem] mr-[1.5rem]">
+    <div class="bg-[#110921] w-[17.62rem] border border-solid border-[#ffffff1c] rounded-[0.75rem] mr-[1.5rem]">
       <img :src="state.project.logo" @error="imgError" class="h-[234px] w-[234px] rounded-[0.75rem] mt-[1.5rem] mx-auto"/>
       <div class="p-[1.5rem]">
         <div class="flex justify-between text-[0.87rem] mb-[1.5rem]">
           <p class="text-[#FFFFFFA8]">{{ t('Contracts') }}</p>
-          <div class="flex items-center text-[#fff] font-bold cursor-pointer" v-if="state.project.tokenAddr">
+          <div class="flex items-center text-[#fff] font-bold cursor-pointer" v-if="Object.keys(state.project.tokenAddr).length > 0 ">
             <p @click="goToUrl(state.project.tokenList[proStore.chain][1])">{{state.project.tokenList ? abbr(state.project.tokenList[proStore.chain][1]) : '--'}}</p>
             <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.project.tokenList[proStore.chain][1])"/>
           </div>
@@ -19,7 +19,7 @@
         <p class="border border-[#FFFFFF1C]"></p>
         <p class="mt-[1rem] mb-[1.5rem] text-[0.88rem] text-[#fff] ">{{ t('tips') }}</p>
         <div 
-          class="bg-[#1E50FF] w-[14.26rem] h-[2.5rem] rounded-[0.75rem] text-[1rem] text-[#fff] 
+          class="bg-[#1E50FF] w-[14.26rem] h-[2.5rem] rounded-[0.5rem] text-[1rem] text-[#fff] 
           font-bold text-center leading-[2.5rem] cursor-pointer" @click="reviewClick">
           {{ t('reviewNow') }}
         </div>
@@ -182,9 +182,6 @@ onMounted(()=>{
 
 </script>
 <style scoped>
-.info-bg{
-  background: linear-gradient(225deg, #363574 0%, #2A1C52 100%);
-}
 .text-ellipsis7{
   overflow:hidden;
   text-overflow: ellipsis;

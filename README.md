@@ -40,7 +40,4 @@ npm run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
-<<<<<<< HEAD
->>>>>>> 596680d (init project)
-=======
->>>>>>> 596680db00e4a25ee11b7f691509e14d8fe75d85
+

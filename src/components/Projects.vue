@@ -1,9 +1,9 @@
 <template>
   <div class="w-[75rem] mx-auto mt-[4rem]">
     <div class="text-[1.25rem] text-[#fff] font-extrabold mb-[1.5rem]">{{ t('PROJECTS')}}</div>
-    <div class="project-bg w-full p-[1.5rem] rounded-[0.75rem]">
-      <div class="w-[43rem] h-[3.5rem] bg-[#474174] rounded-[1rem] mb-[2rem]">
-        <el-input v-model="state.searchInput" class="inputClass h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff] cursor-pointer" :placeholder="t('searchplace')" :prefix-icon="Search" >
+    <div class="bg-[#110921] border border-solid border-[#ffffff1c] w-full p-[1.5rem] rounded-[0.75rem]">
+      <div class="w-[43rem] h-[3.5rem] bg-[#110921] rounded-[1rem] mb-[2rem]">
+        <el-input v-model="state.searchInput" class="inputClass h-[3.5rem] text-[#fff] cursor-pointer" :placeholder="t('searchplace')" :prefix-icon="Search" >
           <template #suffix>
             <div class="h-[2rem] w-[4.13rem] input-bg text-[0.88rem] text-[#fff] rounded-[0.5rem]" @click="searchClick">{{ t('Search') }}</div>
           </template>
@@ -147,9 +147,6 @@ onMounted(()=>{
 </script>
 
 <style scoped>
-.project-bg{
-  background: linear-gradient(225deg, #363574 0%, #2A1C52 100%);
-}
 .input-bg{
   background-color: #1E50FF;
 }
@@ -186,9 +183,9 @@ onMounted(()=>{
 /* input输入框 */
 :deep(.inputClass .el-input__wrapper ){
   height: 3.5rem;
-  background-color: #474174;
+  background-color: #ffffff1c;
   box-shadow: none;
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 :deep(.inputClass .el-input__inner){

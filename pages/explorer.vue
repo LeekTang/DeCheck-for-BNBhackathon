@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full text-gray-700 bg-[#000]">
+  <div class="relative w-full text-gray-700 bg-[#0a041a]">
     <HeaderView />
     <HotProject />
     <Projects />

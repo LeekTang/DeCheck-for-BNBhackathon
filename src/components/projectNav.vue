@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center h-[3.5rem] w-[75rem] mx-auto mt-[6.5rem]">
-    <div class="h-[56px] w-[78px] text-center leading-[3.5rem] bg-[#322558] rounded-[20px] mr-[1.5rem]" @click="back" :teleported="false">
+    <div class="h-[56px] w-[78px] text-center leading-[3.5rem] bg-[#ffffff1c] rounded-[20px] mr-[1.5rem]" @click="back" :teleported="false">
       <img src="/images/back.svg" class="inline-block cursor-pointer"/>
     </div>
     <client-only>
@@ -8,8 +8,8 @@
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>
       </el-select>
     </client-only>
-    <div class="w-[55.81rem] h-[3.5rem] bg-[#474174] rounded-[1rem]">
-      <el-input v-model="state.searchInput" class="h-[3.5rem] bg-[#474174] rounded-[1rem] text-[#fff]" :placeholder="t('searchplace')" :prefix-icon="Search" >
+    <div class="w-[55.81rem] h-[3.5rem] rounded-[1rem]">
+      <el-input v-model="state.searchInput" class="h-[3.5rem] rounded-[1rem] text-[#fff]" :placeholder="t('searchplace')" :prefix-icon="Search" >
         <template #suffix>
           <div class="h-[2rem] w-[4.13rem] input-bg text-[0.88rem] text-[#fff] rounded-[0.5rem] cursor-pointer" @click="getHotProject">{{ t('Search') }}</div>
         </template>
@@ -90,7 +90,7 @@ onMounted(()=>{
 }
 
 :deep(.el-input__wrapper){
-  background: #474174;
+  background: #ffffff1c;
   box-shadow: none;
   border-radius: 20px;
 }
@@ -104,7 +104,7 @@ onMounted(()=>{
 
 
 :deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
-  background-color: #493d6a;
+  background-color: #ffffff1c;
   border-radius: 8px;
 }
 
@@ -120,8 +120,9 @@ onMounted(()=>{
 }
 
 :deep(.el-popper.is-light){
-  background: #322559;
+  background: #110921;
   border: none;
+  z-index: 20;
 }
 
 :deep(.el-popper__arrow::before){
