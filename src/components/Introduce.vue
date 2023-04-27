@@ -79,7 +79,7 @@ const list = [
 }
 
 .bottom_bg {
-  background: url('../../images/home/top_light_line.png') no-repeat;
+  background: url('/images/home/top_light_line.png') no-repeat;
   background-size: 100% 100%;
 }
 

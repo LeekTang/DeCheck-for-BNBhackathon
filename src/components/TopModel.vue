@@ -200,14 +200,14 @@ const { t, locale } = useI18n();
 }
 
 .hero-background-bottom-line-2 {
-  background: url('../../images/home/hero-background-bottom-line-2.png') no-repeat;
+  background: url('/images/home/hero-background-bottom-line-2.png') no-repeat;
   background-size: 100% 100%;
   overflow: hidden;
 }
 
 .lazy-background-image-maskImage-line-2 {
-  -webkit-mask-image: url('../../images/home/hero-background-bottom-line-2.png');
-  mask-image: url('../../images/home/hero-background-bottom-line-2.png');
+  -webkit-mask-image: url('/images/home/hero-background-bottom-line-2.png');
+  mask-image: url('/images/home/hero-background-bottom-line-2.png');
 }
 
 .hero-background-bottom-line-3 {

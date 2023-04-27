@@ -50,12 +50,12 @@ const superiList = [
 }
 
 .top_line {
-  background: url('../../images/home/about_top_line.png') no-repeat;
+  background: url('/images/home/about_top_line.png') no-repeat;
   background-size: 100% 100%;
 }
 
 .bottom_line {
-  background: url('../../images/home/about_bottom_line.png') no-repeat;
+  background: url('/images/home/about_bottom_line.png') no-repeat;
   background-size: 100% 100%;
 }
 

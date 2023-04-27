@@ -3,18 +3,18 @@
     <div class="w-[75rem] mx-auto pt-[4rem]">
       <div class="text-[1.25rem] text-[#fff] font-extrabold mb-[1.5rem] text-center">{{ t('contractcheck') }}</div>
       <div class="self flex items-center justify-center">
-        <img class="w-[40px] h-[40px]" src="../../images/home/line_star.png" alt="">
+        <img class="w-[40px] h-[40px]" src="/images/home/line_star.png" alt="">
         <div class="mx-[34px] text-[60px] leading-[60px]" v-html="t('selfservice')">
         </div>
-        <img class="w-[40px] h-[40px]" src="../../images/home/line_star.png" alt="">
+        <img class="w-[40px] h-[40px]" src="/images/home/line_star.png" alt="">
       </div>
-      <img class="mt-[80px] h-[340px]" src="../../images/home/self_check.png" alt="">
+      <img class="mt-[80px] h-[340px]" src="/images/home/self_check.png" alt="">
       <NuxtLink to="/check">
         <button class="keep-px-buton mb-[200px]">
           {{ t('start') }}</button>
       </NuxtLink>
       <div class="feel_free h-[592px] p-[68px]">
-        <img class="w-[100px] h-[100px]" src="../../images/home/feel_icon.png" alt="">
+        <img class="w-[100px] h-[100px]" src="/images/home/feel_icon.png" alt="">
         <div class="mt-[40px] text-center text-[20px] text-[#fff] font-[700]">
           {{ t('DeCheckDAO') }}
         </div>
@@ -68,7 +68,7 @@ const { t, locale } = useI18n();
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: url('../../images/home/feel_free_bg.png') no-repeat;
+  background: url('/images/home/feel_free_bg.png') no-repeat;
   background-size: 100% 100%;
 }
 
