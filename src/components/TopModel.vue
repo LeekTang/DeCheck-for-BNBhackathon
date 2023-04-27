@@ -132,8 +132,8 @@ const { t, locale } = useI18n();
 }
 
 .hero-background-bottom-line-animation2 div {
-  animation: topAnimation 1s infinite cubic-bezier(.62, .62, .28, .67);
-  animation-delay: 3500ms;
+  animation: topAnimation 1.5s infinite cubic-bezier(.62, .62, .28, .67);
+  animation-delay: 3100ms;
   background: #fff;
   height: 87px;
   position: relative;
@@ -142,7 +142,7 @@ const { t, locale } = useI18n();
 }
 .hero-background-bottom-line-animation3 div {
   animation: topAnimation 1s infinite cubic-bezier(.62, .62, .28, .67);
-  animation-delay: 6500ms;
+  animation-delay: 5800ms;
   background: #fff;
   height: 87px;
   position: relative;

@@ -4,26 +4,16 @@
       <div class="text-[1.25rem] text-[#fff] font-extrabold mb-[1.5rem] text-center">{{ t('contractcheck') }}</div>
       <div class="self flex items-center justify-center">
         <img class="w-[40px] h-[40px]" src="../../public/images/home/line_star.png" alt="">
-        <div class="mx-[34px]" v-html="t('selfservice')">
+        <div class="mx-[34px] text-[60px] leading-[60px]" v-html="t('selfservice')">
         </div>
         <img class="w-[40px] h-[40px]" src="../../public/images/home/line_star.png" alt="">
       </div>
-
-      <div class="magical-borders mt-[80px]">
-        <div class="magical-borders-content">
-          <div class="w-[1200px] h-[340px] mx-auto myhoverbox">
-            <div class="magical-borders-inner">
-              <img class="mt-[80px] h-[340px]" src="../../public/images/home/self_check.png" alt="">
-            </div>
-            <div class="light"></div>
-          </div>
-        </div>
-      </div>
+      <img class="mt-[80px] h-[340px]" src="../../public/images/home/self_check.png" alt="">
       <NuxtLink to="/check">
-        <button class="mb-[200px]">
+        <button class="keep-px-buton mb-[200px]">
           {{ t('start') }}</button>
       </NuxtLink>
-      <div class="feel_free">
+      <div class="feel_free h-[592px] p-[68px]">
         <img class="w-[100px] h-[100px]" src="../../public/images/home/feel_icon.png" alt="">
         <div class="mt-[40px] text-center text-[20px] text-[#fff] font-[700]">
           {{ t('DeCheckDAO') }}
@@ -34,11 +24,11 @@
           </div>
           <img class="w-[40px] h-[40px]" src="../../public/images/home/star.png" alt="">
         </div>
-        <div class="feel_tips">
+        <div class="feel_tips mt-[23px] text-[23px]">
           {{ t(t('check_tips')) }}
         </div>
         <NuxtLink to="/dao">
-          <button class="mt-[32px]">
+          <button class="keep-px-buton mt-[32px]">
             {{ t('join') }}</button>
         </NuxtLink>
       </div>
@@ -59,7 +49,7 @@ const { t, locale } = useI18n();
   color: rgba(255, 255, 255, 0.88);
 }
 
-button {
+.keep-px-buton {
   margin-top: 32px;
   position: relative;
   left: 50%;
@@ -78,7 +68,6 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 68px;
   background: url('../../public/images/home/feel_free_bg.png') no-repeat;
   background-size: 100% 100%;
 }
@@ -88,9 +77,7 @@ button {
 }
 
 .feel_tips {
-  margin-top: 32px;
   font-weight: 500;
-  font-size: 23px;
   text-align: center;
   color: #FFFFFF;
   opacity: 0.44;
