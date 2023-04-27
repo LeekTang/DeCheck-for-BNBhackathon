@@ -13,7 +13,7 @@
     "esModuleInterop": true,
     "allowJs": true,
     "sourceMap": true,
-    "strict": true,
+    "strict": false,
     "noEmit": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
@@ -28,7 +28,8 @@
     "types": [
       "@nuxt/types",
       "@types/node",
-      "element-plus/global"
+      "element-plus/global",
+      "./src/types"
     ]
   },
   "exclude": [

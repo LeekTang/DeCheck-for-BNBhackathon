@@ -1,36 +1,124 @@
 <template>
-  <div class="w-full top-bg h-[43.75rem]">
-    <div class="w-[75rem] mx-auto pt-[9.5rem] flex items-center justify-between">
-      <div class="">
-        <p class="text-[#fff] text-[1.25rem] font-black mb-[1rem]">{{t('decheck')}}</p>
-        <div class="ground w-[38.25rem] px-6 py-4 text-[#ffffffa8]">
-          <img src="/images/top-left.svg" class="h-[9.38rem] w-[35.25rem]">
-          <p class="text-[1.13rem] font-semibold mt-[1.5rem]">{{t('highly')}}</p>
+  <div class="w-full top-bg relative">
+    <div class="hero-background">
+      <div class='hero-background-top'>
+        <div
+          class="mask-bg lazy-background-image lazy-background-image-maskImage hero-background-top-animation lazy-background-image-loaded">
+          <div></div>
         </div>
       </div>
-      <div class="h-[28.56rem] w-[30.38rem] border-dashed">
-        <img src="/images/top-right.svg" class="">
+    </div>
+    <div class="w-[75rem] mx-auto pt-[13.69rem]">
+      <div class="top_text">
+        A DAO for Project Review
       </div>
+      <div class="bottom_text">
+        Professionals in multiple fields protect your investment security<br /> HIGHLY - VETTED blockchain projects you
+        can
+        trust.
+      </div>
+      <img class="translate-y-8 mx-auto mt-[32px] w-[40px] h-[40px]" src="../../public/images/home/star.png" alt="">
+      <div class="keep-px-hero-bottom"></div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useI18n } from  'vue-i18n'
-const { t,locale } = useI18n();
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n();
 </script>
 
 <style scoped>
-.top-bg{
-  background: url('/images/top-bg.svg') no-repeat;
+.hero-background {
+  left: 50%;
+  position: absolute;
+  margin-top: 88px;
+  width: 75rem;
+  transform: translateX(-50%);
 }
-.ground{
-  background: 
-    linear-gradient(to left, #00FFFF, #00FFFF) right top no-repeat,
-    linear-gradient(to bottom, #00FFFF,#00FFFF) right top no-repeat,
-    linear-gradient(to left, #00FFFF, #00FFFF) left bottom no-repeat,
-    linear-gradient(to bottom, #00FFFF, #00FFFF) left bottom no-repeat;
-  background-size: 12px 24px, 24px 12px, 12px 24px, 24px 12px;
-  background-color: #00ffff14;
+
+.hero-background-top {
+  margin: 0 auto;
+  background-image: url('../../public/images/home/top_bg.png');
+  background-size: 75rem 100%;
+  height: 150px;
+  width: 75rem;
+}
+
+.mask-bg {
+  width: 75rem;
+  height: 150px;
+}
+
+.ground {
+  color: rgba(255, 255, 255, 0.88);
+
+}
+
+.lazy-background-image-maskImage {
+  -webkit-mask-image: url('../../public/images/home/mask_bg.png');
+  mask-image: url('../../public/images/home/mask_bg.png');
+}
+
+.lazy-background-image {
+  transition: 1s cubic-bezier(.6, .6, 0, 1) opacity;
+}
+
+.hero-background-top-animation {
+  left: 0;
+  -webkit-mask-size: 75rem 100%;
+  mask-size: cover;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-mask-repeat: no-repeat;
+  z-index: 9;
+}
+
+.hero-background-top-animation div {
+  animation: topAnimation 6s infinite cubic-bezier(.62, .62, .28, .67);
+  background: linear-gradient(180deg, rgba(183, 164, 251, 0) 0, #b7a4fb 100%, #8562ff 100%, rgba(133, 98, 255, 0) 0%);
+  height: 87px;
+  position: relative;
+  top: 0;
+  transform: translateY(-89px);
+}
+
+@keyframes topAnimation {
+
+  /* 开始 */
+  from {
+    transform: translateY(-150px)
+  }
+
+  to {
+    transform: translateY(150px)
+  }
+}
+
+.hero-background-bottom {
+  background: url('../../public/images/home/bottom_bg.png');
+  background-size: 75rem 100%;
+}
+
+.top_text {
+  font-size: 70px;
+  font-weight: 700;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.bottom_text {
+  font-size: 22px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.keep-px-hero-bottom {
+  margin: 0 auto;
+  width: 75rem;
+  height: 198px;
+  background: url('../../public/images/home/hero_bottom.png') no-repeat;
+  background-size: 100% 100%;
 }
 </style>

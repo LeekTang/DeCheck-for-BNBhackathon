@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-[#291f44] h-[12.38rem mt-[4rem]">
+  <div class="w-full bg-[#171025] h-[12.38rem mt-[4rem]">
     <div class="flex py-[3rem] mx-auto w-[75rem] justify-end">
       <img src="/images/twitter.svg" class="h-[2rem] w-[2rem] rounded-[0.5rem] ml-[0.88rem]">
       <img src="/images/discord.svg" class="h-[2rem] w-[2rem] rounded-[0.5rem] ml-[0.88rem]">

@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full text-gray-700 bg-[#190A43] min-h-screen">
+  <div class="relative w-full text-gray-700 bg-[#000] min-h-screen">
     <HeaderView />
     <div class="w-[75rem] mx-auto mt-[6.5rem]">
       <div class="h-full w-[4.88rem] text-center leading-[3.5rem] bg-[#322558] cursor-pointer rounded-[0.75rem] mr-[1.5rem]" @click="back">

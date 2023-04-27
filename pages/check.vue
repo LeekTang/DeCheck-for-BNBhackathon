@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full text-gray-700 bg-[#190A43] min-h-screen">
+  <div class="relative w-full text-gray-700 bg-[#000] min-h-screen">
     <HeaderView />
     <DetailsNav />
     <DetailsInfo />
