@@ -317,7 +317,7 @@ onMounted(() => {
 }
 
 :deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
-  background-color: #493d6a;
+  background-color: #ffffff1c;
   border-radius: 0.25rem;
 }
 

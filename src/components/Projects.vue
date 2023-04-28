@@ -58,23 +58,23 @@
 <script setup>
 import { Search } from '@element-plus/icons-vue'
 import { onMounted, ref, reactive } from 'vue'
-import { abbr, imgError } from '@/src/utils/utils'
+import { imgError } from '@/src/utils/utils'
 import request from '@/src/utils/request'
 import { useI18n } from  'vue-i18n'
-const { t,locale } = useI18n();
+const { t } = useI18n();
 const router = useRouter()
 
 const options = [
-  { value: 10, label: '10items', },
   { value: 20, label: '20items', },
-  { value: 50, label: '50items', }
+  { value: 50, label: '50items', },
+  { value: 100, label: '100items', }
 ]
 
 const state = reactive({
   projectList: {},
   searchInput: '',
   page: 1,
-  pageSize: 10,
+  pageSize: 20,
   totle: 10,
 })
 
@@ -120,7 +120,7 @@ const getProject = () => {
 const goUrl = (id) => {
   router.push({
     name: "ProjectDetails",
-    query: { id: id}
+    query: { id: id},
   })
 }
 

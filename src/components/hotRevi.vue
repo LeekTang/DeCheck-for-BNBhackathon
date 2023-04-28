@@ -1,12 +1,9 @@
 <template>
-  <div class="h-[220rem] w-full bg-[#0a0118]">
-    <div class="bg-[#0a0118] h-[4000px]">
+  <div class="w-full bg-[#0a0118]">
+    <div class="bg-[#0a0118] h-[4500px] relative">
       <div class="content">
-        <div class="text-[#ffffff] text-[2rem] font-medium leading-[50px] text-center" :style="`transform: translate3d(0px, ${state.text3d}, 0px) scale3d( ${state.textscaleX}, ${state.textscaleY}, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);transform-style: preserve-3d; opacity: ${state.textopacity}; will-change: transform, opacity;`">
-          <p class="flex justify-center">Hey!<span><img src="/images/hand.svg" class="w-[34px] h-[40px]"></span>This is the review section for DeCheck DAO;</p>
-          <p>Swipe down to see exciting reviews from a variety </p>
-          <p>of community characters. </p>
-          <p>Maybe there are some projects you care about, join us to review!</p>
+        <div class=" r-intro-wrapper text-center" :style="`transform: translate3d(0px, ${state.text3d}, 0px) scale3d( ${state.textscaleX}, ${state.textscaleY}, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg);transform-style: preserve-3d; opacity: ${state.textopacity}; will-change: transform, opacity;`">
+          <img src="/images/introtext.svg" />
         </div>
         <div class="bg-[#fff] div1" :style="`will-change: opacity, filter, transform; opacity: ${state.div1opacity}; filter: blur(${state.div1filter}); transform: translate3d(-10vw, ${state.div1scaleY}, ${state.div1scaleZ}) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skew(0deg, 0deg); transform-style: preserve-3d;`">
         </div>
@@ -20,7 +17,6 @@
         </div>
       </div>
     </div>
-    <div class="bg-[#fff] h-[100rem]"></div>
   </div>  
 </template>
 
@@ -28,12 +24,15 @@
 import { onMounted, reactive } from 'vue'
 
 const state = reactive({
+
+  heightscroll: '',
+
   text3d: 0,
   textscaleX: 1,
   textscaleY: 1,
   textopacity: 1,
 
-  div1opacity: "0.5",
+  div1opacity: "0.2",
   div1filter: "3px",
   div1scaleY: "-2vw",
   div1scaleZ: "-40VW",
@@ -65,31 +64,33 @@ onMounted(()=>{
 
 const onScroll = () =>{
   let scrollHeight = document.documentElement.scrollTop || document.body.scrollTop;
-  console.log(scrollHeight)
+  state.heightscroll = document.documentElement.scrollTop || document.body.scrollTop;
   if(1845>scrollHeight){
     state.textopacity = 1
-  }else if(1845<scrollHeight && scrollHeight < 2045){
-    state.text3d = 0;
-    state.textscaleX = scrollHeight == 3520 ? 1 : 0.8
-    state.textscaleY = scrollHeight == 3520 ? 1 : 0.8
-    state.textopacity = 0.8
-  }else if(1845<scrollHeight && scrollHeight < 2045){
-    state.textopacity = ( scrollHeight - 1000 ) / scrollHeight  
+    state.text3d = 0
+    state.textscaleX = 1
+    state.textscaleY = 1
+  }else if(1845<scrollHeight && scrollHeight < 2345){
+    state.textscaleX = ( scrollHeight * ( -1 /2500) + 1.738 )
+    state.textscaleY = ( scrollHeight * ( -1 /2500) + 1.738 )
+    state.textopacity = ( scrollHeight * ( -1 /500) + 4.69 )
   }else if (scrollHeight >= 2345){
     state.text3d = '-100vh'
     state.textopacity = 0
   }
 
-  if(1845<=scrollHeight && scrollHeight < 2145){
+  if(1845 > scrollHeight){
+    state.div1opacity = "0.2"
+  }else if(1845<=scrollHeight && scrollHeight < 2045){
     state.div1opacity = "0.5",
     state.div1filter = "3px",
     state.div1scaleY = (scrollHeight * ( -1 / 125 ) + 12.76) + 'vw'
     state.div1scaleZ = (scrollHeight * ( 7 / 100 ) -169.15) + 'vw'
-  }else if(2145 <= scrollHeight && scrollHeight < 2645){
+  }else if(2045 <= scrollHeight && scrollHeight < 2645){
     state.div1opacity =  1
     state.div1filter = "0px"
-    state.div1scaleY = (scrollHeight * ( -1 / 125 ) + 12.76) + 'vw'        // -2 -> -10
-    state.div1scaleZ = (scrollHeight * ( 7 / 100 ) -169.15) + 'vw'          // -40 -> 30  500 - 1000
+    state.div1scaleY = (scrollHeight * ( -1 / 125 ) + 12.76) + 'vw'
+    state.div1scaleZ = (scrollHeight * ( 7 / 100 ) -169.15) + 'vw'
   }else if(2645 <= scrollHeight && scrollHeight < 2845){
     state.div1opacity =  1
     state.div1filter = "0px"
@@ -98,17 +99,17 @@ const onScroll = () =>{
   }
 
   if(1845<=scrollHeight && scrollHeight < 2345){
-    state.div2opacity = "0.3",
+    state.div2opacity = "0.6",
     state.div2filter = "7px",
     state.div2scaleX = (scrollHeight * ( -1 / 100 ) + 38.45) + 'vw'
     state.div2scaleY = (scrollHeight * ( -1 / 100 ) + 23.45) + 'vw'
     state.div2scaleZ = (scrollHeight * ( 11 / 100 ) -282.95) + 'vw'
   }else if(2345 <= scrollHeight && scrollHeight < 2645){
     state.div2opacity = "1",
-    state.div2filter = "1px"
+    state.div2filter = "0px"
     state.div2scaleX = (scrollHeight * ( -1 / 100 ) + 38.45) + 'vw'
-    state.div2scaleY = (scrollHeight * ( -1 / 100 ) + 23.45) + 'vw'        // -2 -> -10
-    state.div2scaleZ = (scrollHeight * ( 11 / 100 ) -282.95) + 'vw'          // -40 -> 30  500 - 1000
+    state.div2scaleY = (scrollHeight * ( -1 / 100 ) + 23.45) + 'vw'
+    state.div2scaleZ = (scrollHeight * ( 11 / 100 ) -282.95) + 'vw'
   }else if(2645 <= scrollHeight && scrollHeight < 2845){
     state.div2opacity = "1",
     state.div2filter = "0px"
@@ -174,13 +175,13 @@ const onScroll = () =>{
     state.div5scaleY = (scrollHeight * ( -1 / 600 ) + 3.075) + 'vw'
     state.div5scaleZ = (scrollHeight * ( 113 / 3000 ) - 189.495) + 'vw'
   }else if(2645 <= scrollHeight && scrollHeight < 3445){
-    state.div5opacity = "0.3",
-    state.div5filter = "2px"
+    state.div5opacity = "0.1",
+    state.div5filter = "5px"
     state.div5scaleY = (scrollHeight * ( -1 / 600 ) + 3.075) + 'vw'
     state.div5scaleZ = (scrollHeight * ( 113 / 3000 ) - 189.495) + 'vw'
   }else if(3445 <= scrollHeight && scrollHeight < 4245){
-    state.div5opacity = "0.5",
-    state.div5filter = "0px"
+    state.div5opacity = "0.3",
+    state.div5filter = "3px"
     state.div5scaleY = (scrollHeight * ( -1 / 600 ) + 3.075) + 'vw'
     state.div5scaleZ = (scrollHeight * ( 113 / 3000 ) - 189.495) + 'vw'
   }else if(4245 <= scrollHeight && scrollHeight < 4845){
@@ -210,12 +211,17 @@ const onScroll = () =>{
     align-items: center;
     perspective: 500px;
 }
+
+.r-intro-wrapper{
+  position: relative;
+  z-index: 50;
+}
 .div1{
   position: absolute;
-  margin-right: 50%;
+  margin-right: 30%;
   width: 25vw;
   height: 30vw;
-  background: url('/images/bithot.png') no-repeat;
+  background: url('/images/bithot.svg') no-repeat;
   background-size: 100% 100%;
 }
 .div2{
@@ -223,25 +229,24 @@ const onScroll = () =>{
   width: 25vw;
   height: 30vw;
   margin-top: 10%;
-  margin-left: 50%;
-  background: url('/images/ethhot.png') no-repeat;
+  margin-left: 20%;
+  background: url('/images/ethhot.svg') no-repeat;
   background-size: 100% 100%;
 }
 .div3{
   position: absolute;
-  margin-right: 50%;
+  margin-right: 30%;
   width: 25vw;
   height: 30vw;
-  background: url('/images/bnbhot.png') no-repeat;
+  background: url('/images/bnbhot.svg') no-repeat;
   background-size: 100% 100%;
 }
 .div4{
   position: absolute;
   width: 25vw;
   height: 30vw;
-  margin-top: 0;
-  margin-left: 45%;
-  background: url('/images/doghot.png') no-repeat;
+  margin-left: 40%;
+  background: url('/images/doghot.svg') no-repeat;
   background-size: 100% 100%;
 }
 .div5{
@@ -249,7 +254,7 @@ const onScroll = () =>{
   width: 25vw;
   height: 30vw;
   margin-right: 40%;
-  background: url('/images/arbhot.png') no-repeat;
+  background: url('/images/arbhot.svg') no-repeat;
   background-size: 100% 100%;
 }
 </style>

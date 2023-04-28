@@ -25,7 +25,7 @@
           <img class="w-[40px] h-[40px]" src="/images/home/star.png" alt="">
         </div>
         <div class="feel_tips mt-[23px] text-[23px]">
-          {{ t(t('check_tips')) }}
+          {{ t('check_tips') }}
         </div>
         <NuxtLink to="/dao">
           <button class="keep-px-buton mt-[32px]">

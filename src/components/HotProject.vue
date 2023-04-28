@@ -10,10 +10,10 @@
             <el-rate disabled size="large" v-model="item.score" />
           </div>
         </swiper-slide>
-        <div class="swiper-button-next h-[4rem] w-[4rem] absolute right-[1rem] top-[50%] translate-y-[-50%] z-50">
+        <div class="swiper-button-next cursor-pointer h-[4rem] w-[4rem] absolute right-[1rem] top-[50%] translate-y-[-50%] z-50">
           <img src="/images/project-right.svg" class="h-[4rem] w-[4rem]">
         </div>
-        <div class="swiper-button-prev h-[4rem] w-[4rem] absolute left-0 top-[50%] translate-y-[-50%] z-50">
+        <div class="swiper-button-prev cursor-pointer h-[4rem] w-[4rem] absolute left-0 top-[50%] translate-y-[-50%] z-50">
           <img src="/images/project-left.svg" class="h-[4rem] w-[4rem]">
         </div>
       </swiper>
@@ -66,6 +66,7 @@ const getHotProject = () => {
     new Swipers('.hotSwiper',{
       slidesPerView: 4,
       loop:true,
+      initialSlide: 1,
       observer:true,
       observeParents:true,
       navigation: {

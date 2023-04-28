@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[75rem] mx-auto mt-[6.5rem]">
+  <div class="w-[75rem] mx-auto mt-[6.5rem] min-h-screen">
     <div class="h-full w-[4.88rem] text-center leading-[3.5rem] bg-[#322558] rounded-[0.75rem] mr-[1.5rem]" @click="back">
       <img src="/images/back.svg" class="inline-block"/>
     </div>

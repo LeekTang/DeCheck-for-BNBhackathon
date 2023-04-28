@@ -17,9 +17,9 @@
                 <span class="text-[1rem] text-[#ffffff] ml-[0.44rem]">{{state.language}}</span>
               </div>
             </template>
-            <div class="flex flex-col cursor-pointer rounded-[0.75rem] bg-[#322558FF]">
+            <div class="flex flex-col cursor-pointer rounded-[0.75rem] bg-[#0a041a]">
               <div v-for="(item, index) in languageList" :key="index" @click="onSetLanguage(item.key)"
-                class="h-[3rem] text-center rounded-[0.5rem] leading-[3rem] text-[#fff] hover:bg-[#493d6a] ">
+                class="h-[3rem] text-center rounded-[0.5rem] leading-[3rem] text-[#fff] hover:bg-[#ffffff1c] ">
                 {{ item.label }}
               </div>
             </div>
@@ -35,9 +35,9 @@
               </div>
             </template>
             <div
-              class="flex flex-col cursor-pointer items-center rounded-[0.75rem] text-[#fff] bg-[#322558FF]">
-              <div @click="onShowInfo" class="h-[3rem] w-[10.25rem] rounded-[0.5rem] text-center leading-[3rem] font-bold hover:bg-[#493d6a]"><NuxtLink to="/userInfo">{{ t('myreviews') }}</NuxtLink></div>
-              <div @click="goSignOut" class="h-[3rem] w-[10.25rem] rounded-[0.5rem] text-center text-[#FF5353FF] leading-[3rem] font-bold hover:bg-[#493d6a] ">{{ t('logout') }}</div>
+              class="flex flex-col cursor-pointer items-center rounded-[0.75rem] text-[#fff] bg-[#0a041a]">
+              <div @click="onShowInfo" class="h-[3rem] w-[10.25rem] rounded-[0.5rem] text-center leading-[3rem] font-bold hover:bg-[#ffffff1c]"><NuxtLink to="/userInfo">{{ t('myreviews') }}</NuxtLink></div>
+              <div @click="goSignOut" class="h-[3rem] w-[10.25rem] rounded-[0.5rem] text-center text-[#FF5353FF] leading-[3rem] font-bold hover:bg-[#ffffff1c] ">{{ t('logout') }}</div>
             </div>
           </el-popover>
           <div v-else class="h-[2rem] leading-[2rem] w-[11.25rem] bg-white 
@@ -141,6 +141,7 @@ onMounted(()=>{
   padding: 0.56rem;
   border: none;
   border-radius: 0.75rem;
-  background-color: #322558FF;
+  background-color: #0a041a;
+  border: 1px solid #ffffff1c;
 }
 </style>

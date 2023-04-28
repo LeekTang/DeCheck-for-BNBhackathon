@@ -18,7 +18,7 @@
             </div>
             <el-rate disabled size="large" v-model="item.score" />
           </div>
-          <div class="mt-[1.5rem] bg-[#FFFFFF1C] rounded-[0.75rem] p-[1rem]">
+          <div class="mt-[1.5rem] bg-[#FFFFFF1C] rounded-[0.75rem] overflow-hidden p-[1rem]">
             <div class="flex justify-between mb-[1rem]">
               <div class="flex flex-wrap">
                 <p v-for="(com,index) in item.tags" :key="index" class="h-[1rem] max-w-[5rem] overflow-hidden leading-[1rem] rounded-[0.25rem] text-[0.63rem] text-[#fff] bg-[#FFFFFF1C] mr-[0.5rem] px-[0.5rem]">{{com}}</p>
@@ -63,10 +63,14 @@ import SwiperCore, {Autoplay, Navigation} from 'swiper'
 import Swipers from 'swiper'
 import { onMounted,ref, reactive, defineProps } from 'vue'
 import request from '@/src/utils/request'
+import web3js from '@/src/utils/link'
 import { abbr,timestampToTime, matchType } from '@/src/utils/utils'
 SwiperCore.use([Autoplay,Navigation])
 import { useI18n } from  'vue-i18n'
 const { t } = useI18n();
+import { userStore } from '@/src/stores/user'
+const store = userStore();
+const runConfig = useRuntimeConfig()
 
 const options = [
   { value: 1, label: t('latest'), },
@@ -81,7 +85,8 @@ const props = defineProps({
 
 const state = reactive({
   selectValue: 1,
-  comments: []
+  comments: [],
+  isSign: computed(() => store.getIsSign),
 })
 
 const projectInfo = () => {
@@ -111,19 +116,51 @@ const projectInfo = () => {
 }
 
 const likeClick = (type,id) => {
-  state.comments.forEach((el,index) => {
-    if(el.id == id){
-      el.liked = !type
-      if(el.liked){
-        el.helpful = el.helpful + 1;
-      }else{
-        el.helpful = el.helpful - 1;
+  if(state.isSign){
+    state.comments.forEach((el,index) => {
+      if(el.id == id){
+        el.liked = !type
+        if(el.liked){
+          el.helpful = el.helpful + 1;
+        }else{
+          el.helpful = el.helpful - 1;
+        }
       }
-    }
-  });
-  request.get(`/plugin/decheck/api/user/review/like/${id}`).then(res => {
-    projectInfo()
-  })
+    });
+    request.get(`/plugin/decheck/api/user/review/like/${id}`).then(res => {
+      projectInfo()
+    })
+  }else{
+    web3js.connect().then((res) => {
+		  if(res == undefined) {return;}
+      web3js.change().then(chanres => {
+        if(chanres == true){
+          store.isSign = false;
+	        store.userInfo = {};
+          localStorage.language = ''
+          localStorage.token = ""
+        }
+      })
+      web3js.getSign().then(signres=>{
+        if(signres.signMessage){
+          let data = {
+            aggregateType: 7,
+            appId: "1646086759245303808",
+            authId: signres.account,
+            strSign: signres.signMessage,
+            type: 4,
+            data: "Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees."
+          }
+          request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data, baseURL: runConfig.public.VITE_LOGIN_URL}).then(loginres => {
+            localStorage.setItem('token',loginres.tokenValue)
+            store.userInfo = { account: signres.account}
+            store.isSign = true;
+          })
+        }
+      })
+    })
+  }
+  
 }
 
 const sortClick = (val) => {

@@ -23,10 +23,10 @@
         <p class="text-[0.75rem]">{{item.tokenAddr[state.chain]}}</p>
       </div>
     </div>
-    <div class="w-[75rem] scroll p-[0.5rem] mt-[0.5rem]" v-if="state.hotShow">
+    <div class="w-[75rem] scroll min-h-screen p-[0.5rem] mt-[0.5rem]" v-if="state.hotShow">
       <div class="text-[1rem] text-[#ffffffa8] font-normal my-[1rem]">Most Searches</div>
       <div class="flex flex-wrap justify-between">
-        <div class="h-[3rem] w-[36rem] text-[#fff] flex items-center justify-between border border-solid border-[#ffffff1c] px-[1.5rem] mb-[1rem] rounded-full hover:bg-[#FFFFFF1C]" 
+        <div class="h-[3rem] w-[36rem] text-[#fff] flex items-center justify-between cursor-pointer border border-solid border-[#ffffff1c] px-[1.5rem] mb-[1rem] rounded-full hover:bg-[#FFFFFF1C]" 
           v-for="(item,index) in hot" :key="index" @click="hotJump(item)">
           <div class="flex">
             <p class="text-[0.88rem] text-[#ffffffa8] font-medium mr-[1rem] w-[4rem]">{{item.name}}</p>
@@ -199,6 +199,8 @@ onMounted(()=>{
   background-color: #ffffff1c;
   box-shadow: none;
   border-radius: 20px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 
 :deep(.el-input__inner){
@@ -206,7 +208,7 @@ onMounted(()=>{
 }
 
 :deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
-  background-color: #493d6a;
+  background-color: #ffffff1c;
   border-radius: 0.25rem;
 }
 
@@ -218,7 +220,7 @@ onMounted(()=>{
 }
 
 :deep(.el-popper.is-light){
-  background-color: #252033;
+  background-color: #110921;
   border: none;
 }
 </style>

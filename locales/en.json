@@ -40,7 +40,7 @@
   "Participant": "Participant",
   "Reviews": "Reviews",
   "Score": "Score",
-  "10items": "Show 10 items",
+  "100items": "Show 100 items",
   "20items": "Show 20 items",
   "50items": "Show 50 items",
   "projectApply": "PROJECT APPLY",
@@ -186,10 +186,10 @@
   "limit": "The limit is { limit }, you selected { files } files this time, add up to { all } totally",
   "tagLimit": "Tags cannot exceed 3",
   "join": "JOIN",
-  "check":"Feel free to customize<br/>your reviews",
+  "check":"Feel free to customize your reviews",
   "check_tips":"Publish your review and make self-increment",
-  "card_one":"An organization for<br/>project reviews",
-  "card_two":"Join DeCheck for project<br/>reviews",
-  "card_three":"Complete project reviews<br/>for airdrop",
-  "card_four":"More airdrops if you're a<br/>developer"
+  "card_one":"An organization for project reviews",
+  "card_two":"Join DeCheck for project reviews",
+  "card_three":"Complete project reviews for airdrop",
+  "card_four":"More airdrops if you're a developer"
 }

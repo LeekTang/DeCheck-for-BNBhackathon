@@ -63,12 +63,13 @@ const runConfig = useRuntimeConfig()
 
 const iconList = [
   {name: 'web', icon: '/images/web-icon.svg', tip: 'Official website', webSrc: ''},
-  {name: 'twitter', icon: '/images/twitter-icon.svg', tip: 'twitter', webSrc: ''},
-  {name: 'telegram', icon: '/images/telegram-icon.svg', tip: 'telegram', webSrc: ''},
-  {name: 'discord', icon: '/images/discord-icon.svg', tip: 'discord', webSrc: ''},
-  {name: 'instagram', icon: '/images/cand-icon.svg', tip: 'instagram', webSrc: ''},
-  {name: 'github', icon: '/images/github-icon.svg', tip: 'github', webSrc: ''},
-  {name: 'gitbook', icon: '/images/gitbook-icon.svg', tip: 'gitbook', webSrc: ''},
+  {name: 'twitter', icon: '/images/twitter-icon.svg', tip: 'Twitter', webSrc: ''},
+  {name: 'telegram', icon: '/images/telegram-icon.svg', tip: 'Telegram', webSrc: ''},
+  {name: 'discord', icon: '/images/discord-icon.svg', tip: 'Discord', webSrc: ''},
+  {name: 'youtube', icon: '/images/youtube.svg', tip: 'YouTube', webSrc: ''},
+  {name: 'reddit', icon: '/images/reddit.svg', tip: 'Reddit', webSrc: ''},
+  {name: 'github', icon: '/images/github-icon.svg', tip: 'Github', webSrc: ''},
+  {name: 'whitePaper', icon: '/images/whitePaper.svg', tip: 'WhitePaper', webSrc: ''},
 ]
 
 const goUrl = (url) => {

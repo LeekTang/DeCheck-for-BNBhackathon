@@ -1,10 +1,10 @@
 <template>
   <div class="w-[75rem] mx-auto mt-[19rem]">
-    <p class="text-[#FFFFFF60] text-[1rem] text-center">{{ t('introtitle') }}</p>
+    <p class="text-[#FFFFFF60] text-[1rem] text-center" style="user-select: none;">{{ t('introtitle') }}</p>
     <div class="mt-[1rem] flex justify-between">
       <div v-for="item in originList" :key="item.id" class="flex items-center h-[3rem] w-[10.63rem]">
-        <img :src="item.icon" class="h-[2rem] w-[2rem]">
-        <p class="ml-[0.5rem] text-[0.88rem] text-[#FFFFFF60]">{{ item.name }}</p>
+        <img :src="item.icon" class="h-[2rem] w-[2rem]" style="user-select: none;">
+        <p class="ml-[0.5rem] text-[0.88rem] text-[#FFFFFF60]" style="user-select: none;">{{ item.name }}</p>
       </div>
     </div>
 
@@ -19,8 +19,8 @@
             :key="item.id">
             <div class="mx-auto magical-borders-inner">
               <div class="flex flex-col justify-center items-center h-[8rem] w-[17.63rem] rounded-[1.25rem]">
-                <p class="text-gradient text-[2rem] font-extrabold">{{ item.number }}</p>
-                <p class="text-[1rem] text-[#ffffffa8] font-semibold">{{ item.name }}</p>
+                <p class="text-gradient text-[2rem] font-extrabold" style="user-select: none;">{{ item.number }}</p>
+                <p class="text-[1rem] text-[#ffffffa8] font-semibold" style="user-select: none;">{{ item.name }}</p>
               </div>
             </div>
             <div class="light"></div>
@@ -30,7 +30,7 @@
 
 
     </div>
-    <div class="mt-[98px] pt-[129px] h-[360px] bottom_bg relative rounded-[1.25rem] mb-[405px]">
+    <div class="mt-[98px] pt-[129px] h-[360px] bottom_bg relative rounded-[1.25rem] mb-[255px]">
       <img class="mx-auto w-[40px] h-[40px]" src="/images/home/star.png" alt="">
       <div class="keep-px-tips" v-html="t('publicitytitle')">
       </div>

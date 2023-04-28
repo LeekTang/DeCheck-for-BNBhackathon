@@ -6,7 +6,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import HeaderView from '@/src/components/Header.vue';
 import BottomBar from '@/src/components/BottomBar.vue';
 import ApplyPro from '@/src/components/applyPro.vue'

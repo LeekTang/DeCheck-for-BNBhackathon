@@ -1,24 +1,11 @@
 <template>
   <div class="relative min-w-[1200px] w-full text-gray-700 bg-[#0a0118]">
-    <!-- <div class="magical-borders">
-      <div class="magical-borders-content">
-        <div class="w-[1000px] h-[500px] mx-auto myhoverbox">
-          <div class="mx-auto magical-borders-inner">
-            
-          </div>
-          <div class="light"></div>
-        </div>
-      </div>
-    </div> -->
-
     <HeaderView />
     <TopView />
     <Introduce />
     <HotRevi />
     <Superiority />
     <Contract />
-    <!-- <Decheck/> -->
-    <!-- <ToOther/> -->
     <BottomBar />
   </div>
 </template>
@@ -34,11 +21,10 @@ import Decheck from '@/src/components/DecheckDao.vue'
 import ToOther from '@/src/components/ToOther.vue'
 import BottomBar from '@/src/components/BottomBar.vue'
 import { useI18n } from 'vue-i18n'
-
 const { t, locale } = useI18n();
+
 onMounted(() => {
   var lis = document.querySelectorAll('.myhoverbox');
-  console.log(lis)
   for (var i = 0; i < lis.length; i++) {
     // 鼠标经过li触发事件
     lis[i].addEventListener('mouseover', function () {

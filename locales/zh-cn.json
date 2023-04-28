@@ -40,7 +40,7 @@
   "Participant": "参与人数",
   "Reviews": "点评数量",
   "Score": "评分",
-  "10items": "展示10项",
+  "100items": "展示100项",
   "20items": "展示20项",
   "50items": "展示50项",
   "projectApply": "项目申请",
@@ -188,8 +188,8 @@
   "join": "参与",
   "check":"随意定义您的点评",
   "check_tips":"发表你的评论并进行自我增值",
-  "card_one":"一个围绕项目点评的<br/>DAO组织",
-  "card_two":"加入DeChcek DAO即可参与<br/>项目点评",
-  "card_three":"完成项目点评获取<br/>空投激励",
-  "card_four":"认证社区角色获取<br/>更多空投"
+  "card_one":"围绕项目点评的DAO组织",
+  "card_two":"加入DeChcek DAO参与点评",
+  "card_three":"完成项目点评获取空投激励",
+  "card_four":"认证社区角色获取更多空投"
 }

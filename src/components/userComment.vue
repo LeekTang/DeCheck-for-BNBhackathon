@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[75rem] mx-auto mt-[4rem] mb-[12rem]">
+  <div class="w-[75rem] mx-auto min-h-screen mt-[4rem] mb-[12rem]">
     <client-only>
       <el-select v-model="state.typeValue" class="h-[3.5rem] w-[11.25rem] my-[1.5rem]" size="large" :teleported="false">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"/>

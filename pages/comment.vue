@@ -1,7 +1,7 @@
 <template>
   <div class="relative w-full text-gray-700 bg-[#0a041a] min-h-screen">
     <HeaderView />
-    <div class="w-[75rem] mx-auto mt-[6.5rem]">
+    <div class="w-[75rem] mx-auto mt-[6.5rem] min-h-screen">
       <div class="h-full w-[4.88rem] text-center leading-[3.5rem] bg-[#ffffff1c] cursor-pointer rounded-[0.75rem] mr-[1.5rem]" @click="back">
         <img src="/images/back.svg" class="inline-block"/>
       </div>
@@ -17,7 +17,7 @@
         </div>
         <div class="text-[1rem] text-[#FFFFFF] leading-[1rem] font-bold mt-[2rem]">{{t('contentReview')}}</div>
         <div class="mt-[1rem] w-[48rem] bg-[#FFFFFF1C] rounded-[1.25rem] p-[1.5rem]">
-          <el-input v-model="state.textarea" type="textarea" :autosize="{minRows:6,maxRows:20}" resize="none" :placeholder="t('pleaseInput')"/>
+          <el-input v-model="state.textarea" type="textarea" maxlength="999" show-word-limit :autosize="{minRows:6,maxRows:20}" resize="none" :placeholder="t('pleaseInput')"/>
           <div class="flex">
             <el-upload 
               action="https://test.decheck.io/decheck-apis/plugin/decheck/api/project/apply/upload"
