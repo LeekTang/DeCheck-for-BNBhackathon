@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'Hezaedrus-Black';
+  src: url(../fonts/hinted-Hezaedrus-Black.ttf) format('opentype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Hezaedrus-Bold';
+  src: url(../fonts/hinted-Hezaedrus-Bold.ttf) format('opentype');
+  font-weight: 700;
+}
+@font-face {
+  font-family: 'Hezaedrus-Light';
+  src: url(../fonts/hinted-Hezaedrus-Light.ttf) format('opentype');
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'Hezaedrus-Medium';
+  src: url(../fonts/hinted-Hezaedrus-Medium.ttf) format('opentype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Hezaedrus-Regular';
+  src: url(../fonts/hinted-Hezaedrus-Regular.ttf) format('opentype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Inter-Bold';
+  src: url(../fonts/Inter-Bold.otf) format('opentype');
+}
+@font-face {
+  font-family: 'Inter-Medium';
+  src: url(../fonts/Inter-Medium.otf) format('opentype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Inter-Regular';
+  src: url(../fonts/Inter-Regular.otf) format('opentype');
+  font-weight: 400;
+}

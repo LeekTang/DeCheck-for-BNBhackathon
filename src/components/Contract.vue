@@ -1,34 +1,34 @@
 <template>
   <div class="keep-px bg-[#0a0118]">
     <div class="w-[75rem] mx-auto pt-[4rem]">
-      <div class="text-[1.25rem] text-[#fff] font-extrabold mb-[1.5rem] text-center">{{ t('contractcheck') }}</div>
-      <div class="self flex items-center justify-center">
+      <div class="text-[1.25rem] text-[#fff] font-extrabold mb-[1.5rem] text-center" style="font-family: Hezaedrus-bold">{{ t('contractcheck') }}</div>
+      <div class="self flex items-baseline justify-center">
         <img class="w-[40px] h-[40px]" src="/images/home/line_star.png" alt="">
-        <div class="mx-[34px] text-[60px] leading-[60px]" v-html="t('selfservice')">
+        <div class="mx-[34px] text-[60px] leading-[60px]" style="font-family: Hezaedrus-bold" v-html="t('selfservice')">
         </div>
         <img class="w-[40px] h-[40px]" src="/images/home/line_star.png" alt="">
       </div>
       <img class="mt-[80px] h-[340px]" src="/images/home/self_check.png" alt="">
       <NuxtLink to="/check">
-        <button class="keep-px-buton mb-[200px]">
+        <button class="keep-px-buton mb-[200px]" style="font-family: Hezaedrus-Medium">
           {{ t('start') }}</button>
       </NuxtLink>
       <div class="feel_free h-[592px] p-[68px]">
         <img class="w-[100px] h-[100px]" src="/images/home/feel_icon.png" alt="">
-        <div class="mt-[40px] text-center text-[20px] text-[#fff] font-[700]">
+        <div class="mt-[40px] text-center text-[20px] text-[#fff] font-[700]" style="font-family: Hezaedrus-bold">
           {{ t('DeCheckDAO') }}
         </div>
-        <div class="mt-[28px] flex items-center justify-center">
+        <div class="mt-[28px] flex items-baseline justify-center">
           <img class="w-[40px] h-[40px]" src="/images/home/star.png" alt="">
-          <div class="mx-[50px] text-[60px] font-[700] text-center feel_text leading-[60px]" v-html="t('check')">
+          <div class="mx-[50px] text-[60px] font-[700] text-center feel_text leading-[60px]" style="font-family: Hezaedrus-bold" v-html="t('check')">
           </div>
           <img class="w-[40px] h-[40px]" src="/images/home/star.png" alt="">
         </div>
-        <div class="feel_tips mt-[23px] text-[23px]">
+        <div class="feel_tips mt-[23px] text-[23px]" style="font-family: Hezaedrus-Medium">
           {{ t('check_tips') }}
         </div>
         <NuxtLink to="/dao">
-          <button class="keep-px-buton mt-[32px]">
+          <button class="keep-px-buton mt-[32px]" style="font-family: Hezaedrus-Medium">
             {{ t('join') }}</button>
         </NuxtLink>
       </div>

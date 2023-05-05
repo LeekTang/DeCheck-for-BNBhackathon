@@ -30,10 +30,10 @@
         </div>
       </div>
       <div class="w-[75rem] mx-auto pt-[13.69rem]">
-        <div class="top_text text-[70px]">
+        <div class="top_text text-[70px]" style="font-family: Hezaedrus-Bold">
           A DAO for Project Review
         </div>
-        <div class="bottom_text text-[22px]" v-html="t('highly')">
+        <div class="bottom_text text-[22px]" style="font-family: Hezaedrus-Regular" v-html="t('highly')">
         </div>
       </div>
     </div>
@@ -168,7 +168,7 @@ const { t, locale } = useI18n();
 }
 
 .top_text {
-  font-weight: 700;
+  font-weight: 900;
   text-align: center;
   color: rgba(255, 255, 255, 0.88);
 }

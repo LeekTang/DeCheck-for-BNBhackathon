@@ -9,7 +9,7 @@
                 <img class="mx-auto w-[260px] h-[156px]" alt="" src="/images/home/card-gridline.png">
                 <img v-if="index==0" class="absolute top-[24px] left-[24px]" :src="item.num" alt="">
                 <img v-else class="absolute top-[24px] left-[24px] w-[48px] h-[48px]" :src="item.num" alt="">
-                <div class="content text-[18px]" >{{t(item.content)}}</div>
+                <div class="content text-[18px]" style="font-family: Hezaedrus-Medium">{{t(item.content)}}</div>
             </div>
             <div class="light"></div>
           </div>

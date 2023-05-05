@@ -1,7 +1,7 @@
 <template>
   <div class="w-full fixed top-0 bg-[#0a041a] z-[100]">
     <div class="w-[75rem] mx-auto flex items-center justify-between">
-      <div class="flex items-center w-[38.2rem] py-[0.75rem] justify-between text-[1rem] text-[#ffffffa8]">
+      <div class="flex items-center w-[38.2rem] py-[0.75rem] justify-between text-[1rem] text-[#ffffffa8]" style="font-family:Hezaedrus-Regular">
         <NuxtLink to="/"><img src="/images/logo.png" class="h-[2.5rem] w-[11rem] cursor-pointer" /></NuxtLink>
         <NuxtLink to="/" activeClass="font-extrabold text-[#fff]">{{ t('Home') }}</NuxtLink>
         <NuxtLink to="/explorer" activeClass="font-extrabold text-[#fff]">{{ t('Explorer') }}</NuxtLink>

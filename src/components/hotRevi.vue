@@ -96,6 +96,9 @@ const onScroll = () =>{
     state.div1filter = "0px"
     state.div1scaleY = (scrollHeight * ( -1 / 125 ) + 12.76) + 'vw'   
     state.div1scaleZ = (scrollHeight * ( 7 / 100 ) -169.15) + 'vw'
+  }else if(scrollHeight >= 2845){
+    state.div1scaleY = '-10vw'   
+    state.div1scaleZ = '30vw'
   }
 
   if(1845<=scrollHeight && scrollHeight < 2345){
@@ -116,6 +119,10 @@ const onScroll = () =>{
     state.div2scaleX = (scrollHeight * ( -1 / 100 ) + 38.45) + 'vw'
     state.div2scaleY = (scrollHeight * ( -1 / 100 ) + 23.45) + 'vw'   
     state.div2scaleZ = (scrollHeight * ( 11 / 100 ) -282.95) + 'vw'
+  }else if(scrollHeight >= 2845){
+    state.div2scaleX = '10vw'
+    state.div2scaleY = '-5vw'   
+    state.div2scaleZ = '30vw'
   }
 
   if(1845<=scrollHeight && scrollHeight < 2345){
@@ -142,6 +149,10 @@ const onScroll = () =>{
     state.div3scaleX = (scrollHeight * ( -1 / 100 ) + 23.45) + 'vw'
     state.div3scaleY = (scrollHeight * ( -3 / 200 ) + 42.675) + 'vw'
     state.div3scaleZ = (scrollHeight * ( 17 / 200 ) - 296.825) + 'vw'
+  }else if(scrollHeight >= 3845){
+    state.div3scaleX = '-15vw'
+    state.div3scaleY = '-15vw'   
+    state.div3scaleZ = '30vw'
   }
 
   if(1845<=scrollHeight && scrollHeight < 2445){

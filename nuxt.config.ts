@@ -20,9 +20,7 @@ export default defineNuxtConfig({
     head: {
       titleTemplate: "DeCheck",
       title: "DeCheck",
-      link: [
-
-      ],
+      link: [],
       meta: [
         { name: "keywords", content: "" },
         { name: "description", content: "" },
@@ -36,7 +34,7 @@ export default defineNuxtConfig({
   },
   modules: ["@nuxtjs/tailwindcss","@element-plus/nuxt","@pinia/nuxt","@pinia-plugin-persistedstate/nuxt"],
   plugins: [{src: '~/plugins/swiper.js', ssr: false}],
-  css: ["element-plus/dist/index.css"],
+  css: ["element-plus/dist/index.css","@/assets/css/font.css"],
   postcss: {
     plugins: {
       'postcss-px-to-viewport-8-plugin': {
@@ -70,11 +68,5 @@ export default defineNuxtConfig({
         }
       ]
     }
-  },
-  devServer: {
-    allowedHosts: "all",
-  },
-  render: {
-    resourceHints: false
   }
 })

@@ -28,6 +28,20 @@
         <p class="w-[8rem]">{{item.reviews || '0'}}</p>
         <p class="w-[8rem]"><el-rate disabled size="large" v-model="item.score" /></p>
       </div>
+      <el-skeleton :loading="state.loading" animated>
+        <template #template >
+          <div v-for="(item,index) in 20" :key="index" class="flex items-center h-[4rem] border-b border-[#FFFFFF1C]">
+            <el-skeleton-item variant="rect" style="width: 40px; height: 40px; border-radius: 12px; background: #ffffff1c;border: 1px solid #ffffff1c; margin-right: 14px"/>
+            <el-skeleton-item variant="rect" style="width: 280px; height: 40px; background: #ffffff1c;margin-right: 110px" />
+            <el-skeleton-item variant="rect" style="width: 98px; height: 40px; background: #ffffff1c;margin-right: 30px" />
+            <el-skeleton-item variant="rect" style="width: 128px; height: 40px; background: #ffffff1c;margin-right: 20px" />
+            <el-skeleton-item variant="rect" style="width: 98px; height: 40px; background: #ffffff1c;margin-right: 20px" />
+            <el-skeleton-item variant="rect" style="width: 98px; height: 40px; background: #ffffff1c;margin-right: 20px" />
+            <el-skeleton-item variant="rect" style="width: 98px; height: 40px; background: #ffffff1c;" />
+          </div>
+          
+        </template>
+      </el-skeleton>
       <div class="flex justify-between items-center h-[4rem]">
         <client-only>
           <el-select v-model="state.pageSize" class="h-[2rem] w-[11.25rem]" size="large" :teleported="false" @change="pageSizeChange">
@@ -71,11 +85,12 @@ const options = [
 ]
 
 const state = reactive({
-  projectList: {},
+  projectList: [],
   searchInput: '',
   page: 1,
   pageSize: 20,
   totle: 10,
+  loading: true
 })
 
 const chainList = [
@@ -100,7 +115,12 @@ const chainList = [
 ]
 
 const getProject = () => {
+  state.projectList = JSON.parse(localStorage.getItem('exProject')) || [];
+  if(state.projectList.length > 0){
+    state.loading = false
+  }
   request({ url: `/plugin/decheck/api/project/page?page=${state.page}&pageSize=${state.pageSize}&keyword=${state.searchInput}`,method : 'get'}).then((res) => {
+    state.loading = false
     state.projectList = res.list
     state.projectList.forEach(ele => {
       if(ele.tokenAddr){
@@ -114,6 +134,7 @@ const getProject = () => {
       }
     });
     state.totle = res.total
+    localStorage.setItem('exProject',JSON.stringify(state.projectList))
   })
 }
 

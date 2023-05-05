@@ -34,7 +34,7 @@ import { ElRate } from 'element-plus'
 import SwiperCore, {Autoplay, Navigation} from 'swiper'
 import Swipers from 'swiper'
 import { onMounted, ref, reactive } from 'vue'
-import { abbr, imgError } from '@/src/utils/utils'
+import { imgError } from '@/src/utils/utils'
 import request from '@/src/utils/request'
 import { useI18n } from  'vue-i18n'
 const { t } = useI18n();
@@ -55,15 +55,11 @@ const goUrl = (id) => {
 }
 
 const getHotProject = () => {
-  request.get(`/plugin/decheck/api/project/hot`).then((res) => {
+  state.hotPorject = JSON.parse(localStorage.getItem('hotProject')) || [];
+  if(state.hotPorject.length > 0 ){
     state.loading = false
-    res.forEach(ele => {
-      if(ele.tokenAddr){
-        ele.tokenList = Object.entries(ele.tokenAddr)
-      }
-    });
-    state.hotPorject = res
-    new Swipers('.hotSwiper',{
+  }
+  new Swipers('.hotSwiper',{
       slidesPerView: 4,
       loop:true,
       initialSlide: 1,
@@ -78,6 +74,15 @@ const getHotProject = () => {
         disableOnInteraction: false
       }
     })
+  request.get(`/plugin/decheck/api/project/hot`).then((res) => {
+    state.loading = false
+    res.forEach(ele => {
+      if(ele.tokenAddr){
+        ele.tokenList = Object.entries(ele.tokenAddr)
+      }
+    });
+    state.hotPorject = res
+    localStorage.setItem('hotProject',JSON.stringify(state.hotPorject))
   })
 }
 
