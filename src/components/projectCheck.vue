@@ -124,7 +124,8 @@
             <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem]">
               <div class="flex justify-between leading-[1rem]">
                 <p class="text-[1rem] text-[#fff] font-medium">{{ t('buyTax') }}</p>
-                <p class="text-[1rem] text-[#11B466] font-bold">{{state.goInfo.buy_tax + '%' || '-'}}</p>
+                <p class="text-[1rem] text-[#11B466] font-bold" v-if="state.goInfo.buy_tax">{{state.goInfo.buy_tax + '%'}}</p>
+                <p class="text-[1rem] text-[#11B466] font-bold" v-else>0%</p>
               </div>
               <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.12rem] bg-[#ffffff14] rounded-[0.5rem] my-[1rem]">
                 <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
@@ -138,7 +139,8 @@
             <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem]">
               <div class="flex justify-between leading-[1rem]">
                 <p class="text-[1rem] text-[#fff] font-medium">{{ t('sellTax') }}</p>
-                <p class="text-[1rem] text-[#FF5353FF] font-bold">{{state.goInfo.sell_tax + '%' || '-'}}</p>
+                <p class="text-[1rem] text-[#FF5353FF] font-bold" v-if="state.goInfo.sell_tax">{{state.goInfo.sell_tax + '%'}}</p>
+                <p class="text-[1rem] text-[#FF5353FF] font-bold" v-else>0%</p>
               </div>
               <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.12rem] bg-[#ffffff14] rounded-[0.5rem] my-[1rem]">
                 <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
