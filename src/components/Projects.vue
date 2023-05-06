@@ -15,7 +15,7 @@
         <p class="w-[8rem]">{{ t('Chain') }}</p>
         <p class="w-[8rem]">{{ t('Participant') }}</p>
         <p class="w-[8rem]">{{ t('Reviews') }}</p>
-        <p class="w-[8rem]">{{ t('Score') }}</p>
+        <p class="w-[10rem]">{{ t('Score') }}</p>
       </div>
       <div v-for="(item, index) in state.projectList" :key="index" class="flex flex-row items-center cursor-pointer text-[1rem] text-[#FFFFFF] h-[4rem] border-b border-[#FFFFFF1C]" @click="goUrl(item.id)">
         <div class="w-[30rem] flex items-center">
@@ -26,7 +26,7 @@
         <p class="w-[8rem]">{{item.chain || '--'}}</p>
         <p class="w-[8rem]">{{item.partake || '0'}}</p>
         <p class="w-[8rem]">{{item.reviews || '0'}}</p>
-        <p class="w-[8rem]"><el-rate disabled size="large" v-model="item.score" /></p>
+        <p class="w-[10rem]"><el-rate disabled size="large" v-model="item.score" /></p>
       </div>
       <el-skeleton :loading="state.loading" animated>
         <template #template >
@@ -223,4 +223,7 @@ onMounted(()=>{
   color: #fff;
 }
 
+:deep(.el-rate__icon){
+  font-size: 24px !important;
+}
 </style>

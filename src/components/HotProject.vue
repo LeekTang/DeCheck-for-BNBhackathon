@@ -103,4 +103,8 @@ onMounted(()=>{
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
+
+:deep(.el-rate__icon){
+  font-size: 24px !important;
+}
 </style>
