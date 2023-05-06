@@ -26,6 +26,8 @@
               <div class="text-[0.75rem] text-[#FFFFFFA8]">{{timestampToTime(item.createAt)}}</div>
             </div>
             <p class="text-[0.88rem] text-[#fff] leading-[1.25rem] whitespace-pre-wrap" v-html="item.content"></p>
+            <p class="text-[0.88rem] text-[#1d9bf0] cursor-pointer" @click="tran(item.content)">翻译评论</p>
+            <p :v-html="state.tranHtml"></p>
           </div>
           <div v-if="item.video" class="h-[11.63rem] w-[46.5rem] bg-[#FFFFFF1C] rounded-[0.75rem] mt-[1.5rem] flex justify-center items-center">
             <video class="h-[8.63rem] w-[43.44rem] rounded-[0.75rem]" v-for="(video,index) in item.attachment" :key="index" controls>
@@ -68,6 +70,7 @@ import { abbr,timestampToTime, matchType } from '@/src/utils/utils'
 SwiperCore.use([Autoplay,Navigation])
 import { useI18n } from  'vue-i18n'
 const { t } = useI18n();
+import { MD5 } from '@/src/utils/md5'
 import { userStore } from '@/src/stores/user'
 const store = userStore();
 const runConfig = useRuntimeConfig()
@@ -112,6 +115,25 @@ const projectInfo = () => {
         }
       });
     }
+  })
+}
+
+const tran = (item) => {
+  let appId = "20230506001667868";
+  let key = "12345678";
+  let salt = (new Date).getTime();
+  let to = 'zh';
+  let str = appId + item + salt + key;
+  let sign = MD5(str)
+  let data = {
+    q: item,
+    appid: appId,
+    salt: salt,
+    to: to,
+    sign: sign
+  }
+  request({url: `http://api.fanyi.baidu.com/api/trans/vip/translate`, method: 'get', data: data, baseURL: ""}).then(res=>{
+    console.log(res)
   })
 }
 

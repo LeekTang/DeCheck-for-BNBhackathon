@@ -117,8 +117,12 @@ const projectInfo = () => {
       iconList[0].webSrc = res.website
     }
     state.project = res
-    state.project.auditor = state.project.auditor.join()
-    state.project.invest = state.project.invest.join()
+    if(state.project.auditor){
+      state.project.auditor = state.project.auditor.join()
+    }
+    if(state.project.invest){
+      state.project.invest = state.project.invest.join()
+    }
     iconList.forEach((el,index) => {
       if(state.project.socialMedia[index + 1] != undefined){
         el.webSrc = state.project.socialMedia[index + 1]

@@ -98,6 +98,7 @@ const hot = [
 
 
 const getHotProject = () => {
+  state.hotShow = false
   store.searchInfo = ''
   store.searchProjectInfo = ''
   store.tokenAddr = ""
