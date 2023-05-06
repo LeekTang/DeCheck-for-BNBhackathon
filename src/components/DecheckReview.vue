@@ -42,10 +42,10 @@
                 </swiper-slide>
               </swiper>
               <div v-if="item.attachment.length > 4" class="swiper-button-next h-[4rem] w-[4rem] absolute right-0 top-[50%] translate-y-[-50%] z-50">
-                  <img src="/images/swiper_right.svg" class="h-[4rem] w-[4rem]">
+                  <img src="/images/swiper_right.svg" class="h-[4rem] w-[4rem] cursor-pointer">
                 </div>
                 <div v-if="item.attachment.length > 4" class="swiper-button-prev h-[4rem] w-[4rem] absolute left-0 top-[50%] translate-y-[-50%] z-50">
-                  <img src="/images/swiper_left.svg" class="h-[4rem] w-[4rem]">
+                  <img src="/images/swiper_left.svg" class="h-[4rem] w-[4rem] cursor-pointer">
                 </div>
             </div>
           </div>
