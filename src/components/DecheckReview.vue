@@ -132,7 +132,7 @@ const tran = (item) => {
     to: to,
     sign: sign
   }
-  request({url: `http://api.fanyi.baidu.com/api/trans/vip/translate`, method: 'get', data: data, baseURL: ""}).then(res=>{
+  request({url: `https://api.fanyi.baidu.com/api/trans/vip/translate`, method: 'get', data: data, baseURL: ""}).then(res=>{
     console.log(res)
   })
 }
