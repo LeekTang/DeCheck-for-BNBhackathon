@@ -248,6 +248,8 @@ const getCheck = () => {
   request.get(`/plugin/decheck/api/security/token/${state.tokenList[proStore.chain][0]}/${state.tokenList[proStore.chain][1]}`).then((res) => {
     if(res != null){
       state.goInfo = res
+      proStore.chainID = state.tokenList[proStore.chain][0]
+      proStore.tokenAddr = state.tokenList[proStore.chain][1]
     }else{
       state.goInfo = {}
     }

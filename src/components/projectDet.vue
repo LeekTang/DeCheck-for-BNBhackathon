@@ -1,6 +1,6 @@
 <template>
   <div v-if="Object.keys(state.project).length > 0" class="w-[75rem] mx-auto mt-[1.5rem] flex">
-    <div class="bg-[#110921] w-[17.62rem] border border-solid border-[#ffffff1c] rounded-[0.75rem] mr-[1.5rem]">
+    <div class="bg-[#110921] h-[22.9rem] w-[17.62rem] border border-solid border-[#ffffff1c] rounded-[0.75rem] mr-[1.5rem]">
       <img :src="state.project.logo" @error="imgError" class="h-[234px] w-[234px] rounded-[0.75rem] mt-[1.5rem] mx-auto"/>
       <div class="p-[1.5rem]">
         <div class="flex justify-between text-[0.87rem] mb-[1.5rem]">
@@ -10,19 +10,19 @@
             <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.project.tokenList[proStore.chain][1])"/>
           </div>
         </div>
-        <div class="flex justify-between text-[0.87rem] mb-[1.5rem]">
+        <div class="flex justify-between text-[0.87rem]">
           <p class="text-[#FFFFFFA8]">{{ t('Audits') }}</p>
           <p class="text-[#fff] font-bold w-[10rem] overflow-hidden whitespace-nowrap text-ellipsis text-right">
             {{state.project.auditor}}
           </p>
         </div>
-        <p class="border border-[#FFFFFF1C]"></p>
+        <!-- <p class="border border-[#FFFFFF1C]"></p>
         <p class="mt-[1rem] mb-[1.5rem] text-[0.88rem] text-[#fff] ">{{ t('tips') }}</p>
         <div 
           class="bg-[#1E50FF] w-[14.26rem] h-[2.5rem] rounded-[0.5rem] text-[1rem] text-[#fff] 
           font-bold text-center leading-[2.5rem] cursor-pointer" @click="reviewClick">
           {{ t('reviewNow') }}
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="flex-1">
@@ -45,8 +45,8 @@
         <div :class="`${state.isEllipsis ? 'text-ellipsis7' : 'more-ellipsis'} text-[1rem] text-[#ffffffa8] leading-[2rem]`">
             {{state.project.intro}}
         </div>
-        <!-- <img v-if="state.isEllipsis" src="images/down.svg" class="h-[1.5rem] w-[1.5rem] mx-auto" @click="state.isEllipsis = !state.isEllipsis"/>
-        <img v-else src="images/up.svg" class="h-[1.5rem] w-[1.5rem] mx-auto"  @click="state.isEllipsis = !state.isEllipsis"/> -->
+        <img v-if="state.isEllipsis" src="images/down.svg" class="h-[1.5rem] w-[1.5rem] mx-auto" @click="state.isEllipsis = !state.isEllipsis"/>
+        <img v-else src="images/up.svg" class="h-[1.5rem] w-[1.5rem] mx-auto"  @click="state.isEllipsis = !state.isEllipsis"/>
       </div>
     </div>
   </div>
@@ -162,11 +162,11 @@ const reviewClick = () => {
         if(signres.signMessage){
           let data = {
             aggregateType: 7,
-            appId: "1646086759245303808",
+            appId: runConfig.public.VITE_LOGIN_ID,
             authId: signres.account,
             strSign: signres.signMessage,
             type: 4,
-            data: "Welcome to DeCheck! Click to sign in and accept the DeCheck Terms of Service: https://decheck.io This request will not trigger a blockchain transaction or cost any gas fees."
+            data: runConfig.public.VITE_SIGN_TEXT
           }
           request({ url: `/center/apis/user/user-login/login`,method: 'post', data: data, baseURL: runConfig.public.VITE_LOGIN_URL}).then(loginres => {
             localStorage.setItem('token',loginres.tokenValue)
@@ -190,14 +190,14 @@ onMounted(()=>{
 .text-ellipsis7{
   overflow:hidden;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 4;
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
 .more-ellipsis{
   overflow:hidden;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 8;
+  -webkit-line-clamp: 10;
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }

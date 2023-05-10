@@ -215,7 +215,6 @@ const onScroll = () =>{
     right: 0;
     bottom: 0;
     overflow: hidden;
-    width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
