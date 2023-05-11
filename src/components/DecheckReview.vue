@@ -365,7 +365,7 @@ const submitClick = () => {
         tokenAddr:  props.isCheck ? store.tokenAddr : proStore.tokenAddr,
         score: state.rateValue,
         tags: tagList,
-        type: 0,
+        type: 1,
         userId: store.userInfo.account,
         visible: true,
         attachment: state.fileList
