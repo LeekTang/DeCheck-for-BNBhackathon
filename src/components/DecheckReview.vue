@@ -362,6 +362,8 @@ const submitClick = () => {
           state.rateValue = 0
           state.textarea = ""
           state.reviewShow = false;
+          state.fileList = [];
+          state.elUpList = [];
           projectInfo();
         }
       })
