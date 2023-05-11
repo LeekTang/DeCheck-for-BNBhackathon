@@ -95,7 +95,7 @@
           </div>
         </div>
         <div class="mt-[32px] flex justify-end">
-          <p :class="`${state.textarea ? 'bg-[#1E50FF] text-[#fff]' : 'bg-[#ffffff1c] text-[#ffffff54]'} h-[48px] w-[180px] rounded-[12px] text-center leading-[48px] text-[16px]`"
+          <p :class="`${state.textarea ? 'bg-[#1E50FF] text-[#fff]' : 'bg-[#ffffff1c] text-[#ffffff54]'} h-[48px] w-[180px] cursor-pointer rounded-[12px] text-center leading-[48px] text-[16px]`"
             style="font-family: Hezaedrus-Bold" @click="submitClick">Write a review</p>
         </div>
       </el-dialog>
@@ -232,7 +232,7 @@ const checkList = reactive([
   { name: "Tokenomics", state: false },
   { name: "Team", state: false },
   { name: "BUG", state: false },
-  { name: "Investment company", state: false },
+  { name: "Investment", state: false },
   { name: "Other", state: false },
 ]);
 
@@ -256,7 +256,7 @@ const state = reactive({
   reviewShow: false,
   project: {},
 
-  rateValue: 0,
+  rateValue: 3,
   limit: 9,
   textarea: "",
   elUpList: [],
@@ -365,7 +365,7 @@ const submitClick = () => {
         tokenAddr:  props.isCheck ? store.tokenAddr : proStore.tokenAddr,
         score: state.rateValue,
         tags: tagList,
-        type: 1,
+        type: 0,
         userId: store.userInfo.account,
         visible: true,
         attachment: state.fileList
