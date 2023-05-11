@@ -2,47 +2,65 @@
   <div class="w-[75rem] mx-auto mt-[4rem]" v-if="Object.keys(state.goInfo).length > 0">
     <div class="text-[1.25rem] text-[#fff] font-extrabold">{{ t('checkReport') }}</div>
     <client-only>
-      <el-select v-model="proStore.chain" class="h-[3.5rem] w-[17.62rem] mt-[1.5rem]" size="large" @change="chainChange" :teleported="false">
-        <el-option v-for="(item,index) in state.tokenList" :key="item[0]" :label="item.chain" :value="index"/>
+      <el-select v-model="proStore.chain" class="h-[3.5rem] w-[17.62rem] mt-[1.5rem]" size="large" @change="chainChange"
+        :teleported="false">
+        <el-option v-for="(item, index) in state.tokenList" :key="item[0]" :label="item.chain" :value="index" />
       </el-select>
     </client-only>
     <div class="w-full border border-solid border-[#ffffff1c] rounded-[1.25rem] mt-[1.5rem]">
-      <div class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem] flex justify-between items-center px-[1.5rem]">
+      <div
+        class="w-full h-[4rem] leading-[4rem] bg-[#FFFFFF1C] rounded-t-[1.25rem] flex justify-between items-center px-[1.5rem]">
         <p class="text-[1.25rem] font-bold text-gradient">{{ t('riskCheck') }}</p>
-        <div class="text-[#FFFFFF] text-[0.88rem] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between cursor-pointer" @click="jumpClick">
+        <div
+          class="text-[#FFFFFF] text-[0.88rem] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between cursor-pointer"
+          @click="jumpClick">
           <p class="h-[1rem] leading-[14px]">{{ t('viewDetails') }}</p>
           <img src="/images/jump.svg" class="h-[1rem] w-[1rem]">
         </div>
       </div>
-      <div class="p-[1.5rem]" v-loading="state.load" element-loading-background="rgba(122, 122, 122, 0.8)" element-loading-text="Loading...">
+      <div class="p-[1.5rem]" v-loading="state.load" element-loading-background="rgba(122, 122, 122, 0.8)"
+        element-loading-text="Loading...">
         <div class="flex justify-between flex-wrap">
           <template v-for="(item, index) in listOrder" :key="index">
-            <div v-if="state.goInfo.hasOwnProperty(item.key)" class="h-[3.5rem] w-[33.75rem] flex items-center border-b-2 border-b-[#FFFFFF1C]">
+            <div v-if="state.goInfo.hasOwnProperty(item.key)"
+              class="h-[3.5rem] w-[33.75rem] flex items-center border-b-2 border-b-[#FFFFFF1C]">
               <template v-if="item.grade == 1">
-                <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/warning.svg')" class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
+                <img
+                  :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/warning.svg')"
+                  class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
               </template>
               <template v-else-if="item.grade == 2">
-                <img :src="state.goInfo[item.key] == 1 ? '/images/warning.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/danger.svg')" class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
+                <img
+                  :src="state.goInfo[item.key] == 1 ? '/images/warning.svg' : (state.goInfo[item.key] == 0 ? '/images/success.svg' : '/images/danger.svg')"
+                  class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
               </template>
               <template v-else-if="item.grade == 3">
-                <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/danger.svg' : '/images/warning.svg')" class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
+                <img
+                  :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/danger.svg' : '/images/warning.svg')"
+                  class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
               </template>
               <template v-else-if="item.grade == 4">
-                <img :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/danger.svg')" class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
+                <img
+                  :src="state.goInfo[item.key] == 1 ? '/images/success.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/danger.svg')"
+                  class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
               </template>
               <template v-else>
-                <img :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/success.svg')" class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
+                <img
+                  :src="state.goInfo[item.key] == 1 ? '/images/danger.svg' : (state.goInfo[item.key] == 0 ? '/images/warning.svg' : '/images/success.svg')"
+                  class="h-[1.5rem] w-[1.5rem] mr-[1.5rem]">
               </template>
-              <p class="text-[1rem]" :style="{color: state.goInfo[item.key] == 0 ? item.color0 : item.color1}">{{t(item.key + state.goInfo[item.key])}}</p>
+              <p class="text-[1rem]" :style="{ color: state.goInfo[item.key] == 0 ? item.color0 : item.color1 }">
+                {{ t(item.key + state.goInfo[item.key]) }}</p>
             </div>
           </template>
         </div>
-        <p class="text-[1rem] text-[#fff] font-bold mt-[1.5rem]">{{t('goTitle')}}</p>
+        <p class="text-[1rem] text-[#fff] font-bold mt-[1.5rem]">{{ t('goTitle') }}</p>
         <div class="text-[0.88rem] text-[#FFFFFFA8] leading-[1.38rem] mt-[1rem]">
-          <p>{{t('goTips1')}}</p>
-          <p>{{t('goTips2')}}</p>
+          <p>{{ t('goTips1') }}</p>
+          <p>{{ t('goTips2') }}</p>
         </div>
-        <a href="https://gopluslabs.io/" target="_blank"><img src="/images/goplus.png" class="h-[1.5rem] w-[10.5rem] mt-[1.5rem] cursor-pointer"/></a>
+        <a href="https://gopluslabs.io/" target="_blank"><img src="/images/goplus.png"
+            class="h-[1.5rem] w-[10.5rem] mt-[1.5rem] cursor-pointer" /></a>
       </div>
     </div>
     <div class="flex justify-between mt-[1.5rem]">
@@ -53,47 +71,55 @@
         <div class="p-[1.5rem] text-[0.88rem]">
           <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('tokenName') }}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.token_symbol">{{state.goInfo.token_symbol}} ({{state.goInfo.token_name}})</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.token_symbol">{{ state.goInfo.token_symbol }}
+              ({{ state.goInfo.token_name }})</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('tokenContractAddress') }}</p>
             <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.tokenList">
-              <p @click="goToUrl(state.tokenList[proStore.chain][1])">{{abbr(state.tokenList[proStore.chain][1])}}</p>
-              <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.tokenList[proStore.chain][1])"/>
+              <p @click="goToUrl(state.tokenList[proStore.chain][1])">{{ abbr(state.tokenList[proStore.chain][1]) }}</p>
+              <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]"
+                @click="copyClick(state.tokenList[proStore.chain][1])" />
             </div>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('contractCreator') }}</p>
-            <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.creator_address">
-              <p @click="goToUrl(state.goInfo.creator_address)">{{abbr(state.goInfo.creator_address)}}</p>
-              <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.goInfo.creator_address)"/>
+            <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer"
+              v-if="state.goInfo.creator_address">
+              <p @click="goToUrl(state.goInfo.creator_address)">{{ abbr(state.goInfo.creator_address) }}</p>
+              <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]"
+                @click="copyClick(state.goInfo.creator_address)" />
             </div>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('contractOwner') }}</p>
-            <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer" v-if="state.goInfo.owner_address">
-              <p @click="goToUrl(state.goInfo.owner_address)">{{abbr(state.goInfo.owner_address)}}</p>
-              <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.goInfo.owner_address)"/>
+            <div class="flex items-center text-[#FFFFFF] font-bold w-[18rem] cursor-pointer"
+              v-if="state.goInfo.owner_address">
+              <p @click="goToUrl(state.goInfo.owner_address)">{{ abbr(state.goInfo.owner_address) }}</p>
+              <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]"
+                @click="copyClick(state.goInfo.owner_address)" />
             </div>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('totalSupply') }}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.total_supply">{{toShort( state.goInfo.total_supply, 2) || '--'}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem]" v-if="state.goInfo.total_supply">{{ toShort(
+              state.goInfo.total_supply, 2) || '--' }}</p>
             <p class="text-[#FFFFFF] font-bold w-[18rem]" v-else> -- </p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('launchTime') }}</p>
-            <p class="text-[#FFFFFF] font-bold w-[18rem]">{{state.goInfo.time || '-'}}</p>
+            <p class="text-[#FFFFFF] font-bold w-[18rem]">{{ state.goInfo.time || '-' }}</p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center">
             <p class="text-[#FFFFFFA8]">{{ t('Website') }}</p>
             <a :href="state.projectInfo.website" target="_blank">
-              <div class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
-                <p class="overflow-hidden whitespace-nowrap text-ellipsis">{{state.projectInfo.website}}</p>
+              <div
+                class="text-[#FFFFFF] font-bold w-[18rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between">
+                <p class="overflow-hidden whitespace-nowrap text-ellipsis">{{ state.projectInfo.website }}</p>
                 <img src="/images/out.svg" class="h-[1rem] w-[1rem]">
               </div>
             </a>
@@ -107,12 +133,33 @@
         <div class="p-[1.5rem] text-[0.88rem]">
           <div class="h-[3.5rem] flex justify-between items-center border-b border-b-[#FFFFFF1C]">
             <p class="text-[#FFFFFFA8]">{{ t('price') }}</p>
-            <p class="text-[#FFFFFF] text-[1.5rem] font-bold">{{state.goInfo.price || '-'}}</p>
+            <p class="text-[#FFFFFF] text-[1.5rem] font-bold" v-if="state.isE && state.nowPrice">
+              {{ countZeros(state.nowPrice) }}
+              <span>$0.0</span>
+              <sub>{{ state.priceFi }}</sub>
+              <span>{{ state.priceTw }}</span>
+              <span>{{ state.priceTh }}</span>
+            </p>
+            <p class="text-[#FFFFFF] text-[1.5rem] font-bold" v-else-if="state.nowPrice && !state.isE">
+              {{ countZeros(state.nowPrice) }}
+              <template v-if="state.isM">
+                <span>$0.0</span>
+                <sub>{{ state.priceFi }}</sub>
+                <span>{{ state.priceTw }}</span>
+                <span>{{ state.priceTh }}</span>
+              </template>
+              <template v-else>
+                <span>${{state.priceFi}}.</span>
+                <span>{{ state.priceTh }}</span>
+              </template>
+            </p>
+            <p class="text-[#FFFFFF] text-[1.5rem] font-bold" v-else>-</p>
           </div>
           <div class="h-[3.5rem] flex justify-between items-center">
             <p class="text-[#FFFFFFA8]">DEX</p>
-            <div class="text-[#FFFFFF] text-[0.75rem] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between cursor-pointer">
-              <p v-if="state.goInfo.dex">{{state.goInfo.dex[0].name}}</p>
+            <div
+              class="text-[#FFFFFF] text-[0.75rem] font-bold w-[16.13rem] h-[2rem] px-[1rem] rounded-[0.75rem] bg-[#1E50FFFF] flex items-center justify-between cursor-pointer">
+              <p v-if="state.goInfo.dex">{{ state.goInfo.dex[0].name }}</p>
               <p v-else>--</p>
               <div class="flex items-center">
                 Tread
@@ -124,31 +171,35 @@
             <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem]">
               <div class="flex justify-between leading-[1rem]">
                 <p class="text-[1rem] text-[#fff] font-medium">{{ t('buyTax') }}</p>
-                <p class="text-[1rem] text-[#11B466] font-bold" v-if="state.goInfo.buy_tax">{{state.goInfo.buy_tax + '%'}}</p>
+                <p class="text-[1rem] text-[#11B466] font-bold" v-if="state.goInfo.buy_tax">{{ state.goInfo.buy_tax + '%' }}
+                </p>
                 <p class="text-[1rem] text-[#11B466] font-bold" v-else>0%</p>
               </div>
-              <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.12rem] bg-[#ffffff14] rounded-[0.5rem] my-[1rem]">
-                <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
+              <div
+                class="flex justify-center items-center flex-col h-[11.5rem] w-[14.12rem] bg-[#ffffff14] rounded-[0.5rem] my-[1rem]">
+                <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]" />
                 <p class="text-[1rem] text-[#ffffff54] mt-[1rem]">Tax details not found</p>
               </div>
               <div class="flex justify-between leading-[1rem]">
-                <p class="text-[1rem] text-[#fff] font-medium">{{t('buyGas')}}</p>
-                <p class="text-[1rem] text-[#11B466] font-bold">{{state.goInfo.buyGas || '-'}}</p>
+                <p class="text-[1rem] text-[#fff] font-medium">{{ t('buyGas') }}</p>
+                <p class="text-[1rem] text-[#11B466] font-bold">{{ state.goInfo.buyGas || '-' }}</p>
               </div>
             </div>
             <div class="h-[17.5rem] w-[16.13rem] bg-[#ffffff1c] rounded-[0.75rem] p-[1rem]">
               <div class="flex justify-between leading-[1rem]">
                 <p class="text-[1rem] text-[#fff] font-medium">{{ t('sellTax') }}</p>
-                <p class="text-[1rem] text-[#FF5353FF] font-bold" v-if="state.goInfo.sell_tax">{{state.goInfo.sell_tax + '%'}}</p>
+                <p class="text-[1rem] text-[#FF5353FF] font-bold" v-if="state.goInfo.sell_tax">{{ state.goInfo.sell_tax +
+                  '%' }}</p>
                 <p class="text-[1rem] text-[#FF5353FF] font-bold" v-else>0%</p>
               </div>
-              <div class="flex justify-center items-center flex-col h-[11.5rem] w-[14.12rem] bg-[#ffffff14] rounded-[0.5rem] my-[1rem]">
-                <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]"/>
+              <div
+                class="flex justify-center items-center flex-col h-[11.5rem] w-[14.12rem] bg-[#ffffff14] rounded-[0.5rem] my-[1rem]">
+                <img src="/images/notLogo.png" class="w-[2.93] h-[3.25rem]" />
                 <p class="text-[1rem] text-[#ffffff54] mt-[1rem]">Tax details not found</p>
               </div>
               <div class="flex justify-between leading-[1rem]">
-                <p class="text-[1rem] text-[#fff] font-medium">{{t('sellGax')}}</p>
-                <p class="text-[1rem] text-[#FF5353FF] font-bold">{{state.goInfo.sellGas || '-'}}</p>
+                <p class="text-[1rem] text-[#fff] font-medium">{{ t('sellGax') }}</p>
+                <p class="text-[1rem] text-[#FF5353FF] font-bold">{{ state.goInfo.sellGas || '-' }}</p>
               </div>
             </div>
           </div>
@@ -161,9 +212,9 @@
 <script setup>
 import { onMounted, ref, reactive } from 'vue'
 import request from '@/src/utils/request'
-import { abbr,toShort, copyToClipBoard,webList } from '@/src/utils/utils'
-import { useI18n } from  'vue-i18n'
-const { t,locale } = useI18n();
+import { abbr, toShort, copyToClipBoard, webList } from '@/src/utils/utils'
+import { useI18n } from 'vue-i18n'
+const { t, locale } = useI18n();
 import { userStore } from '@/src/stores/user'
 const store = userStore();
 import { projectStore } from '@/src/stores/project'
@@ -171,25 +222,25 @@ const proStore = projectStore();
 const router = useRouter()
 
 const listOrder = [
-  { key: 'is_honeypot', grade: 1, color1: '#FF5353', color0: '#1cb071'},
-  { key: 'is_open_source',grade: 3,  color1: '#1cb071', color0: '#FF5353'},
-  { key: 'is_proxy', grade: 2, color1: '#FFB524', color0: '#1cb071'},
-  { key: 'owner_change_balance', grade: 1, color1: '#FF5353', color0: '#1cb071'},
-  { key: 'slippage_modifiable', grade: 1, color1: '#FF5353', color0: '#1cb071'},
-  { key: 'is_whitelisted', grade: 2, color1: '#FFB524', color0: '#1cb071'},
-  { key: 'is_blacklisted', grade: 2, color1: '#FFB524', color0: '#1cb071'},
-  { key: 'is_mintable', grade: 2, color1: '#FFB524', color0: '#1cb071'},
-  { key: 'can_take_back_ownership', grade: 1, color1: '#FF5353', color0: '#1cb071'},
-  { key: 'hidden_owner', grade: 1, color1: '#FF5353', color0: '#1cb071'},
-  { key: 'selfdestruct', grade: 1, color1: '#FF5353', color0: '#1cb071'},
-  { key: 'external_call', grade: 2, color1: '#FFB524', color0: '#1cb071'},
-  { key: 'cannot_buy', grade: 2, color1: '#FFB524', color0: '#1cb071'},
-  { key: 'transfer_pausable', grade: 1, color1: '#FF5353', color0: '#1cb071'},
-  { key: 'is_in_dex', grade: 4, color1: '#1cb071', color0: '#FFB524'},
-  { key: 'cannot_sell_all', grade: 2, color1: '#FFB524', color0: '#1cb071'},
-  { key: 'is_anti_whale', grade: 2, color1: '#FFB524', color0: '#1cb071'},
-  { key: 'trading_cooldown', grade: 2, color1: '#FFB524', color0: '#1cb071'},
-  { key: 'personal_slippage_modifiable', grade: 2, color1: '#FFB524', color0: '#1cb071'}
+  { key: 'is_honeypot', grade: 1, color1: '#FF5353', color0: '#1cb071' },
+  { key: 'is_open_source', grade: 3, color1: '#1cb071', color0: '#FF5353' },
+  { key: 'is_proxy', grade: 2, color1: '#FFB524', color0: '#1cb071' },
+  { key: 'owner_change_balance', grade: 1, color1: '#FF5353', color0: '#1cb071' },
+  { key: 'slippage_modifiable', grade: 1, color1: '#FF5353', color0: '#1cb071' },
+  { key: 'is_whitelisted', grade: 2, color1: '#FFB524', color0: '#1cb071' },
+  { key: 'is_blacklisted', grade: 2, color1: '#FFB524', color0: '#1cb071' },
+  { key: 'is_mintable', grade: 2, color1: '#FFB524', color0: '#1cb071' },
+  { key: 'can_take_back_ownership', grade: 1, color1: '#FF5353', color0: '#1cb071' },
+  { key: 'hidden_owner', grade: 1, color1: '#FF5353', color0: '#1cb071' },
+  { key: 'selfdestruct', grade: 1, color1: '#FF5353', color0: '#1cb071' },
+  { key: 'external_call', grade: 2, color1: '#FFB524', color0: '#1cb071' },
+  { key: 'cannot_buy', grade: 2, color1: '#FFB524', color0: '#1cb071' },
+  { key: 'transfer_pausable', grade: 1, color1: '#FF5353', color0: '#1cb071' },
+  { key: 'is_in_dex', grade: 4, color1: '#1cb071', color0: '#FFB524' },
+  { key: 'cannot_sell_all', grade: 2, color1: '#FFB524', color0: '#1cb071' },
+  { key: 'is_anti_whale', grade: 2, color1: '#FFB524', color0: '#1cb071' },
+  { key: 'trading_cooldown', grade: 2, color1: '#FFB524', color0: '#1cb071' },
+  { key: 'personal_slippage_modifiable', grade: 2, color1: '#FFB524', color0: '#1cb071' }
 ]
 
 const props = defineProps({
@@ -202,38 +253,43 @@ const state = reactive({
   goInfo: {},
   tokenList: [],
   projectInfo: {},
-  load: false
+  load: false,
+  isE: false,
+  isM: false,
+  priceFi: '',
+  priceTw: '',
+  priceTh: ''
 })
 
 const chainList = [
-  { id: "1", label: "Ethereum" },
-  { id: "10", label: "Optimism" },
-  { id: "25", label: "Cronos" },
-  { id: "56", label: "BSC" },
-  { id: "66", label: "OKC" },
-  { id: "100", label: "Gnosis" },
-  { id: "128", label: "Heco" },
-  { id: "137", label: "Polygon" },
-  { id: "250", label: "Fantom" },
-  { id: "321", label: "KCC" },
-  { id: "324", label: "zkSync Era" },
-  { id: "10001", label: "ETHW" },
-  { id: "201022", label: "FON" },
-  { id: "42161", label: "Arbitrum" },
-  { id: "43114", label: "Avalanche" },
-  { id: "59140", label: "Linea" },
-  { id: "1666600000", label: "Harmony" },
-  { id: "tron", label: "Tron" },
+  { id: "1", label: "Ethereum", priceLabel: 'eth' },
+  { id: "10", label: "Optimism", priceLabel: 'Optimism' },
+  { id: "25", label: "Cronos", priceLabel: 'cro' },
+  { id: "56", label: "BSC", priceLabel: 'bsc' },
+  { id: "66", label: "OKC", priceLabel: 'okexchain' },
+  { id: "100", label: "Gnosis", priceLabel: 'xdai' },
+  { id: "128", label: "Heco", priceLabel: 'heco' },
+  { id: "137", label: "Polygon", priceLabel: 'polygon_pos' },
+  { id: "250", label: "Fantom", priceLabel: 'ftm' },
+  { id: "321", label: "KCC", priceLabel: 'kcc' },
+  { id: "324", label: "zkSync Era", priceLabel: 'zksync' },
+  { id: "10001", label: "ETHW", priceLabel: 'ethw' },
+  { id: "201022", label: "FON", priceLabel: 'eth' },
+  { id: "42161", label: "Arbitrum", priceLabel: 'arbitrum' },
+  { id: "43114", label: "Avalanche", priceLabel: 'avax' },
+  { id: "59140", label: "Linea", priceLabel: 'eth' },
+  { id: "1666600000", label: "Harmony", priceLabel: 'one' },
+  { id: "tron", label: "Tron", priceLabel: 'eth' },
 ]
 
 const projectInfo = () => {
   request.get(`/plugin/decheck/api/project/detail/${props.projectID}`).then((res) => {
     state.projectInfo = res
-    if(res.tokenAddr){
+    if (res.tokenAddr) {
       state.tokenList = res.tokenList = Object.entries(res.tokenAddr)
       state.tokenList.forEach(ele => {
         chainList.forEach(chainItem => {
-          if(ele[0] == chainItem.id){
+          if (ele[0] == chainItem.id) {
             ele.chain = chainItem.label
           }
         })
@@ -246,14 +302,22 @@ const projectInfo = () => {
 const getCheck = () => {
   state.load = true
   request.get(`/plugin/decheck/api/security/token/${state.tokenList[proStore.chain][0]}/${state.tokenList[proStore.chain][1]}`).then((res) => {
-    if(res != null){
+    if (res != null) {
       state.goInfo = res
       proStore.chainID = state.tokenList[proStore.chain][0]
       proStore.tokenAddr = state.tokenList[proStore.chain][1]
-    }else{
+    } else {
       state.goInfo = {}
     }
     state.load = false
+    getPrice()
+  })
+}
+
+const getPrice = () => {
+  let nowChain = chainList.find(el => el.id == proStore.chainID)
+  request.get(`/plugin/decheck/api/security/token/price/${nowChain.priceLabel}/${proStore.tokenAddr}`).then(res => {
+    state.nowPrice = res
   })
 }
 
@@ -263,7 +327,7 @@ const chainChange = (val) => {
 }
 
 const copyClick = (val) => {
-  if(val){
+  if (val) {
     copyToClipBoard(val);
     ElMessage.success(t('copySuccess'))
   }
@@ -273,7 +337,7 @@ const jumpClick = () => {
   router.push({
     name: 'check',
     query: {
-      chain : state.tokenList[proStore.chain][0],
+      chain: state.tokenList[proStore.chain][0],
       searchInput: state.tokenList[proStore.chain][1]
     }
   })
@@ -285,12 +349,38 @@ const jumpClick = () => {
 const goToUrl = (val) => {
   let url = '';
   webList.forEach(el => {
-    if(el.chain == state.tokenList[proStore.chain][0]){
+    if (el.chain == state.tokenList[proStore.chain][0]) {
       url = el.web
     }
   })
-  if(url){
-    window.open(url + 'address/' + val,'_blank')
+  if (url) {
+    window.open(url + 'address/' + val, '_blank')
+  }
+}
+
+const countZeros = (num) => {
+  if (num) {
+    let reg = /\d(?:\.(\d*))?e([+-]\d+)/.exec(num);
+    //判断是否是科学计数法
+    if (reg == null) {
+      var str = num.toString();
+      var arr = str.split('.');
+      let regs = /\.0*|0+$/;
+      var zeross = num.toString().match(regs)[0].length - 1
+      if (zeross >= 7) {
+        state.isM = true;
+        state.priceFi = zeross;
+        state.priceTh = arr[1].substring(zeross, zeross + 4);
+      } else {
+        state.priceFi = arr[0];
+        state.priceTh = arr[1].substring(zeross, zeross + 4);
+      }
+    } else {
+      state.isE = true
+      state.priceFi = - reg[2] - 1;
+      state.priceTw = Math.abs(num.toString().split('.')[0])
+      state.priceTh = reg[1].substring(0, 3);
+    }
   }
 }
 
@@ -301,7 +391,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.text-gradient{
+.text-gradient {
   background: linear-gradient(69deg, #4972FF 0%, #1E93FF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -309,31 +399,30 @@ onMounted(() => {
 }
 
 /* 下拉选择样式 */
-:deep(.el-input__wrapper){
+:deep(.el-input__wrapper) {
   height: 3.5rem;
   background-color: #ffffff1c;
   box-shadow: none;
   border-radius: 20px;
 }
 
-:deep(.el-input__inner){
+:deep(.el-input__inner) {
   color: #fff;
 }
 
-:deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover){
+:deep(.el-select-dropdown__item.hover, .el-select-dropdown__item:hover) {
   background-color: #ffffff1c;
   border-radius: 0.25rem;
 }
 
-:deep(.el-select-dropdown__item){
+:deep(.el-select-dropdown__item) {
   height: 3rem;
   line-height: 3rem;
   color: #fff;
   margin: 0 0.5rem;
 }
 
-:deep(.el-popper.is-light){
+:deep(.el-popper.is-light) {
   background-color: #0a041a;
   border: none;
-}
-</style>
+}</style>

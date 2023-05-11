@@ -1,6 +1,6 @@
 <template>
   <div v-if="Object.keys(state.project).length > 0" class="w-[75rem] mx-auto mt-[1.5rem] flex">
-    <div class="bg-[#110921] border border-solid border-[#ffffff1c] w-[17.62rem] rounded-[0.75rem] mr-[1.5rem]">
+    <div class="bg-[#110921] h-[22.9rem] border border-solid border-[#ffffff1c] w-[17.62rem] rounded-[0.75rem] mr-[1.5rem]">
       <img :src="state.project.logo" @error="imgError" class="h-[14.62rem] w-[14.62rem] rounded-[0.75rem] mt-[1.5rem] mx-auto"/>
       <div class="p-[1.5rem]">
         <div class="flex justify-between text-[0.87rem] mb-[1.5rem]">
@@ -10,15 +10,15 @@
             <img src="/images/copy.svg" class="h-[1rem] w-[1rem] ml-[0.5rem]" @click="copyClick(state.project.tokenList[0][1])"/>
           </div>
         </div>
-        <div class="flex justify-between text-[0.87rem] mb-[1.5rem] text-right">
+        <div class="flex justify-between text-[0.87rem] text-right">
           <p class="text-[#FFFFFFA8]">{{t('Audits')}}</p>
           <p class="text-[#fff] w-[10rem] font-bold overflow-hidden whitespace-nowrap text-ellipsis">
             {{state.project.auditor || '--'}}
           </p>
         </div>
-        <p class="border border-[#FFFFFF1C]"></p>
+        <!-- <p class="border border-[#FFFFFF1C]"></p>
         <p class="my-[1.5rem] text-[0.88rem] text-[#fff] ">{{t('tips')}}</p>
-        <div class="w-[14.26rem] h-[2.5rem] bg-[#1E50FF] rounded-[0.5rem] cursor-pointer text-[1rem] text-[#fff] font-bold text-center leading-[2.5rem]" @click="reviewClick">{{t('reviewNow')}}</div>
+        <div class="w-[14.26rem] h-[2.5rem] bg-[#1E50FF] rounded-[0.5rem] cursor-pointer text-[1rem] text-[#fff] font-bold text-center leading-[2.5rem]" @click="reviewClick">{{t('reviewNow')}}</div> -->
       </div>
     </div>
     <div class="w-[55.87rem]">
@@ -41,8 +41,10 @@
         <div :class="`${state.isEllipsis ? 'text-ellipsis7' : 'more-ellipsis'} text-[1rem] text-[#ffffffa8] leading-[2rem]`">
             {{state.project.intro}}
         </div>
-        <!-- <img v-if="state.isEllipsis" src="images/down.svg" class="h-[1.5rem] w-[1.5rem] mx-auto" @click="state.isEllipsis = !state.isEllipsis"/>
-        <img v-else src="images/up.svg" class="h-[1.5rem] w-[1.5rem] mx-auto"  @click="state.isEllipsis = !state.isEllipsis"/> -->
+        <template v-if="state.project.intro">
+          <img v-if="state.isEllipsis" src="/images/down.svg" class="h-[1.5rem] w-[1.5rem] mx-auto" @click="state.isEllipsis = !state.isEllipsis"/>
+          <img v-else src="/images/up.svg" class="h-[1.5rem] w-[1.5rem] mx-auto"  @click="state.isEllipsis = !state.isEllipsis"/>
+        </template>
       </div>
     </div>
   </div>
@@ -112,13 +114,20 @@ const projectInfo = () => {
         iconList[0].webSrc = res.website
       }
       store.searchProjectInfo = state.project = res
-      state.project.auditor = state.project.auditor.join()
-      state.project.invest = state.project.invest.join()
-      iconList.forEach((el,index) => {
-        if(state.project.socialMedia[index + 1] != undefined){
-          el.webSrc = state.project.socialMedia[index + 1]
-        }
-      })
+      if(state.project.auditor){
+        state.project.auditor = state.project.auditor.join()
+      }
+      if(state.project.invest){
+        state.project.invest = state.project.invest.join()
+      }
+      if(state.project.socialMedia){
+        iconList.forEach((el,index) => {
+          if(state.project.socialMedia[index + 1] != undefined){
+            el.webSrc = state.project.socialMedia[index + 1]
+          }
+        })
+      }
+      
     })
   }else{
     store.searchProjectInfo = state.project = ''
@@ -179,14 +188,14 @@ const reviewClick = () => {
 .text-ellipsis7{
   overflow:hidden;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 7;
+  -webkit-line-clamp: 4;
   display: -webkit-box;
   -webkit-box-orient: vertical; 
 }
 .more-ellipsis{
   overflow:hidden;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 8;
+  -webkit-line-clamp: 10;
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }

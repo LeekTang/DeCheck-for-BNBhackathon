@@ -5,6 +5,7 @@
     <DetailsInfo />
     <CheckReport />
     <CheckBottom />
+    <DecheckReview v-if="store.tokenID" :projectID="store.tokenID" :isCheck="true"/>
     <BottomBar class="bottom-0 absolute"/>
   </div>
 </template>
@@ -15,6 +16,7 @@ import DetailsNav from '@/src/components/DetailsNav.vue'
 import DetailsInfo from '@/src/components/DetailstInfo.vue'
 import CheckReport from '@/src/components/CheckReport.vue'
 import CheckBottom from '@/src/components/checkBottom.vue'
+import DecheckReview from '@/src/components/DecheckReview.vue'
 import {  onMounted, onBeforeUnmount} from 'vue'
 import { userStore } from '@/src/stores/user'
 const store = userStore()
@@ -30,16 +32,3 @@ onBeforeUnmount(()=>{
   proStore.chain = 0
 })
 </script>
-
-<style scoped>
-:deep(.el-dialog){
-  border-radius: 20px;
-  background: url('/images/diabg.png') no-repeat;
-  background-size: 100% 100%;
-}
-
-:deep(.el-dialog__header){
-  margin: 0;
-  padding-top: 10px;
-}
-</style>

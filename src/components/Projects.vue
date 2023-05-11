@@ -12,7 +12,7 @@
       <div class="flex flex-row text-[0.88rem] text-[#FFFFFFA8] h-[3rem]">
         <p class="w-[30rem]">{{ t('Name') }}</p>
         <p class="w-[8rem]">{{ t('Token') }}</p>
-        <p class="w-[8rem]">{{ t('Chain') }}</p>
+        <!-- <p class="w-[8rem]">{{ t('Chain') }}</p> -->
         <p class="w-[8rem]">{{ t('Participant') }}</p>
         <p class="w-[8rem]">{{ t('Reviews') }}</p>
         <p class="w-[10rem]">{{ t('Score') }}</p>
@@ -23,7 +23,7 @@
           <a>{{item.name}}</a>
         </div>
         <p class="w-[8rem]">{{item.tokenName || '--'}}</p>
-        <p class="w-[8rem]">{{item.chain || '--'}}</p>
+        <!-- <p class="w-[8rem]">{{item.chain || '--'}}</p> -->
         <p class="w-[8rem]">{{item.partake || '0'}}</p>
         <p class="w-[8rem]">{{item.reviews || '0'}}</p>
         <p class="w-[10rem]"><el-rate disabled size="large" v-model="item.score" /></p>
@@ -34,7 +34,7 @@
             <el-skeleton-item variant="rect" style="width: 40px; height: 40px; border-radius: 12px; background: #ffffff1c;border: 1px solid #ffffff1c; margin-right: 14px"/>
             <el-skeleton-item variant="rect" style="width: 280px; height: 40px; background: #ffffff1c;margin-right: 110px" />
             <el-skeleton-item variant="rect" style="width: 98px; height: 40px; background: #ffffff1c;margin-right: 30px" />
-            <el-skeleton-item variant="rect" style="width: 128px; height: 40px; background: #ffffff1c;margin-right: 20px" />
+            <!-- <el-skeleton-item variant="rect" style="width: 128px; height: 40px; background: #ffffff1c;margin-right: 20px" /> -->
             <el-skeleton-item variant="rect" style="width: 98px; height: 40px; background: #ffffff1c;margin-right: 20px" />
             <el-skeleton-item variant="rect" style="width: 98px; height: 40px; background: #ffffff1c;margin-right: 20px" />
             <el-skeleton-item variant="rect" style="width: 98px; height: 40px; background: #ffffff1c;" />

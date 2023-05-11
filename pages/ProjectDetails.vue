@@ -28,6 +28,7 @@ const state = reactive({
 onBeforeUnmount(()=>{
   proStore.chain = 0
   proStore.chainID = 0
+  proStore.projectID = 0
   proStore.tokenAddr = ''
 })
 </script>

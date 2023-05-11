@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[75rem] mx-auto mt-[1.5rem] mb-[14rem]" v-if="Object.keys(state.goInfo).length > 0">
+  <div class="w-[75rem] mx-auto mt-[1.5rem]" v-if="Object.keys(state.goInfo).length > 0">
     <div class="flex justify-between">
       <div class="w-[36.75rem] rounded-[1.25rem] border border-solid border-[#ffffff1c]">
         <div class="flex items-center justify-between bg-[#FFFFFF1C] h-[4rem] w-full px-[1.5rem] rounded-t-[1.25rem]">

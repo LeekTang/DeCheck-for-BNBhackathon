@@ -24,7 +24,7 @@
         <template #header>
           <div class="flex justify-between items-start">
             <div class="flex">
-              <img :src="state.project.logo" class="h-[56px] w-[56px] rounded-[10px] mr-[16px]" />
+              <img :src="state.project.logo" @error="imgError" class="h-[56px] w-[56px] rounded-[10px] mr-[16px]" />
               <div>
                 <p class="text-[20px] text-[#fff]" style="font-family: Hezaedrus-Bold">
                   {{state.project.name}}
@@ -101,9 +101,13 @@
       </el-dialog>
     </client-only>
     <client-only>
-      <el-select v-model="state.selectValue" class="h-[3.5rem] w-[17.62rem] my-[1.5rem]" size="large" :teleported="false"
+      <el-select v-model="state.selectValue" class="h-[3.5rem] w-[17.62rem] my-[1.5rem] mr-[1.5rem]" size="large" :teleported="false"
         @change="sortClick">
         <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+      </el-select>
+      <el-select v-model="state.selectType" class="h-[3.5rem] w-[17.62rem] my-[1.5rem]" size="large" :teleported="false"
+        @change="sortClick">
+        <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value" />
       </el-select>
     </client-only>
     <div class="flex">
@@ -190,7 +194,7 @@ import Swipers from "swiper";
 import { onMounted, ref, reactive, defineProps } from "vue";
 import request from "@/src/utils/request";
 import web3js from "@/src/utils/link";
-import { abbr, timestampToTime, matchType } from "@/src/utils/utils";
+import { abbr,imgError, timestampToTime, matchType } from "@/src/utils/utils";
 SwiperCore.use([Autoplay, Navigation]);
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
@@ -205,10 +209,21 @@ const options = [
   { value: 2, label: t("hottest") },
 ];
 
+const options2 = [
+  { value: 0, label: t('all') },
+  { value: 1, label: t('reviewer') },
+  { value: 2, label: t('auditor') },
+  { value: 3, label: t('researcher') },
+  { value: 4, label: t('producer') },
+]
+
 const props = defineProps({
   projectID: {
     type: String,
   },
+  isCheck: {
+    type: Boolean
+  }
 });
 
 const checkList = reactive([
@@ -231,6 +246,7 @@ const checkClick = (item) => {
 
 const state = reactive({
   selectValue: 2,
+  selectType: 0,
   comments: [],
   isSign: computed(() => store.getIsSign),
   reviewShow: false,
@@ -311,7 +327,6 @@ const imgDelete = (index) => {
 };
 
 const submitClick = () => {
-  
     let tagList = []
     checkList.forEach(item => {
       if (item.state == true) {
@@ -329,8 +344,8 @@ const submitClick = () => {
         content: state.textarea,
         projectId: props.projectID,
         projectName: state.project.name,
-        chainId: proStore.chainID,
-        tokenAddr: proStore.tokenAddr,
+        chainId:  props.isCheck ? store.chain : proStore.chainID,
+        tokenAddr:  props.isCheck ? store.tokenAddr : proStore.tokenAddr,
         score: state.rateValue,
         tags: tagList,
         type: 0,
@@ -346,10 +361,8 @@ const submitClick = () => {
           })
           state.rateValue = 0
           state.textarea = ""
-          setTimeout(() => {
-            state.reviewShow = false;
-            projectInfo();
-          }, 2000);
+          state.reviewShow = false;
+          projectInfo();
         }
       })
     }
@@ -366,7 +379,7 @@ const reviewClick = () => {
 const projectInfo = () => {
   request
     .get(
-      `/plugin/decheck/api/project/detail/review/page/${props.projectID}?page=1&pageSize=50&sort=${state.selectValue}`
+      `/plugin/decheck/api/project/detail/review/page/${props.projectID}?page=1&pageSize=50&sort=${state.selectValue}&type=${state.selectType}`
     )
     .then((res) => {
       if (res.list) {
