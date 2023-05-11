@@ -132,6 +132,7 @@ const getProject = () => {
           })
         })
       }
+      ele.score = Number(ele.score).toFixed(0)
     });
     state.totle = res.total
     localStorage.setItem('exProject',JSON.stringify(state.projectList))
