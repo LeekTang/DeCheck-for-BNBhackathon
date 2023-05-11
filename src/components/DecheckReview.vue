@@ -42,7 +42,7 @@
           <el-rate v-model="state.rateValue" size="large" />
         </div>
         <div class="surface mt-[40px]">
-          <el-input v-model="state.textarea" type="textarea" maxlength="999" :autosize="{ minRows: 2, maxRows: 6 }"
+          <el-input v-model="state.textarea" type="textarea" maxlength="1500" :autosize="{ minRows: 2, maxRows: 6 }"
             resize="none" :placeholder="t('pleaseInput')" />
         </div>
         <div class="mt-[32px]">
