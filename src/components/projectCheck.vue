@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[75rem] mx-auto mt-[4rem]" v-if="Object.keys(state.goInfo).length > 0">
+  <div class="w-[75rem] mx-auto" v-if="Object.keys(state.goInfo).length > 0">
     <div class="text-[1.25rem] text-[#fff] font-extrabold">{{ t('checkReport') }}</div>
     <client-only>
       <el-select v-model="proStore.chain" class="h-[3.5rem] w-[17.62rem] mt-[1.5rem]" size="large" @change="chainChange"

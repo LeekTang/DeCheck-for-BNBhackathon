@@ -137,7 +137,11 @@ const projectInfo = () => {
 const copyClick = (val) => {
   if(val){
     copyToClipBoard(val);
-    ElMessage.success(t('copySuccess'))
+    ElMessage({
+      message: t('copySuccess'),
+      type: 'success',
+      offset: 120
+    })
   }
 }
 

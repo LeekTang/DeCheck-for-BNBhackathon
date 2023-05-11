@@ -45,7 +45,7 @@
                       {{ t(item.key + state.goInfo[item.key]) }}</p>
                   </div>
 
-                  <p class="text-[0.87rem] text-[#FFFFFFA8] h-[4.13rem] mb-[1rem]">{{ t(item.key + 'Tips') }}</p>
+                  <p class="text-[0.87rem] text-[#FFFFFFA8] mb-[1rem]">{{ t(item.key + 'Tips') }}</p>
                 </div>
               </template>
             </div>
@@ -286,7 +286,11 @@ const goToUrl = (val) => {
 const copyClick = (val) => {
   if (val) {
     copyToClipBoard(val);
-    ElMessage.success(t('copySuccess'))
+    ElMessage({
+      message: t('copySuccess'),
+      type: 'success',
+      offset: 120
+    })
   }
 }
 

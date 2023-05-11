@@ -4,10 +4,10 @@
     <div class="h-[26.5rem] bottom-bg flex relative rounded-[1.25rem]">
       <div class="w-[42.31rem] py-[4rem] pl-[4rem] flex flex-col justify-between">
         <div>
-          <p class="text-[2.56rem] text-[#121D43] font-extrabold leading-[3rem]">{{ t('applytitle') }}</p>
-          <p class="text-[1.44rem] text-[#121D43] leading-[1.75rem] mt-[1.5rem]">{{ t('applytip') }}</p>
+          <p class="text-[2.56rem] text-[#fff] leading-[3rem]" style="font-family:Inter-Bold">{{ t('applytitle') }}</p>
+          <p class="text-[1.44rem] text-[#ffffffa8] leading-[1.75rem] mt-[1.5rem]" style="font-family:Inter-Regular">{{ t('applytip') }}</p>
         </div>
-        <div class="h-[3.5rem] w-[11.25rem] div-bg text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]"><NuxtLink to="/apply">{{ t('DeCheckDAO') }}</NuxtLink></div>
+        <div class="h-[3.5rem] w-[11.25rem] div-bg text-center leading-[3.5rem] text-[1.13rem] text-[#fff] font-black rounded-full mt-[4rem]" style="font-family:Inter-Bold"><NuxtLink to="/apply">{{ t('DeCheckDAO') }}</NuxtLink></div>
       </div>
       <img src="/images/project-apply.svg" class="absolute right-0">
     </div>
@@ -23,10 +23,10 @@ const { t } = useI18n();
 <style scoped>
 
 .bottom-bg{
-  background: linear-gradient(60deg, #F1FDFF 0%, #ADF0FF 100%);
+  background: linear-gradient(262.88deg, #35329F 0%, #604C9A 100%);
 }
 .div-bg{
-  background: linear-gradient(180deg, #263B85 0%, #263B85 0%, #121D43 100%);
+  background: linear-gradient(180deg, #363574 0%, #2A1C52 100%);
 }
 
 </style>

@@ -41,7 +41,7 @@
       </div>
       <p class="text-[1rem] text-[#ffffffa8] leading-[1rem] my-[1rem]">{{ t('Investment') }}</p>
       <p class="text-[1rem] text-[#fff] font-bold leading-[1rem] my-[1rem]">{{state.project.invest || '--'}}</p>
-      <div class="mt-[3.5rem]">
+      <div class="mt-[3.5rem] h-[15rem]">
         <div :class="`${state.isEllipsis ? 'text-ellipsis7' : 'more-ellipsis'} text-[1rem] text-[#ffffffa8] leading-[2rem]`">
             {{state.project.intro}}
         </div>
@@ -136,7 +136,11 @@ const projectInfo = () => {
 const copyClick = (val) => {
   if(val){
     copyToClipBoard(val);
-    ElMessage.success(t('copySuccess'))
+    ElMessage({
+      message: t('copySuccess'),
+      type: 'success',
+      offset: 120
+    })
   }
 }
 
@@ -199,7 +203,7 @@ onMounted(()=>{
 .more-ellipsis{
   overflow:hidden;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 10;
+  -webkit-line-clamp: 7;
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }

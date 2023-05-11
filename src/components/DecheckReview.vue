@@ -240,7 +240,11 @@ const checkClick = (item) => {
   if (checkList.filter((ele) => ele.state).length < 3 || item.state) {
     item.state = !item.state;
   } else {
-    ElMessage.error(t("tagLimit"));
+    ElMessage({
+      message: t('tagLimit'),
+      type: 'error',
+      offset: 120
+    })
   }
 };
 
@@ -270,13 +274,18 @@ const handleExceed = (files, uploadFiles) => {
       files: files.length,
       all: files.length + uploadFiles.length,
     })}`,
+    offset: 120
   });
 };
 //在上传阶段先判断是图片还是视频
 const handleBefore = (files, fileList) => {
   if (state.fileList.length >= 1) {
     if (files.type == "video/mp4") {
-      ElMessage.error(t("videoAndImg"));
+    ElMessage({
+      message: t('videoAndImg'),
+      type: 'error',
+      offset: 120
+    })
       return false;
     } else {
       state.fileList.push("..");
@@ -334,10 +343,18 @@ const submitClick = () => {
       }
     })
     if (state.textarea.length == 0) {
-      ElMessage.error(t('reviewNull'))
+      ElMessage({
+        message: t('reviewNull'),
+        type: 'error',
+        offset: 120
+      })
       return false
     } else if (state.videoFlag) {
-      ElMessage.error(t('uploadNow'))
+      ElMessage({
+        message: t('uploadNow'),
+        type: 'error',
+        offset: 120
+      })
       return false
     } else {
       let data = {
@@ -355,7 +372,11 @@ const submitClick = () => {
       }
       request({ url: '/plugin/decheck/api/project/review/add', data, method: 'post' }).then(res => {
         if (res != null) {
-          ElMessage.success(t('submitSuccess'))
+          ElMessage({
+            message: t('submitSuccess'),
+            type: 'success',
+            offset: 120
+          })
           checkList.forEach(el => {
             el.state = false
           })

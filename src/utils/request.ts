@@ -44,7 +44,11 @@ service.interceptors.response.use(
 				return res.msg
 			}
 			if(res.msg){
-				ElMessage.error(res.msg)
+				ElMessage({
+					message: res.msg,
+					type: 'error',
+					offset: 120
+				})
 			}
 			return Promise.reject(res);
 		} else {
