@@ -118,7 +118,8 @@
             <div class="flex items-center">
               <div :class="`${item.type == 1 ? 'avatar' : ''
                 } h-[2.5rem] w-[2.5rem] rounded-full mr-[0.63rem] relative `">
-                <img src="/images/avatar.png" class="h-[2.5rem] w-[2.5rem] rounded-full" />
+                <img src="/images/auditor.svg" v-if="item.type == 1" class="h-[2.5rem] w-[2.5rem] rounded-full" />
+                <img src="/images/avatar.png" v-else class="h-[2.5rem] w-[2.5rem] rounded-full" />
               </div>
               <div class="mr-[0.63rem] text-[0.75rem] text-[#FFFFFFA8] font-bold">
                 {{ abbr(item.userId) }}
@@ -147,16 +148,16 @@
               </div>
               <p class="text-[0.88rem] text-[#fff] leading-[1.25rem] whitespace-pre-wrap" v-html="item.content"></p>
             </div>
-            <div v-if="item.video"
-              class="h-[11.63rem] w-[46.5rem] rounded-[0.75rem] mt-[1.5rem] flex justify-center items-center">
-              <video class="h-[8.63rem] w-[43.44rem] rounded-[0.75rem]" v-for="(video, index) in item.attachment"
+            <div v-if="item.video" class="h-[11.63rem] w-[46.5rem] rounded-[0.75rem] p-[1rem] relative">
+              <video :id="item.id" class="h-[8.63rem] w-[43.44rem] rounded-[0.75rem]" v-for="(video, index) in item.attachment"
                 :key="index" controls>
                 <source :src="video" type="video/mp4" />
               </video>
+              <!-- <div class="flex absolute left-[1rem] top-[0] h-[8.63rem] w-[8.63rem]" @click="videoPlay(item.id)"></div> -->
             </div>
-            <div v-if="item.image" class="mt-[1.5rem] relative py-[1.5rem] rounded-[0.75rem] mx-[1rem]">
+            <div v-if="item.image" class="relative pb-[1.5rem] rounded-[0.75rem] mx-[1rem]">
               <swiper :class="`swiperc${index}`" class="swiper-no-swiping"
-                :style="`${item.attachment.length > 4 ? 'margin: 0 5rem' : ''}`">
+                style="margin: 0 5rem">
                 <swiper-slide v-for="(icon, index) in item.attachment" :key="index">
                   <el-image :hide-on-click-modal="true" fit="cover" :preview-src-list="item.attachment"
                     :initial-index="index" preview-teleported :src="icon"
@@ -263,7 +264,7 @@ const state = reactive({
   fileList: [],
   video: "",
   videoFlag: false,
-  videoUploadPercent: 0,
+  videoUploadPercent: 0
 });
 
 const handleExceed = (files, uploadFiles) => {
@@ -368,7 +369,7 @@ const submitClick = () => {
         type: 0,
         userId: store.userInfo.account,
         visible: true,
-        attachment: state.fileList
+        attachment: state.fileList,
       }
       request({ url: '/plugin/decheck/api/project/review/add', data, method: 'post' }).then(res => {
         if (res != null) {
@@ -491,6 +492,17 @@ const login = () => {
       }
     });
   });
+}
+
+const videoPlay = (id) => {
+  const elVideo = document.getElementById(id);
+  if(elVideo.requestFullscreen) {
+    elVideo.requestFullscreen();
+    elVideo.play();
+  }else if(elVideo.mozRequestFullScreen) {
+    elVideo.mozRequestFullScreen();
+    elVideo.play();
+  }
 }
 
 const projectDelite = () => {

@@ -360,6 +360,9 @@ const goToUrl = (val) => {
 
 const countZeros = (num) => {
   if (num) {
+    state.priceFi = "";
+    state.priceTw = ""
+    state.priceTh = "";
     let reg = /\d(?:\.(\d*))?e([+-]\d+)/.exec(num);
     //判断是否是科学计数法
     if (reg == null) {
@@ -373,7 +376,7 @@ const countZeros = (num) => {
         state.priceTh = arr[1].substring(zeross, zeross + 4);
       } else {
         state.priceFi = arr[0];
-        state.priceTh = arr[1].substring(zeross, zeross + 4);
+        state.priceTh = arr[1].substring(0, zeross + 4);
       }
     } else {
       state.isE = true

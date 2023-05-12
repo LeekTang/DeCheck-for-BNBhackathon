@@ -80,6 +80,7 @@ const getHotProject = () => {
       if(ele.tokenAddr){
         ele.tokenList = Object.entries(ele.tokenAddr)
       }
+      ele.score = Number(ele.score).toFixed(0)
     });
     state.hotPorject = res
     localStorage.setItem('hotProject',JSON.stringify(state.hotPorject))

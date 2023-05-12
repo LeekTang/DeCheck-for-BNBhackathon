@@ -125,6 +125,7 @@ const projectInfo = () => {
     if(state.project.invest){
       state.project.invest = state.project.invest.join()
     }
+    state.project.score = Number(state.project.score).toFixed(0)
     iconList.forEach((el,index) => {
       if(state.project.socialMedia[index + 1] != undefined){
         el.webSrc = state.project.socialMedia[index + 1]
